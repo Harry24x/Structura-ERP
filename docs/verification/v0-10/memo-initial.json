@@ -1,0 +1,967 @@
+{
+  "caseId": "memo",
+  "model": "gpt-6.1-sol",
+  "date": "2026-10-26",
+  "outcome": "validated_draft",
+  "providerDurationRecorded": false,
+  "error": "",
+  "draft": {
+    "schemaVersion": "1.0",
+    "title": "Lapiga pantrid AS — Sales opportunity to service handover",
+    "mode": "as-is",
+    "roles": [
+      {
+        "id": "sales",
+        "label": "Salesperson"
+      },
+      {
+        "id": "customer",
+        "label": "Customer"
+      },
+      {
+        "id": "specialist",
+        "label": "Consultant or specialist"
+      }
+    ],
+    "nodes": [
+      {
+        "id": "start",
+        "type": "start",
+        "label": "New prospect or opportunity",
+        "roleId": null,
+        "evidence": "",
+        "systemId": null,
+        "execution": "unknown",
+        "humanDecision": null,
+        "systemEvidence": "",
+        "businessArea": "unknown",
+        "areaReason": "",
+        "areaReviewed": false
+      },
+      {
+        "id": "register",
+        "type": "activity",
+        "label": "Check CRM records and register the prospect or opportunity; add new company details where needed",
+        "roleId": "sales",
+        "evidence": "When a new prospect or opportunity arises, the salesperson should enter it into the CRM.",
+        "systemId": "sys_247y",
+        "execution": "assisted",
+        "humanDecision": null,
+        "systemEvidence": "The salesperson first checks the CRM to see if the company and the contact already exist",
+        "businessArea": "sales",
+        "areaReason": "Records and checks prospective customer information.",
+        "areaReviewed": false
+      },
+      {
+        "id": "qualify",
+        "type": "decision",
+        "label": "Is the contact a promising sales opportunity?",
+        "roleId": "sales",
+        "evidence": "The salesperson first checks the CRM to see if the company and the contact already exist and assesses whether it is a real sales opportunity.",
+        "systemId": null,
+        "execution": "unknown",
+        "humanDecision": true,
+        "systemEvidence": "assesses whether it is a real sales opportunity",
+        "businessArea": "sales",
+        "areaReason": "Qualifies customer needs and sales potential.",
+        "areaReviewed": false
+      },
+      {
+        "id": "inactive",
+        "type": "activity",
+        "label": "Do not open an active opportunity, or close the opportunity",
+        "roleId": null,
+        "evidence": "In this case, the active sales opportunity is not opened or the opportunity is closed.",
+        "systemId": null,
+        "execution": "unknown",
+        "humanDecision": null,
+        "systemEvidence": "",
+        "businessArea": "sales",
+        "areaReason": "Stops pursuit of an unsuitable or immature opportunity.",
+        "areaReviewed": false
+      },
+      {
+        "id": "inactive_end",
+        "type": "end",
+        "label": "Opportunity not actively pursued",
+        "roleId": null,
+        "evidence": "In case of an inappropriate or immature need, the process is not actively taken forward.",
+        "systemId": null,
+        "execution": "unknown",
+        "humanDecision": null,
+        "systemEvidence": "",
+        "businessArea": "unknown",
+        "areaReason": "",
+        "areaReviewed": false
+      },
+      {
+        "id": "meeting",
+        "type": "activity",
+        "label": "Arrange a meeting and map needs, desired results and schedule",
+        "roleId": "sales",
+        "evidence": "Sales determines the client's problem, the desired result, the reason for the change and a possible schedule.",
+        "systemId": null,
+        "execution": "unknown",
+        "humanDecision": null,
+        "systemEvidence": "",
+        "businessArea": "sales",
+        "areaReason": "Establishes customer requirements for a proposed sale.",
+        "areaReviewed": false
+      },
+      {
+        "id": "expert_needed",
+        "type": "decision",
+        "label": "Are needs technically complex or beyond the salesperson's assessment?",
+        "roleId": null,
+        "evidence": "This is done primarily if the customer's needs are technically complex or the salesperson cannot assess a suitable solution and the amount of work without additional analysis.",
+        "systemId": null,
+        "execution": "unknown",
+        "humanDecision": null,
+        "systemEvidence": "",
+        "businessArea": "sales",
+        "areaReason": "Determines whether sales discovery needs expert support.",
+        "areaReviewed": false
+      },
+      {
+        "id": "involve",
+        "type": "activity",
+        "label": "Involve a consultant or solution expert",
+        "roleId": "sales",
+        "evidence": "If necessary, the salesperson will involve a consultant or solution expert already at this stage.",
+        "systemId": null,
+        "execution": "unknown",
+        "humanDecision": null,
+        "systemEvidence": "",
+        "businessArea": "sales",
+        "areaReason": "Obtains expert support for customer needs assessment.",
+        "areaReviewed": false
+      },
+      {
+        "id": "service_type",
+        "type": "decision",
+        "label": "Standard service or complex project?",
+        "roleId": null,
+        "evidence": "In the case of smaller and more standard services, the offer can be prepared by the salesperson themselves on the basis of the existing price list and service description.",
+        "systemId": null,
+        "execution": "unknown",
+        "humanDecision": null,
+        "systemEvidence": "",
+        "businessArea": "sales",
+        "areaReason": "Selects the preparation approach for the offer.",
+        "areaReviewed": false
+      },
+      {
+        "id": "analysis",
+        "type": "activity",
+        "label": "Perform additional analysis and request a specialist's work estimate",
+        "roleId": null,
+        "evidence": "In the case of a more complex project, an additional analysis is carried out before the offer and an estimate of the amount of work is requested from a consultant or a specialist in the relevant field.",
+        "systemId": null,
+        "execution": "unknown",
+        "humanDecision": null,
+        "systemEvidence": "",
+        "businessArea": "sales",
+        "areaReason": "Establishes the scope and effort needed to quote a complex service.",
+        "areaReviewed": false
+      },
+      {
+        "id": "estimate",
+        "type": "activity",
+        "label": "Assess the required work",
+        "roleId": "specialist",
+        "evidence": "in the case of a more complex solution, a specialist's assessment is needed.",
+        "systemId": null,
+        "execution": "unknown",
+        "humanDecision": null,
+        "systemEvidence": "",
+        "businessArea": "sales",
+        "areaReason": "Provides the specialist estimate needed for an offer.",
+        "areaReviewed": false
+      },
+      {
+        "id": "offer",
+        "type": "activity",
+        "label": "Prepare the offer with scope, price, schedule and assumptions",
+        "roleId": null,
+        "evidence": "Once the content and volume of the work are known, an offer is prepared for the client.",
+        "systemId": null,
+        "execution": "unknown",
+        "humanDecision": null,
+        "systemEvidence": "",
+        "businessArea": "sales",
+        "areaReason": "Creates the customer offer.",
+        "areaReviewed": false
+      },
+      {
+        "id": "review_needed",
+        "type": "decision",
+        "label": "Is the offer larger or non-standard?",
+        "roleId": null,
+        "evidence": "In the case of larger or non-standard offers, the price and conditions must be checked before sending them to the customer.",
+        "systemId": null,
+        "execution": "unknown",
+        "humanDecision": null,
+        "systemEvidence": "",
+        "businessArea": "sales",
+        "areaReason": "Determines whether commercial terms need checking.",
+        "areaReviewed": false
+      },
+      {
+        "id": "review",
+        "type": "activity",
+        "label": "Check price and conditions",
+        "roleId": null,
+        "evidence": "the price and conditions must be checked before sending them to the customer.",
+        "systemId": null,
+        "execution": "unknown",
+        "humanDecision": null,
+        "systemEvidence": "",
+        "businessArea": "sales",
+        "areaReason": "Reviews the commercial terms of the offer.",
+        "areaReviewed": false
+      },
+      {
+        "id": "exception",
+        "type": "decision",
+        "label": "Are margin or other conditions outside the usual framework?",
+        "roleId": null,
+        "evidence": "If the necessary margin or other conditions are outside the usual framework, the salesperson must receive a separate confirmation.",
+        "systemId": null,
+        "execution": "unknown",
+        "humanDecision": null,
+        "systemEvidence": "",
+        "businessArea": "sales",
+        "areaReason": "Identifies commercial exceptions requiring confirmation.",
+        "areaReviewed": false
+      },
+      {
+        "id": "confirmation",
+        "type": "activity",
+        "label": "Obtain separate confirmation for exceptional terms",
+        "roleId": "sales",
+        "evidence": "the salesperson must receive a separate confirmation.",
+        "systemId": null,
+        "execution": "unknown",
+        "humanDecision": null,
+        "systemEvidence": "",
+        "businessArea": "sales",
+        "areaReason": "Obtains authorization for exceptional offer terms.",
+        "areaReviewed": false
+      },
+      {
+        "id": "send",
+        "type": "activity",
+        "label": "Send the offer",
+        "roleId": null,
+        "evidence": "After the offer is sent, the opportunity remains open.",
+        "systemId": null,
+        "execution": "unknown",
+        "humanDecision": null,
+        "systemEvidence": "",
+        "businessArea": "sales",
+        "areaReason": "Presents the offer to the customer.",
+        "areaReviewed": false
+      },
+      {
+        "id": "followup",
+        "type": "activity",
+        "label": "Agree or track the next customer contact",
+        "roleId": "sales",
+        "evidence": "The salesperson agrees on the next contact with the customer or keeps track of when the customer should be contacted again.",
+        "systemId": null,
+        "execution": "unknown",
+        "humanDecision": null,
+        "systemEvidence": "",
+        "businessArea": "sales",
+        "areaReason": "Follows up the open opportunity.",
+        "areaReviewed": false
+      },
+      {
+        "id": "response",
+        "type": "decision",
+        "label": "Customer response to the offer",
+        "roleId": "customer",
+        "evidence": "The customer can approve the offer, reject it, postpone the decision, or ask for changes.",
+        "systemId": null,
+        "execution": "unknown",
+        "humanDecision": true,
+        "systemEvidence": "The customer can approve the offer, reject it, postpone the decision, or ask for changes.",
+        "businessArea": "sales",
+        "areaReason": "Captures the customer's purchasing decision.",
+        "areaReviewed": false
+      },
+      {
+        "id": "change_type",
+        "type": "decision",
+        "label": "Do requested changes affect work content or only offer terms?",
+        "roleId": null,
+        "evidence": "If the client asks for changes, it is reviewed whether they only affect the terms of the offer or whether they also change the content and volume of work.",
+        "systemId": null,
+        "execution": "unknown",
+        "humanDecision": null,
+        "systemEvidence": "",
+        "businessArea": "sales",
+        "areaReason": "Determines the impact of requested offer changes.",
+        "areaReviewed": false
+      },
+      {
+        "id": "reassess",
+        "type": "activity",
+        "label": "Reassess changed work",
+        "roleId": "specialist",
+        "evidence": "If the content of the work changes, a new assessment must be taken from a specialist",
+        "systemId": null,
+        "execution": "unknown",
+        "humanDecision": null,
+        "systemEvidence": "",
+        "businessArea": "sales",
+        "areaReason": "Updates the work assessment for a revised offer.",
+        "areaReviewed": false
+      },
+      {
+        "id": "discount",
+        "type": "decision",
+        "label": "Are price changes within agreed limits?",
+        "roleId": "sales",
+        "evidence": "The salesperson can make changes within the agreed limits, but in the case of a larger discount, they need additional confirmation.",
+        "systemId": null,
+        "execution": "unknown",
+        "humanDecision": null,
+        "systemEvidence": "",
+        "businessArea": "sales",
+        "areaReason": "Checks authority for negotiated pricing changes.",
+        "areaReviewed": false
+      },
+      {
+        "id": "discount_confirmation",
+        "type": "activity",
+        "label": "Obtain additional confirmation for a larger discount",
+        "roleId": "sales",
+        "evidence": "in the case of a larger discount, they need additional confirmation.",
+        "systemId": null,
+        "execution": "unknown",
+        "humanDecision": null,
+        "systemEvidence": "",
+        "businessArea": "sales",
+        "areaReason": "Obtains authorization for a larger discount.",
+        "areaReviewed": false
+      },
+      {
+        "id": "revise_terms",
+        "type": "activity",
+        "label": "Revise agreed offer terms",
+        "roleId": null,
+        "evidence": "ask for changes",
+        "systemId": null,
+        "execution": "unknown",
+        "humanDecision": null,
+        "systemEvidence": "",
+        "businessArea": "sales",
+        "areaReason": "Handles the customer's requested offer amendments.",
+        "areaReviewed": false
+      },
+      {
+        "id": "loss",
+        "type": "activity",
+        "label": "Record the loss reason in CRM if possible and close the opportunity as lost",
+        "roleId": "sales",
+        "evidence": "If the customer rejects the offer, the salesperson should record the reason in the CRM, if possible.",
+        "systemId": "sys_247y",
+        "execution": "assisted",
+        "humanDecision": null,
+        "systemEvidence": "the salesperson should record the reason in the CRM, if possible.",
+        "businessArea": "sales",
+        "areaReason": "Records the outcome of a lost sales opportunity.",
+        "areaReviewed": false
+      },
+      {
+        "id": "lost_end",
+        "type": "end",
+        "label": "Opportunity lost",
+        "roleId": null,
+        "evidence": "the customer decides not to buy and the opportunity is closed as lost",
+        "systemId": null,
+        "execution": "unknown",
+        "humanDecision": null,
+        "systemEvidence": "",
+        "businessArea": "unknown",
+        "areaReason": "",
+        "areaReviewed": false
+      },
+      {
+        "id": "postpone",
+        "type": "activity",
+        "label": "Agree a new time to contact the customer",
+        "roleId": null,
+        "evidence": "a new time is agreed upon to contact the customer.",
+        "systemId": null,
+        "execution": "unknown",
+        "humanDecision": null,
+        "systemEvidence": "",
+        "businessArea": "sales",
+        "areaReason": "Schedules follow-up of a deferred buying decision.",
+        "areaReviewed": false
+      },
+      {
+        "id": "contract_route",
+        "type": "decision",
+        "label": "Existing framework agreement or separate contract required?",
+        "roleId": null,
+        "evidence": "A framework agreement already exists with some existing customers and a confirmed offer or order is sufficient. In the case of a new customer or a larger project, a separate contract is drawn up.",
+        "systemId": null,
+        "execution": "unknown",
+        "humanDecision": null,
+        "systemEvidence": "",
+        "businessArea": "sales",
+        "areaReason": "Determines how the accepted sale is formalized.",
+        "areaReviewed": false
+      },
+      {
+        "id": "order",
+        "type": "activity",
+        "label": "Formalize the confirmed offer or order under the framework agreement",
+        "roleId": null,
+        "evidence": "a confirmed offer or order is sufficient.",
+        "systemId": null,
+        "execution": "unknown",
+        "humanDecision": null,
+        "systemEvidence": "",
+        "businessArea": "sales",
+        "areaReason": "Formalizes an accepted sale under an existing agreement.",
+        "areaReviewed": false
+      },
+      {
+        "id": "contract",
+        "type": "activity",
+        "label": "Agree the contractual party and draw up a separate contract",
+        "roleId": null,
+        "evidence": "In the case of a new customer or a larger project, a separate contract is drawn up.",
+        "systemId": null,
+        "execution": "unknown",
+        "humanDecision": null,
+        "systemEvidence": "",
+        "businessArea": "sales",
+        "areaReason": "Formalizes the customer agreement for the sale.",
+        "areaReviewed": false
+      },
+      {
+        "id": "readiness",
+        "type": "activity",
+        "label": "Check agreed contracts and conditions; check new-client payment terms and data if needed",
+        "roleId": null,
+        "evidence": "Before starting work, it must be checked whether the necessary contracts and conditions have been agreed upon with the client.",
+        "systemId": null,
+        "execution": "unknown",
+        "humanDecision": null,
+        "systemEvidence": "",
+        "businessArea": "sales",
+        "areaReason": "Checks contractual readiness before service delivery.",
+        "areaReviewed": false
+      },
+      {
+        "id": "handover_type",
+        "type": "decision",
+        "label": "Larger project or smaller work?",
+        "roleId": null,
+        "evidence": "In the case of a larger project, a separate internal handover meeting is held",
+        "systemId": null,
+        "execution": "unknown",
+        "humanDecision": null,
+        "systemEvidence": "",
+        "businessArea": "sales",
+        "areaReason": "Selects the sales handover format.",
+        "areaReviewed": false
+      },
+      {
+        "id": "handover_meeting",
+        "type": "activity",
+        "label": "Hand over customer background and agreements to the project manager and team in an internal meeting",
+        "roleId": "sales",
+        "evidence": "sales hands over the customer's background and agreements to the project manager and team.",
+        "systemId": null,
+        "execution": "unknown",
+        "humanDecision": null,
+        "systemEvidence": "",
+        "businessArea": "sales",
+        "areaReason": "Transfers the won sale to the delivery team.",
+        "areaReviewed": false
+      },
+      {
+        "id": "short_handover",
+        "type": "activity",
+        "label": "Hand over agreements using CRM information, the confirmed offer and a short handover",
+        "roleId": "sales",
+        "evidence": "In the case of smaller work, CRM information, a confirmed offer and a short handover may be enough.",
+        "systemId": "sys_247y",
+        "execution": "assisted",
+        "humanDecision": null,
+        "systemEvidence": "CRM information, a confirmed offer and a short handover may be enough.",
+        "businessArea": "sales",
+        "areaReason": "Transfers the agreed smaller job to the delivery team.",
+        "areaReviewed": false
+      },
+      {
+        "id": "won_end",
+        "type": "end",
+        "label": "Confirmed work handed over to the service team",
+        "roleId": null,
+        "evidence": "the customer confirms the order and the necessary information has been handed over to the team responsible for performing the work.",
+        "systemId": null,
+        "execution": "unknown",
+        "humanDecision": null,
+        "systemEvidence": "",
+        "businessArea": "unknown",
+        "areaReason": "",
+        "areaReviewed": false
+      }
+    ],
+    "edges": [
+      {
+        "from": "start",
+        "to": "register",
+        "label": ""
+      },
+      {
+        "from": "register",
+        "to": "qualify",
+        "label": ""
+      },
+      {
+        "from": "qualify",
+        "to": "inactive",
+        "label": "Inappropriate or immature need"
+      },
+      {
+        "from": "inactive",
+        "to": "inactive_end",
+        "label": ""
+      },
+      {
+        "from": "qualify",
+        "to": "meeting",
+        "label": "Promising contact"
+      },
+      {
+        "from": "meeting",
+        "to": "expert_needed",
+        "label": ""
+      },
+      {
+        "from": "expert_needed",
+        "to": "involve",
+        "label": "Expert support needed"
+      },
+      {
+        "from": "expert_needed",
+        "to": "service_type",
+        "label": "No expert support needed"
+      },
+      {
+        "from": "involve",
+        "to": "service_type",
+        "label": ""
+      },
+      {
+        "from": "service_type",
+        "to": "offer",
+        "label": "Smaller, standard service"
+      },
+      {
+        "from": "service_type",
+        "to": "analysis",
+        "label": "Complex project"
+      },
+      {
+        "from": "analysis",
+        "to": "estimate",
+        "label": ""
+      },
+      {
+        "from": "estimate",
+        "to": "offer",
+        "label": ""
+      },
+      {
+        "from": "offer",
+        "to": "review_needed",
+        "label": ""
+      },
+      {
+        "from": "review_needed",
+        "to": "review",
+        "label": "Larger or non-standard"
+      },
+      {
+        "from": "review_needed",
+        "to": "send",
+        "label": "Regular offer; no separate check required"
+      },
+      {
+        "from": "review",
+        "to": "exception",
+        "label": ""
+      },
+      {
+        "from": "exception",
+        "to": "confirmation",
+        "label": "Outside usual framework"
+      },
+      {
+        "from": "exception",
+        "to": "send",
+        "label": "Within usual framework"
+      },
+      {
+        "from": "confirmation",
+        "to": "send",
+        "label": ""
+      },
+      {
+        "from": "send",
+        "to": "followup",
+        "label": ""
+      },
+      {
+        "from": "followup",
+        "to": "response",
+        "label": ""
+      },
+      {
+        "from": "response",
+        "to": "change_type",
+        "label": "Requests changes"
+      },
+      {
+        "from": "response",
+        "to": "loss",
+        "label": "Rejects"
+      },
+      {
+        "from": "response",
+        "to": "postpone",
+        "label": "Postpones"
+      },
+      {
+        "from": "response",
+        "to": "contract_route",
+        "label": "Accepts"
+      },
+      {
+        "from": "change_type",
+        "to": "reassess",
+        "label": "Work content or volume changes"
+      },
+      {
+        "from": "change_type",
+        "to": "discount",
+        "label": "Price change"
+      },
+      {
+        "from": "change_type",
+        "to": "revise_terms",
+        "label": "Other terms only"
+      },
+      {
+        "from": "reassess",
+        "to": "offer",
+        "label": "Reprepare offer as needed"
+      },
+      {
+        "from": "discount",
+        "to": "revise_terms",
+        "label": "Within agreed limits"
+      },
+      {
+        "from": "discount",
+        "to": "discount_confirmation",
+        "label": "Larger discount"
+      },
+      {
+        "from": "discount_confirmation",
+        "to": "revise_terms",
+        "label": ""
+      },
+      {
+        "from": "revise_terms",
+        "to": "review_needed",
+        "label": ""
+      },
+      {
+        "from": "loss",
+        "to": "lost_end",
+        "label": ""
+      },
+      {
+        "from": "postpone",
+        "to": "followup",
+        "label": "At the agreed follow-up time"
+      },
+      {
+        "from": "contract_route",
+        "to": "order",
+        "label": "Existing framework; confirmed offer or order sufficient"
+      },
+      {
+        "from": "contract_route",
+        "to": "contract",
+        "label": "New customer or larger project"
+      },
+      {
+        "from": "order",
+        "to": "readiness",
+        "label": ""
+      },
+      {
+        "from": "contract",
+        "to": "readiness",
+        "label": ""
+      },
+      {
+        "from": "readiness",
+        "to": "handover_type",
+        "label": ""
+      },
+      {
+        "from": "handover_type",
+        "to": "handover_meeting",
+        "label": "Larger project"
+      },
+      {
+        "from": "handover_type",
+        "to": "short_handover",
+        "label": "Smaller work"
+      },
+      {
+        "from": "handover_meeting",
+        "to": "won_end",
+        "label": ""
+      },
+      {
+        "from": "short_handover",
+        "to": "won_end",
+        "label": ""
+      }
+    ],
+    "questions": [
+      {
+        "id": "q_inactive",
+        "kind": "role",
+        "text": "Who decides not to open the active opportunity or closes it after initial qualification?",
+        "nodeIds": [
+          "inactive"
+        ]
+      },
+      {
+        "id": "q_expert",
+        "kind": "role",
+        "text": "Who determines whether expert involvement is needed?",
+        "nodeIds": [
+          "expert_needed"
+        ]
+      },
+      {
+        "id": "q_service",
+        "kind": "role",
+        "text": "Who classifies the service as standard or complex?",
+        "nodeIds": [
+          "service_type"
+        ]
+      },
+      {
+        "id": "q_analysis",
+        "kind": "role",
+        "text": "Who performs the additional analysis and requests the specialist's estimate? If different people, specify each responsibility.",
+        "nodeIds": [
+          "analysis"
+        ]
+      },
+      {
+        "id": "q_offer",
+        "kind": "role",
+        "text": "Sales prepares standard offers; who prepares offers for complex projects?",
+        "nodeIds": [
+          "offer"
+        ]
+      },
+      {
+        "id": "q_review_needed",
+        "kind": "role",
+        "text": "Who determines whether an offer is larger or non-standard?",
+        "nodeIds": [
+          "review_needed"
+        ]
+      },
+      {
+        "id": "q_review",
+        "kind": "role",
+        "text": "Who checks offer prices and conditions?",
+        "nodeIds": [
+          "review"
+        ]
+      },
+      {
+        "id": "q_exception",
+        "kind": "role",
+        "text": "Who determines whether margin or conditions fall outside the usual framework?",
+        "nodeIds": [
+          "exception"
+        ]
+      },
+      {
+        "id": "q_send",
+        "kind": "role",
+        "text": "Who sends the offer to the customer?",
+        "nodeIds": [
+          "send"
+        ]
+      },
+      {
+        "id": "q_change",
+        "kind": "role",
+        "text": "Who assesses whether requested changes affect terms or work content?",
+        "nodeIds": [
+          "change_type"
+        ]
+      },
+      {
+        "id": "q_revise",
+        "kind": "role",
+        "text": "Who revises non-price offer terms?",
+        "nodeIds": [
+          "revise_terms"
+        ]
+      },
+      {
+        "id": "q_postpone",
+        "kind": "role",
+        "text": "Who agrees the new contact time with the customer after postponement?",
+        "nodeIds": [
+          "postpone"
+        ]
+      },
+      {
+        "id": "q_contract_route",
+        "kind": "role",
+        "text": "Who determines which contractual arrangement is sufficient?",
+        "nodeIds": [
+          "contract_route"
+        ]
+      },
+      {
+        "id": "q_order",
+        "kind": "role",
+        "text": "Who formalizes the confirmed offer or order under an existing framework agreement?",
+        "nodeIds": [
+          "order"
+        ]
+      },
+      {
+        "id": "q_contract",
+        "kind": "role",
+        "text": "Who agrees the contractual party and draws up the separate contract?",
+        "nodeIds": [
+          "contract"
+        ]
+      },
+      {
+        "id": "q_readiness",
+        "kind": "role",
+        "text": "Who checks contractual readiness and any required new-client payment terms and data?",
+        "nodeIds": [
+          "readiness"
+        ]
+      },
+      {
+        "id": "q_handover_type",
+        "kind": "role",
+        "text": "Who selects the handover format?",
+        "nodeIds": [
+          "handover_type"
+        ]
+      },
+      {
+        "id": "q_limits",
+        "kind": "decision_rule",
+        "text": "What defines larger or non-standard offers, the usual margin framework, and discount approval limits?",
+        "nodeIds": [
+          "review_needed",
+          "exception",
+          "discount"
+        ]
+      },
+      {
+        "id": "q_approval",
+        "kind": "other",
+        "text": "Who provides the separate confirmations, and what happens if confirmation is refused?",
+        "nodeIds": [
+          "confirmation",
+          "discount_confirmation"
+        ]
+      },
+      {
+        "id": "q_contract_overlap",
+        "kind": "decision_rule",
+        "text": "For a larger project with an existing framework agreement, is a separate contract always required?",
+        "nodeIds": [
+          "contract_route"
+        ]
+      },
+      {
+        "id": "q_readiness_failure",
+        "kind": "other",
+        "text": "What happens when the pre-work check finds missing contracts, conditions or client data?",
+        "nodeIds": [
+          "readiness"
+        ]
+      },
+      {
+        "id": "q_revision",
+        "kind": "other",
+        "text": "How are requested term changes actually implemented and returned to the customer? The draft shows a provisional revision and recheck route.",
+        "nodeIds": [
+          "revise_terms",
+          "review_needed"
+        ]
+      },
+      {
+        "id": "q_close",
+        "kind": "role",
+        "text": "Does the salesperson also close the opportunity as lost, or does another role perform that action?",
+        "nodeIds": [
+          "loss"
+        ]
+      }
+    ],
+    "notes": [
+      "Reviewable as-is draft, not a claim of human approval. Scope runs from a new prospect or opportunity to non-pursuit, loss, or handover of confirmed work; service execution is outside scope.",
+      "The full recap and compact summary describe the same process and are consolidated rather than mapped twice.",
+      "Lead sources include website, email, recommendations, existing-customer communication, events, active sales and consultant-identified needs.",
+      "CRM registration includes duplicate checks for existing company and contact records and addition of master data and known contacts for new companies. The source does not describe every record-maintenance action separately.",
+      "The offer-preparation node is shared by standard and complex routes. Sales ownership is explicit for standard offers only; complex-offer ownership remains open.",
+      "The source describes approval requirements but not approvers or refusal handling. Confirmation nodes represent obtaining confirmation, not an invented approval decision.",
+      "The term-revision step and its return to commercial checking require validation: the source explicitly describes requests for changes, but gives fuller rework instructions only for work-content changes and discounts.",
+      "The lost-opportunity node combines reason recording and closure. Sales ownership is explicit for recording the reason, while ownership of closure remains to be confirmed.",
+      "Handover should communicate customer needs, agreed scope, price, deadlines and main contacts. Larger projects use an internal meeting; smaller work may use CRM information, the confirmed offer and a short handover.",
+      "The CRM visibility statement is a stated expectation, not evidence of consistent practice. The recap acknowledges that some information and agreements remain in emails or Teams chats; those systems are not assigned to individual tasks without task-specific evidence.",
+      "The supplied ERP registry entry is retained, but no source activity establishes ERP use."
+    ],
+    "systems": [
+      {
+        "id": "sys_25pf",
+        "label": "ERP"
+      },
+      {
+        "id": "sys_247y",
+        "label": "CRM"
+      }
+    ],
+    "source": "Example 3\nCompany name: Lapiga pantrid AS\nField of activity: Cleaning services\nTeams Meeting Summary for Business Service Customers\nMeeting recap: Sales process mapping\nAt the meeting, the sales process of a company providing business services was discussed, from the emergence of a new sales opportunity to the conclusion of the contract and the transfer of the work to the team responsible for the provision of the service.\nSales opportunities arise in the company from several sources. Some new customers contact the company themselves through the website, e-mail or recommendation. In addition, leads arise from communication with existing customers, seminars and events, and as a result of the sales team's own active sales work. In the case of an existing customer, a new opportunity may also arise in the course of providing the service, if the consultant notices an additional need.\nWhen a new prospect or opportunity arises, the salesperson should enter it into the CRM. If the company is already a customer, the company and contact are first checked to see if the company and contact exist in the CRM so as not to create duplicates. For a new company, the company's master data and known contacts are added.\nDuring the discussion, it was pointed out that not all initial contacts are immediately turned into a sales opportunity. First, it is assessed whether the customer has a real need, whether our services could meet it and whether it is reasonable to proceed with the sales process. In some cases, it becomes clear during the first conversation that the need is not related to our services or the customer does not plan to change anything in the near future. In this case, the active sales opportunity is not opened or the opportunity is closed.\nIf the contact seems promising, a meeting is arranged with the client to specify the needs. At the first meeting, an attempt is made to understand the client's business need, problem, current situation and desired result. It is also examined why the client wants to make the change right now and what the desired schedule of the project or service could be.\nIf necessary, the salesperson will involve a consultant or solution expert already at this stage. This is done primarily if the customer's needs are technically complex or the salesperson cannot assess a suitable solution and the amount of work without additional analysis.\nIt was noted at the meeting that before making an offer, it should be sufficiently clear what the customer wants to buy. In the case of smaller and more standard services, the offer can be prepared by the salesperson themselves on the basis of the existing price list and service description. In the case of a more complex project, an additional analysis is carried out before the offer and an estimate of the amount of work is requested from a consultant or a specialist in the relevant field.\nOnce the content and volume of the work are known, an offer is prepared for the client. The offer usually describes the purpose, scope, price or pricing principle of the work or service, the expected schedule and important assumptions. If necessary, separate activities are added that the client must carry out themselves during the project.\nIn the case of larger or non-standard offers, the price and conditions must be checked before sending them to the customer. If the necessary margin or other conditions are outside the usual framework, the salesperson must receive a separate confirmation. In the case of a regular service, a separate confirmation is not always required.\nAfter the offer is sent, the opportunity remains open. The salesperson agrees on the next contact with the customer or keeps track of when the customer should be contacted again. The customer can accept the offer, reject it, or ask for changes.\nIf the client asks for changes, it is reviewed whether they only affect the terms of the offer or whether they also change the content and volume of work. If the content of the work changes, a new assessment must be taken from a specialist and the offer must be re-prepared, if necessary.\nThe discussion also highlighted a situation where the customer agrees with the solution in principle, but wants to change the price. The salesperson can make changes within the agreed limits, but in the case of a larger discount, they need additional confirmation.\nIf the customer rejects the offer, the salesperson should record the reason in the CRM, if possible. The reason could be, for example, price, wrong timing, choosing a competitor, postponing the project, or loss of need. If the customer simply postpones the decision to the future, the opportunity may not be marked as lost for good, but a new time is agreed upon to contact the customer.\nIf the customer confirms the offer, the contractual party must be agreed. A framework agreement already exists with some existing customers and a confirmed offer or order is sufficient. In the case of a new customer or a larger project, a separate contract is drawn up.\nBefore starting work, it must be checked whether the necessary contracts and conditions have been agreed upon with the client. In the case of a new client, the payment terms and other client data will also be checked, if necessary.\nFrom the point of view of sales, the process does not end with the customer saying yes to the offer. After confirming the order, information about the sale must be passed on to the person responsible for providing the service or to the project manager. Upon delivery, it should be clear what was promised to the customer, what the agreed scope of work, price, deadlines are, and who the main contact persons of the customer are.\nIn the case of a larger project, a separate internal handover meeting is held, where sales hands over the customer's background and agreements to the project manager and team. In the case of smaller work, CRM information, a confirmed offer and a short handover may be enough.\nAt the end of the meeting, it was emphasized that the CRM should be visible at least the current status of the opportunity, the expected value, the next action and the responsible salesperson throughout the sales process. At the same time, it was admitted that in practice, not all information is always in the CRM and some of the communication and agreements may be in emails or Teams chats.\nThe sales process can be considered completed if the customer decides not to buy and the opportunity is closed as lost, or if the customer confirms the order and the necessary information has been handed over to the team responsible for performing the work.\nOption 2: A more compact Copilot-like summary\nSales Process Discussion Summary\nAt the meeting, the sales process of business services was reviewed, from the generation of a lead to the transfer of the won job to the team responsible for providing the service.\nLeads can come from the web, recommendations, seminars, existing customers, consultants, or the active activities of the sales team. The salesperson first checks the CRM to see if the company and the contact already exist and assesses whether it is a real sales opportunity. In case of an inappropriate or immature need, the process is not actively taken forward.\nA needs mapping meeting is held with a promising client. Sales determines the client's problem, the desired result, the reason for the change and a possible schedule. In the case of more complex needs, a consultant or an expert in the field is involved.\nIf the need is sufficiently clear, a solution is prepared and the required amount of work is assessed. In the case of a standard service, sales can prepare the offer themselves, in the case of a more complex solution, a specialist's assessment is needed. The offer includes the scope of work, price, schedule and important assumptions. Prices that differ from the usual or larger discounts may require separate approval.\nAfter the offer is sent, sales will follow up on the customer's decision and agree on the next course of action. The customer can approve the offer, reject it, postpone the decision, or ask for changes. In the event of a significant change in content, the amount of work must be reassessed and the offer must be changed.\nIn the case of a lost sales opportunity, the reason for the loss is fixed, if possible. If the decision is only postponed, a new contact is scheduled.\nIf the opportunity is won, the necessary order or contract will be formalized. After that, the sales will hand over the agreements to the project manager or the team responsible for providing the service. At the time of delivery, the customer's needs, agreed scope, price, deadlines and contact persons must be known.\nThe process ends either with the loss of the opportunity or with the transfer of the approved work to the team providing the service.",
+    "version": 4,
+    "origin": "model-api",
+    "reviewed": false,
+    "changeSummary": "AI draft from process description"
+  },
+  "appVersion": "0.9",
+  "phase": "initial",
+  "businessAcceptance": "not-established"
+}

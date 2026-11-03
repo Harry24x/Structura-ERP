@@ -1,0 +1,183 @@
+{
+  "schemaVersion": "1.0",
+  "title": "Travel request and approval",
+  "mode": "to-be",
+  "roles": [
+    {
+      "id": "employee",
+      "label": "Employee"
+    },
+    {
+      "id": "department_manager",
+      "label": "Department manager"
+    },
+    {
+      "id": "hr",
+      "label": "HR"
+    },
+    {
+      "id": "finance",
+      "label": "Finance"
+    }
+  ],
+  "nodes": [
+    {
+      "id": "start",
+      "type": "start",
+      "label": "Travel request process begins",
+      "roleId": null,
+      "evidence": ""
+    },
+    {
+      "id": "submit_request",
+      "type": "activity",
+      "label": "Submit travel request",
+      "roleId": "employee",
+      "evidence": "An employee submits a travel request to the department manager."
+    },
+    {
+      "id": "check_dates",
+      "type": "activity",
+      "label": "Check date availability",
+      "roleId": "department_manager",
+      "evidence": "The department manager checks whether the requested dates are available."
+    },
+    {
+      "id": "dates_available",
+      "type": "decision",
+      "label": "Are the requested dates available?",
+      "roleId": "department_manager",
+      "evidence": "If the dates are available"
+    },
+    {
+      "id": "approve_request",
+      "type": "activity",
+      "label": "Approve request",
+      "roleId": "department_manager",
+      "evidence": "the department manager approves the request."
+    },
+    {
+      "id": "revise_dates",
+      "type": "activity",
+      "label": "Revise dates and resubmit request",
+      "roleId": "employee",
+      "evidence": "the employee revises the dates and resubmits the request to the department manager"
+    },
+    {
+      "id": "check_budget",
+      "type": "activity",
+      "label": "Check estimated cost against approved budget",
+      "roleId": "finance",
+      "evidence": "Finance checks whether the estimated cost is within the approved budget."
+    },
+    {
+      "id": "within_budget",
+      "type": "decision",
+      "label": "Is the estimated cost within the approved budget?",
+      "roleId": "finance",
+      "evidence": "If it is within the budget"
+    },
+    {
+      "id": "request_cost_revision",
+      "type": "activity",
+      "label": "Ask employee to revise estimated cost",
+      "roleId": "finance",
+      "evidence": "Finance asks the employee to revise the estimated cost"
+    },
+    {
+      "id": "revise_cost",
+      "type": "activity",
+      "label": "Revise estimated cost",
+      "roleId": "employee",
+      "evidence": "the employee revises it"
+    },
+    {
+      "id": "record_request",
+      "type": "activity",
+      "label": "Record approved request",
+      "roleId": "hr",
+      "evidence": "HR records the approved request."
+    },
+    {
+      "id": "end",
+      "type": "end",
+      "label": "Process complete",
+      "roleId": null,
+      "evidence": ""
+    }
+  ],
+  "edges": [
+    {
+      "from": "start",
+      "to": "submit_request",
+      "label": ""
+    },
+    {
+      "from": "submit_request",
+      "to": "check_dates",
+      "label": ""
+    },
+    {
+      "from": "check_dates",
+      "to": "dates_available",
+      "label": ""
+    },
+    {
+      "from": "dates_available",
+      "to": "approve_request",
+      "label": "Yes — dates available"
+    },
+    {
+      "from": "dates_available",
+      "to": "revise_dates",
+      "label": "No — dates not available"
+    },
+    {
+      "from": "revise_dates",
+      "to": "check_dates",
+      "label": "Resubmitted for same date check"
+    },
+    {
+      "from": "approve_request",
+      "to": "check_budget",
+      "label": ""
+    },
+    {
+      "from": "check_budget",
+      "to": "within_budget",
+      "label": ""
+    },
+    {
+      "from": "within_budget",
+      "to": "record_request",
+      "label": "Yes — within budget"
+    },
+    {
+      "from": "within_budget",
+      "to": "request_cost_revision",
+      "label": "No — exceeds budget"
+    },
+    {
+      "from": "request_cost_revision",
+      "to": "revise_cost",
+      "label": ""
+    },
+    {
+      "from": "revise_cost",
+      "to": "check_budget",
+      "label": "Repeat budget check"
+    },
+    {
+      "from": "record_request",
+      "to": "end",
+      "label": ""
+    }
+  ],
+  "questions": [],
+  "notes": [],
+  "source": "An employee submits a travel request to the department manager. The department manager checks whether the requested dates are available. If the dates are available, the department manager approves the request. If the dates are not available, the employee revises the dates and resubmits the request to the department manager for the same date check. After approval, HR records the approved request.\nRequested improvement: After approval and before HR records the request, Finance checks whether the estimated cost is within the approved budget. If it exceeds the budget, Finance asks the employee to revise the estimated cost; the employee revises it and Finance repeats the budget check. If it is within the budget, HR records the request as before. Keep the existing date-revision branch.",
+  "version": 3,
+  "origin": "model-api",
+  "reviewed": false,
+  "changeSummary": "AI proposal from requested change"
+}

@@ -1,0 +1,223 @@
+{
+  "caseId": "incomplete",
+  "model": "gpt-6.1-sol",
+  "date": "2026-10-26",
+  "outcome": "validated_draft",
+  "providerDurationRecorded": false,
+  "error": "",
+  "draft": {
+    "schemaVersion": "1.0",
+    "title": "Purchase Request Approval and Ordering",
+    "mode": "as-is",
+    "roles": [
+      {
+        "id": "role_employee",
+        "label": "Employee"
+      },
+      {
+        "id": "role_buyer",
+        "label": "Buyer"
+      }
+    ],
+    "nodes": [
+      {
+        "id": "start",
+        "type": "start",
+        "label": "Start",
+        "roleId": null,
+        "evidence": "",
+        "systemId": null,
+        "execution": "unknown",
+        "humanDecision": null,
+        "systemEvidence": "",
+        "businessArea": "unknown",
+        "areaReason": "",
+        "areaReviewed": false
+      },
+      {
+        "id": "submit_request",
+        "type": "activity",
+        "label": "Submit purchase request",
+        "roleId": "role_employee",
+        "evidence": "An employee submits a purchase request.",
+        "systemId": null,
+        "execution": "unknown",
+        "humanDecision": null,
+        "systemEvidence": "",
+        "businessArea": "purchasing",
+        "areaReason": "Initiates a purchase request.",
+        "areaReviewed": false
+      },
+      {
+        "id": "approval",
+        "type": "decision",
+        "label": "Purchase request approved?",
+        "roleId": null,
+        "evidence": "If approved, the buyer places the order. If rejected, the employee is notified and the process ends.",
+        "systemId": null,
+        "execution": "unknown",
+        "humanDecision": null,
+        "systemEvidence": "",
+        "businessArea": "purchasing",
+        "areaReason": "Determines whether the requested purchase proceeds.",
+        "areaReviewed": false
+      },
+      {
+        "id": "place_order",
+        "type": "activity",
+        "label": "Place order",
+        "roleId": "role_buyer",
+        "evidence": "the buyer places the order.",
+        "systemId": null,
+        "execution": "unknown",
+        "humanDecision": null,
+        "systemEvidence": "",
+        "businessArea": "purchasing",
+        "areaReason": "Places the purchase order.",
+        "areaReviewed": false
+      },
+      {
+        "id": "notify_employee",
+        "type": "activity",
+        "label": "Notify employee of rejection",
+        "roleId": null,
+        "evidence": "If rejected, the employee is notified",
+        "systemId": null,
+        "execution": "unknown",
+        "humanDecision": null,
+        "systemEvidence": "",
+        "businessArea": "purchasing",
+        "areaReason": "Communicates the purchase request rejection.",
+        "areaReviewed": false
+      },
+      {
+        "id": "end_rejected",
+        "type": "end",
+        "label": "Process ends after rejection notification",
+        "roleId": null,
+        "evidence": "the employee is notified and the process ends.",
+        "systemId": null,
+        "execution": "unknown",
+        "humanDecision": null,
+        "systemEvidence": "",
+        "businessArea": "unknown",
+        "areaReason": "",
+        "areaReviewed": false
+      },
+      {
+        "id": "end_order_boundary",
+        "type": "end",
+        "label": "Unmapped boundary: After order placement",
+        "roleId": null,
+        "evidence": "",
+        "systemId": null,
+        "execution": "unknown",
+        "humanDecision": null,
+        "systemEvidence": "",
+        "businessArea": "unknown",
+        "areaReason": "",
+        "areaReviewed": false
+      }
+    ],
+    "edges": [
+      {
+        "from": "start",
+        "to": "submit_request",
+        "label": ""
+      },
+      {
+        "from": "submit_request",
+        "to": "approval",
+        "label": ""
+      },
+      {
+        "from": "approval",
+        "to": "place_order",
+        "label": "Approved"
+      },
+      {
+        "from": "approval",
+        "to": "notify_employee",
+        "label": "Rejected"
+      },
+      {
+        "from": "place_order",
+        "to": "end_order_boundary",
+        "label": ""
+      },
+      {
+        "from": "notify_employee",
+        "to": "end_rejected",
+        "label": ""
+      }
+    ],
+    "questions": [
+      {
+        "id": "q_reviewer",
+        "kind": "role",
+        "text": "Who reviews the purchase request and decides whether to approve or reject it?",
+        "nodeIds": [
+          "approval"
+        ]
+      },
+      {
+        "id": "q_approval_rule",
+        "kind": "decision_rule",
+        "text": "What rule determines whether the purchase request is approved or rejected?",
+        "nodeIds": [
+          "approval"
+        ]
+      },
+      {
+        "id": "q_notification_owner",
+        "kind": "role",
+        "text": "Who notifies the employee when the purchase request is rejected?",
+        "nodeIds": [
+          "notify_employee"
+        ]
+      },
+      {
+        "id": "q_after_order",
+        "kind": "missing_step",
+        "text": "What happens after the buyer places the order, or does this process end there?",
+        "nodeIds": [
+          "end_order_boundary"
+        ]
+      }
+    ],
+    "notes": [
+      "Reviewable as-is draft based on the supplied source; no human approval is implied.",
+      "The source does not identify systems used or how tasks are executed. Supplied registry entries are retained without assigning them to tasks."
+    ],
+    "systems": [
+      {
+        "id": "sys_25pf",
+        "label": "ERP"
+      },
+      {
+        "id": "sys_247y",
+        "label": "CRM"
+      },
+      {
+        "id": "sys_rmkpt2",
+        "label": "Directo"
+      },
+      {
+        "id": "sys_1lpy9j",
+        "label": "Excel"
+      },
+      {
+        "id": "sys_hg5asr",
+        "label": "Merit Palk"
+      }
+    ],
+    "source": "An employee submits a purchase request. If approved, the buyer places the order. If rejected, the employee is notified and the process ends. The reviewer and approval rule are not specified.",
+    "version": 6,
+    "origin": "model-api",
+    "reviewed": false,
+    "changeSummary": "AI draft from process description"
+  },
+  "appVersion": "0.9",
+  "phase": "initial",
+  "businessAcceptance": "not-established"
+}

@@ -1,0 +1,168 @@
+{
+  "schemaVersion": "1.0",
+  "title": "Sales order fulfilment",
+  "mode": "as-is",
+  "roles": [
+    {
+      "id": "sales",
+      "label": "Sales"
+    },
+    {
+      "id": "finance",
+      "label": "Finance"
+    },
+    {
+      "id": "warehouse",
+      "label": "Warehouse"
+    },
+    {
+      "id": "logistics",
+      "label": "Logistics"
+    }
+  ],
+  "nodes": [
+    {
+      "id": "start",
+      "type": "start",
+      "label": "Order received",
+      "roleId": null,
+      "evidence": "",
+      "systemId": null,
+      "execution": "unknown",
+      "humanDecision": null,
+      "systemEvidence": ""
+    },
+    {
+      "id": "record",
+      "type": "activity",
+      "label": "Record sales order",
+      "roleId": "sales",
+      "evidence": "Sales records a sales order",
+      "systemId": "sys_2f5",
+      "execution": "automated",
+      "humanDecision": false,
+      "systemEvidence": "System: BC. Ausführung: Automatisch. Menschliche Entscheidung: Nein."
+    },
+    {
+      "id": "credit",
+      "type": "decision",
+      "label": "Credit approved?",
+      "roleId": "finance",
+      "evidence": "Finance checks customer credit",
+      "systemId": null,
+      "execution": "unknown",
+      "humanDecision": null,
+      "systemEvidence": ""
+    },
+    {
+      "id": "pick",
+      "type": "activity",
+      "label": "Pick and pack goods",
+      "roleId": "warehouse",
+      "evidence": "the warehouse picks and packs the goods",
+      "systemId": null,
+      "execution": "unknown",
+      "humanDecision": null,
+      "systemEvidence": ""
+    },
+    {
+      "id": "ship",
+      "type": "activity",
+      "label": "Ship goods",
+      "roleId": "logistics",
+      "evidence": "logistics ships them",
+      "systemId": null,
+      "execution": "unknown",
+      "humanDecision": null,
+      "systemEvidence": ""
+    },
+    {
+      "id": "confirm",
+      "type": "activity",
+      "label": "Confirm dispatch",
+      "roleId": "sales",
+      "evidence": "sales confirms dispatch",
+      "systemId": null,
+      "execution": "unknown",
+      "humanDecision": null,
+      "systemEvidence": ""
+    },
+    {
+      "id": "refuse",
+      "type": "activity",
+      "label": "Inform customer; close order",
+      "roleId": "sales",
+      "evidence": "sales informs the customer and closes the order",
+      "systemId": null,
+      "execution": "unknown",
+      "humanDecision": null,
+      "systemEvidence": ""
+    },
+    {
+      "id": "end",
+      "type": "end",
+      "label": "Process complete",
+      "roleId": null,
+      "evidence": "",
+      "systemId": null,
+      "execution": "unknown",
+      "humanDecision": null,
+      "systemEvidence": ""
+    }
+  ],
+  "edges": [
+    {
+      "from": "start",
+      "to": "record",
+      "label": ""
+    },
+    {
+      "from": "record",
+      "to": "credit",
+      "label": ""
+    },
+    {
+      "from": "credit",
+      "to": "pick",
+      "label": "Approved"
+    },
+    {
+      "from": "credit",
+      "to": "refuse",
+      "label": "Refused"
+    },
+    {
+      "from": "pick",
+      "to": "ship",
+      "label": ""
+    },
+    {
+      "from": "ship",
+      "to": "confirm",
+      "label": ""
+    },
+    {
+      "from": "confirm",
+      "to": "end",
+      "label": ""
+    },
+    {
+      "from": "refuse",
+      "to": "end",
+      "label": ""
+    }
+  ],
+  "questions": [],
+  "notes": [],
+  "systems": [
+    {
+      "id": "sys_2f5",
+      "label": "BC"
+    }
+  ],
+  "source": "Sales records a sales order. Finance checks customer credit. If credit is approved, the warehouse picks and packs the goods, logistics ships them and sales confirms dispatch. If credit is refused, sales informs the customer and closes the order.\nClarification: System card - Record sales order\nAnswer: System: BC. Ausführung: Automatisch. Menschliche Entscheidung: Nein.",
+  "version": 4,
+  "origin": "system-card",
+  "reviewed": false,
+  "changeSummary": "System card updated"
+}

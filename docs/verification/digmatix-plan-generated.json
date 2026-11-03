@@ -1,0 +1,440 @@
+{
+  "schemaVersion": "1.0",
+  "title": "Paljuriideid · Plan and approve",
+  "mode": "as-is",
+  "roles": [
+    {
+      "id": "buyer",
+      "label": "Buyer"
+    },
+    {
+      "id": "manager",
+      "label": "Purchasing manager"
+    },
+    {
+      "id": "sales",
+      "label": "Sales"
+    },
+    {
+      "id": "erp",
+      "label": "ERP system"
+    }
+  ],
+  "nodes": [
+    {
+      "id": "start",
+      "type": "start",
+      "label": "Purchase need planning",
+      "roleId": null,
+      "evidence": ""
+    },
+    {
+      "id": "need_type",
+      "type": "decision",
+      "label": "Routing rule unknown",
+      "roleId": null,
+      "evidence": "In addition to the usual replenishment, there are customer-specific orders."
+    },
+    {
+      "id": "stock_inputs",
+      "type": "activity",
+      "label": "Assess stock and demand",
+      "roleId": null,
+      "evidence": "We look at the existing stock in the ERP system, the quantities already reserved for customers, the sales forecast and previous sales."
+    },
+    {
+      "id": "minimum_stock",
+      "type": "decision",
+      "label": "Forecast stock below applicable minimum?",
+      "roleId": null,
+      "evidence": "We also have a minimum inventory level for some goods. If the forecasted stock level falls below that, there is a need to order more."
+    },
+    {
+      "id": "planning_boundary",
+      "type": "end",
+      "label": "Unmapped boundary: other replenishment criteria",
+      "roleId": null,
+      "evidence": ""
+    },
+    {
+      "id": "erp_recommendation",
+      "type": "activity",
+      "label": "Provide regular-goods purchase recommendation",
+      "roleId": "erp",
+      "evidence": "In the case of regular goods, we receive a purchase recommendation from the ERP"
+    },
+    {
+      "id": "sales_request",
+      "type": "activity",
+      "label": "Notify purchasing of customer-specific need",
+      "roleId": "sales",
+      "evidence": "the sales department notifies the purchase that the item needs to be sourced for a specific customer"
+    },
+    {
+      "id": "review_need",
+      "type": "activity",
+      "label": "Review purchase need",
+      "roleId": "buyer",
+      "evidence": "after the buyer has reviewed the need"
+    },
+    {
+      "id": "supplier_route",
+      "type": "decision",
+      "label": "New product or usual supplier unable to supply?",
+      "roleId": null,
+      "evidence": "If it is a new product or a conventional supplier cannot provide the goods"
+    },
+    {
+      "id": "request_quotes",
+      "type": "activity",
+      "label": "Request supplier offers",
+      "roleId": null,
+      "evidence": "we usually ask for an offer from one or more suppliers"
+    },
+    {
+      "id": "compare_offers",
+      "type": "activity",
+      "label": "Compare and select offer",
+      "roleId": "buyer",
+      "evidence": "The buyer compares the price, delivery time and other conditions and chooses a suitable offer."
+    },
+    {
+      "id": "create_order",
+      "type": "activity",
+      "label": "Create ERP purchase order",
+      "roleId": "buyer",
+      "evidence": "The buyer creates a purchase order in the ERP system."
+    },
+    {
+      "id": "price_differs",
+      "type": "decision",
+      "label": "ERP price differs from last agreed price?",
+      "roleId": null,
+      "evidence": "If the price in the system differs from the price last agreed with the supplier"
+    },
+    {
+      "id": "check_price",
+      "type": "activity",
+      "label": "Check correct price",
+      "roleId": "buyer",
+      "evidence": "the buyer must check which price is correct"
+    },
+    {
+      "id": "approval_route",
+      "type": "decision",
+      "label": "Smaller regular purchase or larger amount?",
+      "roleId": null,
+      "evidence": "Regular smaller purchases can be confirmed by the buyer himself. In the case of a larger amount, the order goes to the purchasing manager for approval."
+    },
+    {
+      "id": "buyer_confirms",
+      "type": "activity",
+      "label": "Confirm smaller regular purchase",
+      "roleId": "buyer",
+      "evidence": "Regular smaller purchases can be confirmed by the buyer himself."
+    },
+    {
+      "id": "manager_review",
+      "type": "decision",
+      "label": "Manager approval outcome?",
+      "roleId": "manager",
+      "evidence": "the order goes to the purchasing manager for approval"
+    },
+    {
+      "id": "return_comments",
+      "type": "activity",
+      "label": "Return order with review comment",
+      "roleId": "manager",
+      "evidence": "Then it goes back to the buyer. I usually add a comment that needs to be reviewed."
+    },
+    {
+      "id": "correct_order",
+      "type": "activity",
+      "label": "Correct and resubmit for approval",
+      "roleId": "buyer",
+      "evidence": "The buyer makes corrections and sends the order for approval again."
+    },
+    {
+      "id": "cancel_order",
+      "type": "activity",
+      "label": "Cancel unnecessary order",
+      "roleId": null,
+      "evidence": "Sometimes we also decide that it is not necessary to order this item at all. In this case, the order is canceled."
+    },
+    {
+      "id": "confirmed",
+      "type": "end",
+      "label": "Unmapped boundary: approved purchase order handoff",
+      "roleId": null,
+      "evidence": ""
+    },
+    {
+      "id": "cancelled",
+      "type": "end",
+      "label": "Order cancelled",
+      "roleId": null,
+      "evidence": "the order is canceled."
+    }
+  ],
+  "edges": [
+    {
+      "from": "start",
+      "to": "need_type",
+      "label": ""
+    },
+    {
+      "from": "need_type",
+      "to": "stock_inputs",
+      "label": "Regular replenishment"
+    },
+    {
+      "from": "need_type",
+      "to": "sales_request",
+      "label": "Customer-specific order"
+    },
+    {
+      "from": "stock_inputs",
+      "to": "minimum_stock",
+      "label": ""
+    },
+    {
+      "from": "minimum_stock",
+      "to": "erp_recommendation",
+      "label": "Below applicable minimum"
+    },
+    {
+      "from": "minimum_stock",
+      "to": "planning_boundary",
+      "label": "Not below minimum / no minimum assigned"
+    },
+    {
+      "from": "erp_recommendation",
+      "to": "review_need",
+      "label": ""
+    },
+    {
+      "from": "sales_request",
+      "to": "review_need",
+      "label": ""
+    },
+    {
+      "from": "review_need",
+      "to": "supplier_route",
+      "label": ""
+    },
+    {
+      "from": "supplier_route",
+      "to": "request_quotes",
+      "label": "Yes: usual offer-request route"
+    },
+    {
+      "from": "supplier_route",
+      "to": "create_order",
+      "label": "No: supplier and purchase terms known"
+    },
+    {
+      "from": "request_quotes",
+      "to": "compare_offers",
+      "label": ""
+    },
+    {
+      "from": "compare_offers",
+      "to": "create_order",
+      "label": ""
+    },
+    {
+      "from": "create_order",
+      "to": "price_differs",
+      "label": ""
+    },
+    {
+      "from": "price_differs",
+      "to": "check_price",
+      "label": "Yes"
+    },
+    {
+      "from": "price_differs",
+      "to": "approval_route",
+      "label": "No"
+    },
+    {
+      "from": "check_price",
+      "to": "approval_route",
+      "label": "Order ready"
+    },
+    {
+      "from": "approval_route",
+      "to": "buyer_confirms",
+      "label": "Smaller regular purchase"
+    },
+    {
+      "from": "approval_route",
+      "to": "manager_review",
+      "label": "Larger amount"
+    },
+    {
+      "from": "buyer_confirms",
+      "to": "confirmed",
+      "label": ""
+    },
+    {
+      "from": "manager_review",
+      "to": "confirmed",
+      "label": "Approved"
+    },
+    {
+      "from": "manager_review",
+      "to": "return_comments",
+      "label": "Not approved: revise"
+    },
+    {
+      "from": "return_comments",
+      "to": "correct_order",
+      "label": ""
+    },
+    {
+      "from": "correct_order",
+      "to": "manager_review",
+      "label": "Approval again"
+    },
+    {
+      "from": "manager_review",
+      "to": "cancel_order",
+      "label": "Item deemed unnecessary; decision authority unresolved"
+    },
+    {
+      "from": "cancel_order",
+      "to": "cancelled",
+      "label": ""
+    }
+  ],
+  "questions": [
+    {
+      "id": "q_need_owner",
+      "kind": "role",
+      "text": "Who determines the source of the initial purchase need?",
+      "nodeIds": [
+        "need_type"
+      ]
+    },
+    {
+      "id": "q_need_route",
+      "kind": "decision_rule",
+      "text": "How are regular replenishment and customer-specific needs distinguished or combined?",
+      "nodeIds": [
+        "need_type"
+      ]
+    },
+    {
+      "id": "q_stock_owner",
+      "kind": "role",
+      "text": "Who assesses stock, reservations and demand?",
+      "nodeIds": [
+        "stock_inputs"
+      ]
+    },
+    {
+      "id": "q_minimum_owner",
+      "kind": "role",
+      "text": "Who checks forecast stock against the applicable minimum?",
+      "nodeIds": [
+        "minimum_stock"
+      ]
+    },
+    {
+      "id": "q_other_replenishment",
+      "kind": "missing_step",
+      "text": "How does planning proceed when stock is not below the minimum or the goods have no minimum level?",
+      "nodeIds": [
+        "planning_boundary"
+      ]
+    },
+    {
+      "id": "q_supplier_owner",
+      "kind": "role",
+      "text": "Who determines whether a product is new or the usual supplier cannot supply it?",
+      "nodeIds": [
+        "supplier_route"
+      ]
+    },
+    {
+      "id": "q_quote_owner",
+      "kind": "role",
+      "text": "Who requests offers from candidate suppliers?",
+      "nodeIds": [
+        "request_quotes"
+      ]
+    },
+    {
+      "id": "q_price_owner",
+      "kind": "role",
+      "text": "Who identifies a difference between the ERP price and the last agreed price?",
+      "nodeIds": [
+        "price_differs"
+      ]
+    },
+    {
+      "id": "q_price_update",
+      "kind": "missing_step",
+      "text": "After checking a differing price, how is the order updated before approval?",
+      "nodeIds": [
+        "check_price"
+      ]
+    },
+    {
+      "id": "q_approval_owner",
+      "kind": "role",
+      "text": "Who routes the ready order to buyer confirmation or manager approval?",
+      "nodeIds": [
+        "approval_route"
+      ]
+    },
+    {
+      "id": "q_approval_amount",
+      "kind": "decision_rule",
+      "text": "What amount and conditions separate buyer confirmation from manager approval, including nonregular purchases?",
+      "nodeIds": [
+        "approval_route"
+      ]
+    },
+    {
+      "id": "q_cancel_owner",
+      "kind": "role",
+      "text": "Who cancels an unnecessary purchase order?",
+      "nodeIds": [
+        "cancel_order"
+      ]
+    },
+    {
+      "id": "q_cancel_authority",
+      "kind": "decision_rule",
+      "text": "Who decides an item is unnecessary, and where does that cancellation decision enter the approval flow?",
+      "nodeIds": [
+        "manager_review",
+        "cancel_order"
+      ]
+    },
+    {
+      "id": "q_approved_handoff",
+      "kind": "missing_step",
+      "text": "Who receives the approved order for sending to the supplier, and how is that handoff made?",
+      "nodeIds": [
+        "confirmed"
+      ]
+    }
+  ],
+  "notes": [
+    "Reviewable draft, not a human-approved process.",
+    "Scope: purchasing planning through approved purchase order handoff or stated cancellation. Supplier confirmation, delivery tracking, receipt, closing, invoice checking and payment are outside this view.",
+    "The ERP recommendation is partial; the buyer reviews it rather than automatically sending recommended quantities. Forecast changes, discontinued goods, supplier minimum quantities and package sizes inform that review.",
+    "Minimum inventory levels apply only to some goods. Other replenishment criteria and their continuation are not specified.",
+    "Most products have a master supplier in the ERP. Order creation requires the supplier and purchase terms to be known. Offer requests for new products or unavailable usual suppliers are described as the usual practice, not an exception-free rule.",
+    "The cancellation option is placed beside approval outcomes to preserve this view, but the source does not establish exclusive manager authority or the exact cancellation entry point.",
+    "Approved orders are subsequently sent to suppliers, usually by email and sometimes electronically. The sender and handoff are unspecified and remain outside this view."
+  ],
+  "source": "Example 2\r\nCompany name: Paljuriideid OÜ\r\nActivity: Wholesale and retail trade\r\nSample interview: the buying process of a trading company\r\nInterviewer: Please describe how you go through the process of buying goods. Let's start with how you decide what and how much you need to order.\r\nPurchasing manager: For us, the purchasing process actually starts with planning the need. We buy most of the assortment in stock for regular sales. We look at the existing stock in the ERP system, the quantities already reserved for customers, the sales forecast and previous sales. We also have a minimum inventory level for some goods. If the forecasted stock level falls below that, there is a need to order more.\r\nIn addition to the usual replenishment, there are customer-specific orders. For example, sales may receive an order from a customer for an item that we don't usually have in stock. In this case, the sales department notifies the purchase that the item needs to be sourced for a specific customer.\r\nInterviewer: Does ERP automatically give you a recommendation on how much to order?\r\nPurchasing manager: Partially. In the case of regular goods, we receive a purchase recommendation from the ERP, but the buyer still reviews it. We do not automatically send all the quantities recommended by the system to the supplier. For example, the buyer may know that next month's sales will be higher than usual or, conversely, that some goods are about to be discontinued. The supplier's minimum order quantities and package sizes must also be taken into account.\r\nInterviewer: What happens after the buyer has reviewed the need?\r\nPurchasing manager: First of all, it must be clear from which supplier to buy the goods. Most products have a master supplier assigned in the ERP. Once the supplier and the terms of purchase are known, the buyer can start creating a purchase order.\r\nIf it is a new product or a conventional supplier cannot provide the goods, we usually ask for an offer from one or more suppliers. The buyer compares the price, delivery time and other conditions and chooses a suitable offer.\r\nInterviewer: How does a buy order come about?\r\nPurchasing manager: The buyer creates a purchase order in the ERP system. The supplier, products, quantities, agreed prices and the desired delivery time go there. If the price in the system differs from the price last agreed with the supplier, the buyer must check which price is correct.\r\nWhen the order is ready, further action depends on the amount of the order. Regular smaller purchases can be confirmed by the buyer himself. In the case of a larger amount, the order goes to the purchasing manager for approval.\r\nInterviewer: What happens if you don't confirm the order?\r\nPurchasing manager: Then it goes back to the buyer. I usually add a comment that needs to be reviewed. For example, the quantity may be too high or the price may not meet the agreed conditions. The buyer makes corrections and sends the order for approval again.\r\nSometimes we also decide that it is not necessary to order this item at all. In this case, the order is canceled.\r\nInterviewer: Let's  say the order is confirmed. What happens next?\r\nPurchase manager: The purchase order is sent to the supplier, usually by e-mail. With some larger suppliers, orders are forwarded electronically, but not all of them have this option.\r\nThe supplier sends us an order confirmation. The confirmation can include quantities, prices, and an estimated delivery date.\r\nInterviewer: Does anyone compare the supplier's confirmation with your order?\r\nPurchasing Manager: Yes, the buyer should check on this. The most important are the quantities, prices, and delivery date.\r\nIf everything matches the order, the buyer enters the confirmed delivery time in the ERP. If the supplier says, for example, that it is not possible to deliver the entire quantity or the delivery time is longer, the buyer must decide what to do next.\r\nInterviewer: So what are the options?\r\nPurchasing Manager: It depends on the situation. If the delivery time is a bit longer and the goods are not critical, we can simply accept the new delivery time. If the goods are urgently needed, the buyer will ask if the supplier can make a partial delivery.\r\nIf this is not suitable either, we can look for an alternative supplier. If it is a product ordered for the customer, the buyer or sales will negotiate with the customer whether the customer is ready to accept a later delivery time.\r\nInterviewer: How do you know when the goods will actually arrive?\r\nPurchase manager: The supplier's confirmed delivery time must be in the ERP next to the purchase order. Buyers keep track of approaching and late purchase orders. If the goods should have already arrived but have not arrived, the buyer contacts the supplier and asks for new delivery information.\r\nInterviewer: Will the warehouse be notified in advance that the goods will arrive?\r\nPurchasing manager: In the case of larger deliveries, definitely. If the exact time of arrival is known or, for example, several pallets of goods arrive, the warehouse informs the buyer. In the case of regular deliveries, the warehouse sees the expected purchase orders from the ERP.\r\nInterviewer: What happens when the goods physically arrive?\r\nPurchasing manager: The goods are first taken to the receiving area. The warehouse worker finds the corresponding purchase order in the ERP and checks the shipment against the supplier's waybill and purchase order.\r\nIt is checked whether the correct goods and the right quantity have arrived. We also have goods for which you need to look at the batch or expiration date, for example.\r\nIf everything is in order, the warehouse worker registers the receipt of the goods in the ERP and the goods go to the warehouse.\r\nInterviewer: What if the quantity doesn't match the order?\r\nPurchasing manager: In this case, only the quantity that actually arrived is recorded. If the supplier promised to ship the remaining quantity later, the rest of the order remains open. If the supplier no longer delivers it, the buyer must adjust the remaining quantity of the order.\r\nInterviewer: What happens if the wrong or damaged goods arrive?\r\nPurchasing Manager: It should not be accepted as normal goods in the warehouse. The warehouse worker informs the buyer and the goods are separated from the rest of the goods. The buyer contacts the supplier and it is agreed whether the supplier will send a replacement item, return the item or make some other arrangement.\r\nInterviewer: When does this part of the buying process end for you?\r\nPurchasing manager: From the point of view of the goods, when the ordered goods have been received correctly, the receipt has been registered in the ERP and the goods are in stock for further use or sale. If it was a customer-based purchase, the sales must also know about it so that the customer's order can be continued.\r\nChecking the invoice and paying the supplier is already the next part of the process, which is mainly done by the finance department.",
+  "version": 2,
+  "origin": "model-api",
+  "reviewed": false,
+  "changeSummary": "AI draft from process description"
+}

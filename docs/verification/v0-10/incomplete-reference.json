@@ -1,0 +1,10 @@
+{
+  "id": "incomplete",
+  "title": "Synthetic incomplete purchasing control",
+  "reference": [
+    "Unknown reviewer and approval rule remain questions; do not invent an amount or manager.",
+    "Purchase request/order are purchasing functions.",
+    "Approval branch has no stated continuation after order placement; retain an explicit unmapped boundary.",
+    "The notified employee receives the notice; do not assign an unspecified sender's action to the recipient."
+  ]
+}

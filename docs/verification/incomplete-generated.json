@@ -1,0 +1,139 @@
+{
+  "schemaVersion": "1.0",
+  "title": "Purchase request approval",
+  "mode": "as-is",
+  "roles": [],
+  "nodes": [
+    {
+      "id": "start",
+      "type": "start",
+      "label": "Request process begins",
+      "roleId": null,
+      "evidence": ""
+    },
+    {
+      "id": "submit_request",
+      "type": "activity",
+      "label": "Submit purchase request",
+      "roleId": null,
+      "evidence": "A purchase request is submitted."
+    },
+    {
+      "id": "check_request",
+      "type": "activity",
+      "label": "Check request",
+      "roleId": null,
+      "evidence": "It is checked"
+    },
+    {
+      "id": "approval_decision",
+      "type": "decision",
+      "label": "Approved?",
+      "roleId": null,
+      "evidence": "either approved or returned for correction"
+    },
+    {
+      "id": "return_correction",
+      "type": "activity",
+      "label": "Return for correction",
+      "roleId": null,
+      "evidence": "returned for correction"
+    },
+    {
+      "id": "approved_boundary",
+      "type": "end",
+      "label": "Unmapped boundary after approval",
+      "roleId": null,
+      "evidence": ""
+    },
+    {
+      "id": "correction_boundary",
+      "type": "end",
+      "label": "Unmapped boundary after return for correction",
+      "roleId": null,
+      "evidence": ""
+    }
+  ],
+  "edges": [
+    {
+      "from": "start",
+      "to": "submit_request",
+      "label": ""
+    },
+    {
+      "from": "submit_request",
+      "to": "check_request",
+      "label": ""
+    },
+    {
+      "from": "check_request",
+      "to": "approval_decision",
+      "label": ""
+    },
+    {
+      "from": "approval_decision",
+      "to": "approved_boundary",
+      "label": "Approved"
+    },
+    {
+      "from": "approval_decision",
+      "to": "return_correction",
+      "label": "Returned for correction"
+    },
+    {
+      "from": "return_correction",
+      "to": "correction_boundary",
+      "label": ""
+    }
+  ],
+  "questions": [
+    {
+      "id": "q_approval_role",
+      "kind": "role",
+      "text": "Who checks and decides whether the purchase request is approved or returned for correction?",
+      "nodeIds": [
+        "check_request",
+        "approval_decision"
+      ]
+    },
+    {
+      "id": "q_correction_next",
+      "kind": "missing_step",
+      "text": "What happens after a request is returned for correction?",
+      "nodeIds": [
+        "return_correction",
+        "correction_boundary"
+      ]
+    },
+    {
+      "id": "q_approval_next",
+      "kind": "missing_step",
+      "text": "What is the next step after approval?",
+      "nodeIds": [
+        "approved_boundary"
+      ]
+    },
+    {
+      "id": "q_unassigned_1",
+      "kind": "role",
+      "text": "Who is responsible for “Submit purchase request”?",
+      "nodeIds": [
+        "submit_request"
+      ]
+    },
+    {
+      "id": "q_unassigned_2",
+      "kind": "role",
+      "text": "Who is responsible for “Return for correction”?",
+      "nodeIds": [
+        "return_correction"
+      ]
+    }
+  ],
+  "notes": [],
+  "source": "A purchase request is submitted. It is checked and either approved or returned for correction. The next step after approval is not described.",
+  "version": 2,
+  "origin": "model-api",
+  "reviewed": false,
+  "changeSummary": "AI draft from process description"
+}

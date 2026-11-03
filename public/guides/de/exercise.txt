@@ -1,0 +1,53 @@
+Serviceanfrage beschreiben
+
+Der Kunde sendet eine Serviceanfrage per E-Mail. Die Servicekoordination erfasst die Anfrage und prüft, ob Adresse und Kontaktdaten vollständig sind. Fehlen Angaben, fragt sie beim Kunden nach und prüft erneut. Sind alle Angaben vollständig, sendet sie ein Angebot. Bei Annahme wird ein Termin vereinbart. Bei Ablehnung erfasst die Servicekoordination den Grund.
+
+Diagramm erstellen
+
+Anfrage erhalten → Erfassen → Angaben prüfen → Angebot senden → Kundenentscheidung
+
+Offene Punkte klären
+
+Wer vereinbart den Termin? → Die Servicekoordination.
+Was folgt nach einer Ablehnung? → Die Servicekoordination schließt die Anfrage ohne Termin ab.
+
+Schritte und Rollen prüfen
+
+Annahme → Termin vereinbaren → Ende
+Ablehnung → Grund erfassen → Anfrage schließen
+
+Erste Änderung anfordern
+
+Fügen Sie nach dem Erfassen und vor der Prüfung den Schritt „Eingang binnen eines Werktags bestätigen“ ein. Zuständig ist die Servicekoordination. Behalten Sie alle vorhandenen Zweige bei.
+
+Exportieren und Prozesskarte anlegen
+
+JSON exportieren → Diagramm im Konto speichern
+Kartentitel: Serviceanfrage · Übungsbeispiel
+
+Kundenrückmeldung vorbereiten
+
+Schritt: Termin vereinbaren
+Übungsrolle: Kunde
+
+Vorschlag formulieren
+
+Titel: Termin bestätigen
+Problem: Der Kunde erhält keine schriftliche Bestätigung.
+Vorschlag: Datum, Zeitfenster und Kontaktdaten per E-Mail senden.
+Nutzen: Weniger versäumte Termine und Rückfragen.
+
+Vorschlag prüfen und entscheiden
+
+Entscheidung: Genehmigen
+Begründung: Eine schriftliche Bestätigung macht den Termin nachvollziehbar.
+Rückmeldung: Vielen Dank. Wir ergänzen eine Bestätigung per E-Mail.
+
+Änderung auf derselben Karte umsetzen
+
+Fügen Sie nach „Termin vereinbaren“ den Schritt „Terminbestätigung senden“ ein. Die Servicekoordination sendet Datum, Zeitfenster und Kontaktdaten. Behalten Sie den übrigen Ablauf bei.
+
+Ergebnis kontrollieren und sichern
+
+Termin vereinbaren → Terminbestätigung senden → Ende
+Verlauf: Vorschlag → Entscheidung → Umsetzung

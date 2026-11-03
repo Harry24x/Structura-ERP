@@ -1,0 +1,337 @@
+{
+  "schemaVersion": "1.0",
+  "title": "Põllukuld · Supplier 1 · current receipt",
+  "mode": "as-is",
+  "roles": [
+    {
+      "id": "driver",
+      "label": "Driver"
+    },
+    {
+      "id": "accountant",
+      "label": "Accountant"
+    }
+  ],
+  "nodes": [
+    {
+      "id": "start",
+      "type": "start",
+      "label": "Supplier 1 goods arrive",
+      "roleId": null,
+      "evidence": ""
+    },
+    {
+      "id": "paper_slip",
+      "type": "activity",
+      "label": "Give warehouse paper packing slip",
+      "roleId": "driver",
+      "evidence": "upon the arrival of the goods, the driver gives the warehouse a paper packing slip"
+    },
+    {
+      "id": "compare_excel",
+      "type": "activity",
+      "label": "Compare packing slip with Excel order",
+      "roleId": null,
+      "evidence": "the packing slip is compared with the order created in Excel"
+    },
+    {
+      "id": "manual_check",
+      "type": "activity",
+      "label": "Count and check goods manually",
+      "roleId": null,
+      "evidence": "The goods are counted and checked manually on the basis of paper documents."
+    },
+    {
+      "id": "quantity_differs",
+      "type": "decision",
+      "label": "Quantity differs from order?",
+      "roleId": null,
+      "evidence": "If the goods arrive more or less than ordered, the actual quantity will be accepted."
+    },
+    {
+      "id": "accept_actual",
+      "type": "activity",
+      "label": "Accept actual received quantity",
+      "roleId": null,
+      "evidence": "the actual quantity will be accepted"
+    },
+    {
+      "id": "email_difference",
+      "type": "activity",
+      "label": "Email supplier about difference",
+      "roleId": null,
+      "evidence": "The supplier will be informed of the difference by e-mail."
+    },
+    {
+      "id": "condition",
+      "type": "decision",
+      "label": "Packaging or item damaged?",
+      "roleId": null,
+      "evidence": "If the packaging is broken or the item is otherwise damaged"
+    },
+    {
+      "id": "credit_claim",
+      "type": "activity",
+      "label": "Send supplier credit claim",
+      "roleId": null,
+      "evidence": "a credit claim will be sent to the supplier"
+    },
+    {
+      "id": "damage_boundary",
+      "type": "end",
+      "label": "Unmapped boundary: disposition after credit claim",
+      "roleId": null,
+      "evidence": ""
+    },
+    {
+      "id": "store",
+      "type": "activity",
+      "label": "Store goods",
+      "roleId": null,
+      "evidence": "then the goods are stored"
+    },
+    {
+      "id": "batch_exists",
+      "type": "decision",
+      "label": "Same item already present?",
+      "roleId": null,
+      "evidence": "If the same item is present, the older batch is moved forward and the new batch is placed backwards."
+    },
+    {
+      "id": "rotate_batch",
+      "type": "activity",
+      "label": "Move older batch forward and newer batch back",
+      "roleId": null,
+      "evidence": "the older batch is moved forward and the new batch is placed backwards"
+    },
+    {
+      "id": "erp_entry",
+      "type": "activity",
+      "label": "Make necessary ERP entries",
+      "roleId": "accountant",
+      "evidence": "the necessary ERP transactions are made by the accountant"
+    },
+    {
+      "id": "end",
+      "type": "end",
+      "label": "Mapped receipt and ERP follow-up complete",
+      "roleId": null,
+      "evidence": ""
+    }
+  ],
+  "edges": [
+    {
+      "from": "start",
+      "to": "paper_slip",
+      "label": ""
+    },
+    {
+      "from": "paper_slip",
+      "to": "compare_excel",
+      "label": ""
+    },
+    {
+      "from": "compare_excel",
+      "to": "manual_check",
+      "label": ""
+    },
+    {
+      "from": "manual_check",
+      "to": "quantity_differs",
+      "label": ""
+    },
+    {
+      "from": "quantity_differs",
+      "to": "accept_actual",
+      "label": "More or less than ordered"
+    },
+    {
+      "from": "quantity_differs",
+      "to": "condition",
+      "label": "Matches order"
+    },
+    {
+      "from": "accept_actual",
+      "to": "email_difference",
+      "label": ""
+    },
+    {
+      "from": "email_difference",
+      "to": "condition",
+      "label": ""
+    },
+    {
+      "from": "condition",
+      "to": "credit_claim",
+      "label": "Damaged"
+    },
+    {
+      "from": "credit_claim",
+      "to": "damage_boundary",
+      "label": ""
+    },
+    {
+      "from": "condition",
+      "to": "store",
+      "label": "Intact"
+    },
+    {
+      "from": "store",
+      "to": "batch_exists",
+      "label": ""
+    },
+    {
+      "from": "batch_exists",
+      "to": "rotate_batch",
+      "label": "Yes"
+    },
+    {
+      "from": "batch_exists",
+      "to": "erp_entry",
+      "label": "No"
+    },
+    {
+      "from": "rotate_batch",
+      "to": "erp_entry",
+      "label": ""
+    },
+    {
+      "from": "erp_entry",
+      "to": "end",
+      "label": ""
+    }
+  ],
+  "questions": [
+    {
+      "id": "q_checks_owner",
+      "kind": "role",
+      "text": "Who compares the packing slip with the Excel order?",
+      "nodeIds": [
+        "compare_excel"
+      ]
+    },
+    {
+      "id": "q_manual_owner",
+      "kind": "role",
+      "text": "Who manually counts and checks the goods?",
+      "nodeIds": [
+        "manual_check"
+      ]
+    },
+    {
+      "id": "q_quantity_owner",
+      "kind": "role",
+      "text": "Who determines whether the received quantity differs from the order?",
+      "nodeIds": [
+        "quantity_differs"
+      ]
+    },
+    {
+      "id": "q_condition_owner",
+      "kind": "role",
+      "text": "Who visually checks whether packaging or goods are damaged?",
+      "nodeIds": [
+        "condition"
+      ]
+    },
+    {
+      "id": "q_actual_owner",
+      "kind": "role",
+      "text": "Who accepts the actual received quantity?",
+      "nodeIds": [
+        "accept_actual"
+      ]
+    },
+    {
+      "id": "q_difference_owner",
+      "kind": "role",
+      "text": "Who emails the supplier about the quantity difference?",
+      "nodeIds": [
+        "email_difference"
+      ]
+    },
+    {
+      "id": "q_claim_owner",
+      "kind": "role",
+      "text": "Who sends the supplier credit claim?",
+      "nodeIds": [
+        "credit_claim"
+      ]
+    },
+    {
+      "id": "q_storage_owner",
+      "kind": "role",
+      "text": "Who stores the goods?",
+      "nodeIds": [
+        "store"
+      ]
+    },
+    {
+      "id": "q_batch_owner",
+      "kind": "role",
+      "text": "Who checks whether the same item is already present?",
+      "nodeIds": [
+        "batch_exists"
+      ]
+    },
+    {
+      "id": "q_rotation_owner",
+      "kind": "role",
+      "text": "Who moves the older and newer batches into position?",
+      "nodeIds": [
+        "rotate_batch"
+      ]
+    },
+    {
+      "id": "q_damage_disposition",
+      "kind": "missing_step",
+      "text": "After the credit claim, are damaged goods held, stored, returned or handled another way?",
+      "nodeIds": [
+        "damage_boundary"
+      ]
+    },
+    {
+      "id": "q_timing",
+      "kind": "other",
+      "text": "What is the relative timing of quantity checks, visual checks, storage and accountant entries? These topics are described separately; their displayed relative order needs confirmation.",
+      "nodeIds": [
+        "manual_check",
+        "condition",
+        "store",
+        "erp_entry"
+      ]
+    },
+    {
+      "id": "q_receipt_recording",
+      "kind": "missing_step",
+      "text": "For Supplier 1, when and where are item, batch, quantity and best-before date recorded, and by whom?",
+      "nodeIds": [
+        "manual_check"
+      ]
+    },
+    {
+      "id": "q_erp_details",
+      "kind": "other",
+      "text": "Which ERP transactions does the accountant make for Supplier 1, and are they made after receipt or after order completion?",
+      "nodeIds": [
+        "erp_entry"
+      ]
+    }
+  ],
+  "notes": [
+    "Reviewable draft, not human-approved. Scope and the existing damaged-goods clarification boundary are retained.",
+    "Scope: Supplier 1 receipt, inspection, stock placement and accountant ERP follow-up. Other suppliers and own production are excluded. The advance Excel order is an input; upstream stock review and order preparation remain outside the retained view.",
+    "Supplier 1 checks include goods, batch, best-before date and quantity. General receipt practice includes manual counting, paper-document checks, visual inspection and recording item, batch, quantity and best-before date. Recording details need clarification.",
+    "The source states document comparison, checks and then storage for Supplier 1. Quantity-difference handling and quality control are described separately. Their precise relative timing remains unresolved; displayed ordering is for review, not a confirmed operational sequence.",
+    "Storage is a stated common continuation. Matching quantities and absence of an existing batch bypass only the corresponding conditional actions; no additional actions are inferred.",
+    "After a damage credit claim, physical disposition and continuation are unspecified. The unmapped boundary does not assert that the actual process ends there.",
+    "Accountants perform necessary ERP transactions after receipt or order completion; warehouse workers do not perform ERP transactions. The purchase-invoice entry specified for other suppliers is not attributed to Supplier 1.",
+    "Warehouse locations are established and arranged by handling speed across Warehouse 1 and Warehouse 2. Rare cross-docking and packaging accounting remain outside this retained view.",
+    "Future needs, excluded from current-process nodes: ERP purchase orders and visibility of ordered goods, electronic receipt and inspection against ERP orders, and more automated packaging-tax calculations."
+  ],
+  "source": "Example 1\r\nCompany: Põllukuld AS\r\nField of activity: Food industry\r\nSample: The process of receiving and storing goods\r\nNote: \"Need\" refers to the future need identified in the workshop and is not part of today's process.\r\n1. Receipt of goods\r\nToday's process\r\nWhen making purchase orders, the current stock of the goods is viewed.\r\nFor Supplier 1: \r\nthe order is prepared in advance in Excel;\r\nupon the arrival of the goods, the driver gives the warehouse a paper packing slip;\r\nthe packing slip is compared with the order created in Excel;\r\nin the warehouse, the goods, batch, best before date and quantity are checked;\r\nthen the goods are stored;\r\nIf the same item is present, the older batch is moved forward and the new batch is placed backwards.\r\nIn the case of goods arriving from other suppliers, there is no pre-created order in Excel: \r\nthe goods are inspected on the basis of the delivery note;\r\nthe goods received, batch, best before and quantity are marked on the consignment note;\r\nthe delivery note is forwarded to the accountant;\r\nthe accountant enters the information into the ERP as a purchase invoice.\r\nGoods arriving at the warehouse from our own production are not inspected upon receipt.\r\nNeed: It  must be possible to see the goods that have already been ordered in the ERP. For this, you want to start using purchase orders.\r\n2. Identification and inspection of the goods\r\nToday's process\r\nThe goods are counted and checked manually on the basis of paper documents.\r\nIf there is an order in Excel, it will be compared with the packing slip or delivery note provided by the driver.\r\nNeed: In the future, the receipt and inspection of goods will be carried out electronically and the received goods will be compared with the previously prepared order in the system.\r\n3. Handling of differences\r\nToday's process\r\nIf the goods arrive more or less than ordered, the actual quantity will be accepted.\r\nThe supplier will be informed of the difference by e-mail.\r\n4. Data recorded at the appointment\r\nUpon receipt of the goods, the following shall be recorded:\r\nmerchandise;\r\nbatch;\r\nquantity;\r\nBest before date.\r\n5. Quality Control\r\nToday's process\r\nUpon receipt of goods, it is visually checked whether the goods are intact.\r\nIf the packaging is broken or the item is otherwise damaged, a credit claim will be sent to the supplier.\r\n6. Making ERP entries\r\nToday's process\r\nWarehouse workers do not make ERP transactions themselves.\r\nAfter the goods have been received or the order has been completed, the necessary ERP transactions are made by the accountant.\r\n7. Storage of goods\r\nToday's process\r\nGoods have established specific locations in the warehouse.\r\nGoods are arranged according to their handling speed, i.e. how quickly they move through the warehouse.\r\nThe warehouse has two floors: Warehouse 1 and Warehouse 2.\r\nFor different batches of the same item, the older batch is placed forward and the newer batch is placed backward.\r\n8. Cross-docking\r\nToday's process\r\nForwarding of received goods directly to dispatch without intermediate storage is very rare.\r\n9. Packaging accounting\r\nToday's process\r\nHistorically, the packaging accompanying goods arriving from outside Estonia has been overweighed.\r\nBased on the received quantities, the taxable portion related to packaging is calculated in Excel.\r\nNeed: ERP must enable the calculation of the taxable portion related to packaging more automatically than before.\r\n10. Source documents for receipt of goods\r\nToday, the following documents are used for the receipt of goods:\r\nDelivery note;\r\npacking slip;\r\nAn order created in Excel.\r\nSummary of identified needs\r\nThree main future needs were identified in the workshop:\r\nImplementation of purchase orders in ERP\r\nThe ordered goods must be visible in the ERP even before the physical arrival of the goods.\r\nElectronic Goods Receipt and Control\r\nIt must be possible to check the received goods electronically against the purchase order in the ERP.\r\nAutomation of packaging accounting\r\nThe ERP must support a more automated calculation of the taxable portion related to packaging.",
+  "version": 2,
+  "origin": "model-api",
+  "reviewed": false,
+  "changeSummary": "AI draft from process description"
+}

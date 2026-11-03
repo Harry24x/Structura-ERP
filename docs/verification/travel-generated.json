@@ -1,0 +1,126 @@
+{
+  "schemaVersion": "1.0",
+  "title": "Travel request and approval",
+  "mode": "as-is",
+  "roles": [
+    {
+      "id": "employee",
+      "label": "Employee"
+    },
+    {
+      "id": "department_manager",
+      "label": "Department manager"
+    },
+    {
+      "id": "hr",
+      "label": "HR"
+    }
+  ],
+  "nodes": [
+    {
+      "id": "start",
+      "type": "start",
+      "label": "Travel request process begins",
+      "roleId": null,
+      "evidence": ""
+    },
+    {
+      "id": "submit_request",
+      "type": "activity",
+      "label": "Submit travel request",
+      "roleId": "employee",
+      "evidence": "An employee submits a travel request to the department manager."
+    },
+    {
+      "id": "check_dates",
+      "type": "activity",
+      "label": "Check date availability",
+      "roleId": "department_manager",
+      "evidence": "The department manager checks whether the requested dates are available."
+    },
+    {
+      "id": "dates_available",
+      "type": "decision",
+      "label": "Are the requested dates available?",
+      "roleId": "department_manager",
+      "evidence": "If the dates are available"
+    },
+    {
+      "id": "approve_request",
+      "type": "activity",
+      "label": "Approve request",
+      "roleId": "department_manager",
+      "evidence": "the department manager approves the request."
+    },
+    {
+      "id": "revise_dates",
+      "type": "activity",
+      "label": "Revise dates and resubmit request",
+      "roleId": "employee",
+      "evidence": "the employee revises the dates and resubmits the request to the department manager"
+    },
+    {
+      "id": "record_request",
+      "type": "activity",
+      "label": "Record approved request",
+      "roleId": "hr",
+      "evidence": "HR records the approved request."
+    },
+    {
+      "id": "end",
+      "type": "end",
+      "label": "Process complete",
+      "roleId": null,
+      "evidence": ""
+    }
+  ],
+  "edges": [
+    {
+      "from": "start",
+      "to": "submit_request",
+      "label": ""
+    },
+    {
+      "from": "submit_request",
+      "to": "check_dates",
+      "label": ""
+    },
+    {
+      "from": "check_dates",
+      "to": "dates_available",
+      "label": ""
+    },
+    {
+      "from": "dates_available",
+      "to": "approve_request",
+      "label": "Yes — dates available"
+    },
+    {
+      "from": "dates_available",
+      "to": "revise_dates",
+      "label": "No — dates not available"
+    },
+    {
+      "from": "revise_dates",
+      "to": "check_dates",
+      "label": "Resubmitted for same date check"
+    },
+    {
+      "from": "approve_request",
+      "to": "record_request",
+      "label": ""
+    },
+    {
+      "from": "record_request",
+      "to": "end",
+      "label": ""
+    }
+  ],
+  "questions": [],
+  "notes": [],
+  "source": "An employee submits a travel request to the department manager. The department manager checks whether the requested dates are available. If the dates are available, the department manager approves the request. If the dates are not available, the employee revises the dates and resubmits the request to the department manager for the same date check. After approval, HR records the approved request.",
+  "version": 2,
+  "origin": "model-api",
+  "reviewed": false,
+  "changeSummary": "AI draft from process description"
+}

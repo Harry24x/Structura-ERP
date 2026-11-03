@@ -1,0 +1,1031 @@
+{
+  "caseId": "interview",
+  "model": "gpt-6.1-sol",
+  "date": "2026-10-26",
+  "outcome": "validated_draft",
+  "error": "",
+  "draft": {
+    "schemaVersion": "1.0",
+    "title": "Paljuriideid OÜ — Purchasing goods through receipt into stock",
+    "mode": "as-is",
+    "roles": [
+      {
+        "id": "buyer",
+        "label": "Buyer"
+      },
+      {
+        "id": "purchasing_manager",
+        "label": "Purchasing manager"
+      },
+      {
+        "id": "supplier",
+        "label": "Supplier"
+      },
+      {
+        "id": "warehouse_worker",
+        "label": "Warehouse worker"
+      }
+    ],
+    "nodes": [
+      {
+        "id": "start",
+        "type": "start",
+        "label": "Purchasing need planning begins",
+        "roleId": null,
+        "evidence": "",
+        "systemId": null,
+        "execution": "unknown",
+        "humanDecision": null,
+        "systemEvidence": "",
+        "businessArea": "unknown",
+        "areaReason": "",
+        "areaReviewed": false
+      },
+      {
+        "id": "plan_need",
+        "type": "activity",
+        "label": "Review stock, reservations, forecasts and sales history",
+        "roleId": null,
+        "evidence": "We look at the existing stock in the ERP system, the quantities already reserved for customers, the sales forecast and previous sales.",
+        "systemId": "sys_25pf",
+        "execution": "assisted",
+        "humanDecision": null,
+        "systemEvidence": "We look at the existing stock in the ERP system",
+        "businessArea": "purchasing",
+        "areaReason": "Identifies replenishment requirements.",
+        "areaReviewed": false
+      },
+      {
+        "id": "review_need",
+        "type": "activity",
+        "label": "Review purchasing need and ERP recommendation",
+        "roleId": "buyer",
+        "evidence": "In the case of regular goods, we receive a purchase recommendation from the ERP, but the buyer still reviews it.",
+        "systemId": "sys_25pf",
+        "execution": "assisted",
+        "humanDecision": null,
+        "systemEvidence": "we receive a purchase recommendation from the ERP, but the buyer still reviews it",
+        "businessArea": "purchasing",
+        "areaReason": "Reviews proposed purchase quantities.",
+        "areaReviewed": false
+      },
+      {
+        "id": "supplier_route",
+        "type": "decision",
+        "label": "New product or conventional supplier unable to supply?",
+        "roleId": null,
+        "evidence": "If it is a new product or a conventional supplier cannot provide the goods, we usually ask for an offer from one or more suppliers.",
+        "systemId": null,
+        "execution": "unknown",
+        "humanDecision": null,
+        "systemEvidence": "",
+        "businessArea": "purchasing",
+        "areaReason": "Determines whether supplier sourcing is required.",
+        "areaReviewed": false
+      },
+      {
+        "id": "request_offers",
+        "type": "activity",
+        "label": "Request offers from suppliers",
+        "roleId": null,
+        "evidence": "we usually ask for an offer from one or more suppliers",
+        "systemId": null,
+        "execution": "unknown",
+        "humanDecision": null,
+        "systemEvidence": "",
+        "businessArea": "purchasing",
+        "areaReason": "Obtains supplier offers.",
+        "areaReviewed": false
+      },
+      {
+        "id": "choose_offer",
+        "type": "activity",
+        "label": "Compare conditions and choose an offer",
+        "roleId": "buyer",
+        "evidence": "The buyer compares the price, delivery time and other conditions and chooses a suitable offer.",
+        "systemId": null,
+        "execution": "unknown",
+        "humanDecision": true,
+        "systemEvidence": "The buyer compares the price, delivery time and other conditions and chooses a suitable offer.",
+        "businessArea": "purchasing",
+        "areaReason": "Selects a supplier offer.",
+        "areaReviewed": false
+      },
+      {
+        "id": "create_order",
+        "type": "activity",
+        "label": "Create purchase order",
+        "roleId": "buyer",
+        "evidence": "The buyer creates a purchase order in the ERP system.",
+        "systemId": "sys_25pf",
+        "execution": "assisted",
+        "humanDecision": null,
+        "systemEvidence": "The buyer creates a purchase order in the ERP system.",
+        "businessArea": "purchasing",
+        "areaReason": "Creates a supplier purchase order.",
+        "areaReviewed": false
+      },
+      {
+        "id": "price_difference",
+        "type": "decision",
+        "label": "System price differs from last agreed price?",
+        "roleId": null,
+        "evidence": "If the price in the system differs from the price last agreed with the supplier, the buyer must check which price is correct.",
+        "systemId": null,
+        "execution": "unknown",
+        "humanDecision": null,
+        "systemEvidence": "",
+        "businessArea": "purchasing",
+        "areaReason": "Checks purchase pricing consistency.",
+        "areaReviewed": false
+      },
+      {
+        "id": "check_price",
+        "type": "activity",
+        "label": "Check which purchase price is correct",
+        "roleId": "buyer",
+        "evidence": "the buyer must check which price is correct",
+        "systemId": null,
+        "execution": "unknown",
+        "humanDecision": null,
+        "systemEvidence": "",
+        "businessArea": "purchasing",
+        "areaReason": "Resolves a purchase price discrepancy.",
+        "areaReviewed": false
+      },
+      {
+        "id": "approval_route",
+        "type": "decision",
+        "label": "Order amount approval route",
+        "roleId": null,
+        "evidence": "Regular smaller purchases can be confirmed by the buyer himself. In the case of a larger amount, the order goes to the purchasing manager for approval.",
+        "systemId": null,
+        "execution": "unknown",
+        "humanDecision": null,
+        "systemEvidence": "",
+        "businessArea": "purchasing",
+        "areaReason": "Routes purchase orders for approval.",
+        "areaReviewed": false
+      },
+      {
+        "id": "buyer_confirm",
+        "type": "activity",
+        "label": "Confirm regular smaller purchase",
+        "roleId": "buyer",
+        "evidence": "Regular smaller purchases can be confirmed by the buyer himself.",
+        "systemId": null,
+        "execution": "unknown",
+        "humanDecision": true,
+        "systemEvidence": "Regular smaller purchases can be confirmed by the buyer himself.",
+        "businessArea": "purchasing",
+        "areaReason": "Authorizes a purchase order.",
+        "areaReviewed": false
+      },
+      {
+        "id": "manager_approval",
+        "type": "decision",
+        "label": "Approve, return for correction, or cancel?",
+        "roleId": "purchasing_manager",
+        "evidence": "In the case of a larger amount, the order goes to the purchasing manager for approval.",
+        "systemId": null,
+        "execution": "unknown",
+        "humanDecision": true,
+        "systemEvidence": "the order goes to the purchasing manager for approval",
+        "businessArea": "purchasing",
+        "areaReason": "Determines whether a larger purchase may proceed.",
+        "areaReviewed": false
+      },
+      {
+        "id": "correct_order",
+        "type": "activity",
+        "label": "Correct order and resubmit for approval",
+        "roleId": "buyer",
+        "evidence": "The buyer makes corrections and sends the order for approval again.",
+        "systemId": null,
+        "execution": "unknown",
+        "humanDecision": null,
+        "systemEvidence": "",
+        "businessArea": "purchasing",
+        "areaReason": "Revises a purchase order following approval feedback.",
+        "areaReviewed": false
+      },
+      {
+        "id": "cancel_order",
+        "type": "activity",
+        "label": "Cancel order",
+        "roleId": null,
+        "evidence": "In this case, the order is canceled.",
+        "systemId": null,
+        "execution": "unknown",
+        "humanDecision": null,
+        "systemEvidence": "",
+        "businessArea": "purchasing",
+        "areaReason": "Cancels an unnecessary purchase.",
+        "areaReviewed": false
+      },
+      {
+        "id": "cancelled",
+        "type": "end",
+        "label": "Order canceled",
+        "roleId": null,
+        "evidence": "In this case, the order is canceled.",
+        "systemId": null,
+        "execution": "unknown",
+        "humanDecision": null,
+        "systemEvidence": "",
+        "businessArea": "unknown",
+        "areaReason": "",
+        "areaReviewed": false
+      },
+      {
+        "id": "send_order",
+        "type": "activity",
+        "label": "Send purchase order to supplier",
+        "roleId": null,
+        "evidence": "The purchase order is sent to the supplier, usually by e-mail.",
+        "systemId": null,
+        "execution": "assisted",
+        "humanDecision": null,
+        "systemEvidence": "The purchase order is sent to the supplier, usually by e-mail.",
+        "businessArea": "purchasing",
+        "areaReason": "Communicates the purchase order to the supplier.",
+        "areaReviewed": false
+      },
+      {
+        "id": "supplier_confirmation",
+        "type": "activity",
+        "label": "Send order confirmation",
+        "roleId": "supplier",
+        "evidence": "The supplier sends us an order confirmation.",
+        "systemId": null,
+        "execution": "unknown",
+        "humanDecision": null,
+        "systemEvidence": "",
+        "businessArea": "purchasing",
+        "areaReason": "Provides confirmation of purchase terms.",
+        "areaReviewed": false
+      },
+      {
+        "id": "check_confirmation",
+        "type": "activity",
+        "label": "Compare confirmation quantities, prices and delivery date",
+        "roleId": "buyer",
+        "evidence": "Yes, the buyer should check on this. The most important are the quantities, prices, and delivery date.",
+        "systemId": null,
+        "execution": "unknown",
+        "humanDecision": null,
+        "systemEvidence": "",
+        "businessArea": "purchasing",
+        "areaReason": "Checks supplier confirmation against the purchase order.",
+        "areaReviewed": false
+      },
+      {
+        "id": "confirmation_matches",
+        "type": "decision",
+        "label": "Confirmation matches order?",
+        "roleId": "buyer",
+        "evidence": "If everything matches the order, the buyer enters the confirmed delivery time in the ERP. If the supplier says, for example, that it is not possible to deliver the entire quantity or the delivery time is longer, the buyer must decide what to do next.",
+        "systemId": null,
+        "execution": "unknown",
+        "humanDecision": true,
+        "systemEvidence": "the buyer must decide what to do next",
+        "businessArea": "purchasing",
+        "areaReason": "Determines whether confirmed purchase terms are acceptable.",
+        "areaReviewed": false
+      },
+      {
+        "id": "resolve_confirmation",
+        "type": "activity",
+        "label": "Decide how to handle changed supplier terms",
+        "roleId": "buyer",
+        "evidence": "the buyer must decide what to do next",
+        "systemId": null,
+        "execution": "unknown",
+        "humanDecision": true,
+        "systemEvidence": "the buyer must decide what to do next",
+        "businessArea": "purchasing",
+        "areaReason": "Determines a response to supply discrepancies.",
+        "areaReviewed": false
+      },
+      {
+        "id": "changed_terms_boundary",
+        "type": "end",
+        "label": "Unmapped boundary: Changed supplier terms resolution",
+        "roleId": null,
+        "evidence": "",
+        "systemId": null,
+        "execution": "unknown",
+        "humanDecision": null,
+        "systemEvidence": "",
+        "businessArea": "unknown",
+        "areaReason": "",
+        "areaReviewed": false
+      },
+      {
+        "id": "record_delivery",
+        "type": "activity",
+        "label": "Enter confirmed delivery time",
+        "roleId": "buyer",
+        "evidence": "the buyer enters the confirmed delivery time in the ERP",
+        "systemId": "sys_25pf",
+        "execution": "assisted",
+        "humanDecision": null,
+        "systemEvidence": "the buyer enters the confirmed delivery time in the ERP",
+        "businessArea": "purchasing",
+        "areaReason": "Maintains the supplier's confirmed delivery commitment.",
+        "areaReviewed": false
+      },
+      {
+        "id": "track_orders",
+        "type": "activity",
+        "label": "Track approaching and late purchase orders",
+        "roleId": "buyer",
+        "evidence": "Buyers keep track of approaching and late purchase orders.",
+        "systemId": null,
+        "execution": "unknown",
+        "humanDecision": null,
+        "systemEvidence": "",
+        "businessArea": "purchasing",
+        "areaReason": "Monitors purchase delivery progress.",
+        "areaReviewed": false
+      },
+      {
+        "id": "late_order",
+        "type": "decision",
+        "label": "Goods overdue and not arrived?",
+        "roleId": null,
+        "evidence": "If the goods should have already arrived but have not arrived, the buyer contacts the supplier and asks for new delivery information.",
+        "systemId": null,
+        "execution": "unknown",
+        "humanDecision": null,
+        "systemEvidence": "",
+        "businessArea": "purchasing",
+        "areaReason": "Identifies late supplier deliveries.",
+        "areaReviewed": false
+      },
+      {
+        "id": "chase_supplier",
+        "type": "activity",
+        "label": "Ask supplier for new delivery information",
+        "roleId": "buyer",
+        "evidence": "the buyer contacts the supplier and asks for new delivery information",
+        "systemId": null,
+        "execution": "unknown",
+        "humanDecision": null,
+        "systemEvidence": "",
+        "businessArea": "purchasing",
+        "areaReason": "Follows up an overdue purchase.",
+        "areaReviewed": false
+      },
+      {
+        "id": "receiving_area",
+        "type": "activity",
+        "label": "Take arriving goods to receiving area",
+        "roleId": null,
+        "evidence": "The goods are first taken to the receiving area.",
+        "systemId": null,
+        "execution": "unknown",
+        "humanDecision": null,
+        "systemEvidence": "",
+        "businessArea": "warehouse",
+        "areaReason": "Receives physical goods at the warehouse.",
+        "areaReviewed": false
+      },
+      {
+        "id": "check_shipment",
+        "type": "activity",
+        "label": "Find purchase order and check shipment",
+        "roleId": "warehouse_worker",
+        "evidence": "The warehouse worker finds the corresponding purchase order in the ERP and checks the shipment against the supplier's waybill and purchase order.",
+        "systemId": "sys_25pf",
+        "execution": "assisted",
+        "humanDecision": null,
+        "systemEvidence": "The warehouse worker finds the corresponding purchase order in the ERP",
+        "businessArea": "warehouse",
+        "areaReason": "Checks physical receipt against delivery and order documents.",
+        "areaReviewed": false
+      },
+      {
+        "id": "receipt_route",
+        "type": "decision",
+        "label": "Receipt check result",
+        "roleId": null,
+        "evidence": "If everything is in order, the warehouse worker registers the receipt of the goods in the ERP and the goods go to the warehouse.",
+        "systemId": null,
+        "execution": "unknown",
+        "humanDecision": null,
+        "systemEvidence": "",
+        "businessArea": "warehouse",
+        "areaReason": "Routes receipts according to goods and quantity discrepancies.",
+        "areaReviewed": false
+      },
+      {
+        "id": "register_receipt",
+        "type": "activity",
+        "label": "Register goods receipt",
+        "roleId": "warehouse_worker",
+        "evidence": "the warehouse worker registers the receipt of the goods in the ERP",
+        "systemId": "sys_25pf",
+        "execution": "assisted",
+        "humanDecision": null,
+        "systemEvidence": "the warehouse worker registers the receipt of the goods in the ERP",
+        "businessArea": "warehouse",
+        "areaReason": "Records goods received into inventory.",
+        "areaReviewed": false
+      },
+      {
+        "id": "put_in_stock",
+        "type": "activity",
+        "label": "Move received goods into stock",
+        "roleId": null,
+        "evidence": "the goods go to the warehouse",
+        "systemId": null,
+        "execution": "unknown",
+        "humanDecision": null,
+        "systemEvidence": "",
+        "businessArea": "warehouse",
+        "areaReason": "Places received goods into warehouse stock.",
+        "areaReviewed": false
+      },
+      {
+        "id": "stocked",
+        "type": "end",
+        "label": "Goods received, registered and in stock",
+        "roleId": null,
+        "evidence": "the ordered goods have been received correctly, the receipt has been registered in the ERP and the goods are in stock for further use or sale",
+        "systemId": null,
+        "execution": "unknown",
+        "humanDecision": null,
+        "systemEvidence": "",
+        "businessArea": "unknown",
+        "areaReason": "",
+        "areaReviewed": false
+      },
+      {
+        "id": "record_actual",
+        "type": "activity",
+        "label": "Record only the quantity actually received",
+        "roleId": null,
+        "evidence": "In this case, only the quantity that actually arrived is recorded.",
+        "systemId": null,
+        "execution": "unknown",
+        "humanDecision": null,
+        "systemEvidence": "",
+        "businessArea": "warehouse",
+        "areaReason": "Records actual receipt quantities.",
+        "areaReviewed": false
+      },
+      {
+        "id": "remaining_delivery",
+        "type": "decision",
+        "label": "Supplier will deliver remaining quantity?",
+        "roleId": null,
+        "evidence": "If the supplier promised to ship the remaining quantity later, the rest of the order remains open. If the supplier no longer delivers it, the buyer must adjust the remaining quantity of the order.",
+        "systemId": null,
+        "execution": "unknown",
+        "humanDecision": null,
+        "systemEvidence": "",
+        "businessArea": "purchasing",
+        "areaReason": "Determines treatment of the outstanding purchase quantity.",
+        "areaReviewed": false
+      },
+      {
+        "id": "open_order_boundary",
+        "type": "end",
+        "label": "Unmapped boundary: Remaining order open for later delivery",
+        "roleId": null,
+        "evidence": "the rest of the order remains open",
+        "systemId": null,
+        "execution": "unknown",
+        "humanDecision": null,
+        "systemEvidence": "",
+        "businessArea": "unknown",
+        "areaReason": "",
+        "areaReviewed": false
+      },
+      {
+        "id": "adjust_remainder",
+        "type": "activity",
+        "label": "Adjust remaining order quantity",
+        "roleId": "buyer",
+        "evidence": "the buyer must adjust the remaining quantity of the order",
+        "systemId": null,
+        "execution": "unknown",
+        "humanDecision": null,
+        "systemEvidence": "",
+        "businessArea": "purchasing",
+        "areaReason": "Updates the purchase quantity that will not be supplied.",
+        "areaReviewed": false
+      },
+      {
+        "id": "adjustment_boundary",
+        "type": "end",
+        "label": "Unmapped boundary: Remaining quantity adjusted",
+        "roleId": null,
+        "evidence": "",
+        "systemId": null,
+        "execution": "unknown",
+        "humanDecision": null,
+        "systemEvidence": "",
+        "businessArea": "unknown",
+        "areaReason": "",
+        "areaReviewed": false
+      },
+      {
+        "id": "notify_buyer",
+        "type": "activity",
+        "label": "Inform buyer of wrong or damaged goods",
+        "roleId": "warehouse_worker",
+        "evidence": "The warehouse worker informs the buyer",
+        "systemId": null,
+        "execution": "unknown",
+        "humanDecision": null,
+        "systemEvidence": "",
+        "businessArea": "warehouse",
+        "areaReason": "Reports a physical receipt exception.",
+        "areaReviewed": false
+      },
+      {
+        "id": "separate_goods",
+        "type": "activity",
+        "label": "Separate wrong or damaged goods",
+        "roleId": null,
+        "evidence": "the goods are separated from the rest of the goods",
+        "systemId": null,
+        "execution": "unknown",
+        "humanDecision": null,
+        "systemEvidence": "",
+        "businessArea": "warehouse",
+        "areaReason": "Segregates goods unsuitable for normal acceptance.",
+        "areaReviewed": false
+      },
+      {
+        "id": "agree_remedy",
+        "type": "activity",
+        "label": "Contact supplier and agree remedy",
+        "roleId": "buyer",
+        "evidence": "The buyer contacts the supplier and it is agreed whether the supplier will send a replacement item, return the item or make some other arrangement.",
+        "systemId": null,
+        "execution": "unknown",
+        "humanDecision": null,
+        "systemEvidence": "",
+        "businessArea": "purchasing",
+        "areaReason": "Agrees supplier handling of incorrect or damaged goods.",
+        "areaReviewed": false
+      },
+      {
+        "id": "remedy_boundary",
+        "type": "end",
+        "label": "Unmapped boundary: Supplier remedy agreed",
+        "roleId": null,
+        "evidence": "",
+        "systemId": null,
+        "execution": "unknown",
+        "humanDecision": null,
+        "systemEvidence": "",
+        "businessArea": "unknown",
+        "areaReason": "",
+        "areaReviewed": false
+      }
+    ],
+    "edges": [
+      {
+        "from": "start",
+        "to": "plan_need",
+        "label": ""
+      },
+      {
+        "from": "plan_need",
+        "to": "review_need",
+        "label": ""
+      },
+      {
+        "from": "review_need",
+        "to": "supplier_route",
+        "label": ""
+      },
+      {
+        "from": "supplier_route",
+        "to": "request_offers",
+        "label": "New product or conventional supplier unavailable"
+      },
+      {
+        "from": "supplier_route",
+        "to": "create_order",
+        "label": "Supplier and purchase terms known"
+      },
+      {
+        "from": "request_offers",
+        "to": "choose_offer",
+        "label": ""
+      },
+      {
+        "from": "choose_offer",
+        "to": "create_order",
+        "label": ""
+      },
+      {
+        "from": "create_order",
+        "to": "price_difference",
+        "label": ""
+      },
+      {
+        "from": "price_difference",
+        "to": "check_price",
+        "label": "Price differs"
+      },
+      {
+        "from": "price_difference",
+        "to": "approval_route",
+        "label": "No price difference"
+      },
+      {
+        "from": "check_price",
+        "to": "approval_route",
+        "label": "Order ready"
+      },
+      {
+        "from": "approval_route",
+        "to": "buyer_confirm",
+        "label": "Regular smaller purchase"
+      },
+      {
+        "from": "approval_route",
+        "to": "manager_approval",
+        "label": "Larger amount"
+      },
+      {
+        "from": "buyer_confirm",
+        "to": "send_order",
+        "label": ""
+      },
+      {
+        "from": "manager_approval",
+        "to": "send_order",
+        "label": "Approved"
+      },
+      {
+        "from": "manager_approval",
+        "to": "correct_order",
+        "label": "Not approved; corrections requested"
+      },
+      {
+        "from": "correct_order",
+        "to": "manager_approval",
+        "label": "Resubmitted"
+      },
+      {
+        "from": "manager_approval",
+        "to": "cancel_order",
+        "label": "Item no longer necessary"
+      },
+      {
+        "from": "cancel_order",
+        "to": "cancelled",
+        "label": ""
+      },
+      {
+        "from": "send_order",
+        "to": "supplier_confirmation",
+        "label": ""
+      },
+      {
+        "from": "supplier_confirmation",
+        "to": "check_confirmation",
+        "label": ""
+      },
+      {
+        "from": "check_confirmation",
+        "to": "confirmation_matches",
+        "label": ""
+      },
+      {
+        "from": "confirmation_matches",
+        "to": "record_delivery",
+        "label": "Matches order"
+      },
+      {
+        "from": "confirmation_matches",
+        "to": "resolve_confirmation",
+        "label": "Changed quantities, price or delivery"
+      },
+      {
+        "from": "resolve_confirmation",
+        "to": "changed_terms_boundary",
+        "label": ""
+      },
+      {
+        "from": "record_delivery",
+        "to": "track_orders",
+        "label": ""
+      },
+      {
+        "from": "track_orders",
+        "to": "late_order",
+        "label": ""
+      },
+      {
+        "from": "late_order",
+        "to": "chase_supplier",
+        "label": "Overdue and not arrived"
+      },
+      {
+        "from": "chase_supplier",
+        "to": "track_orders",
+        "label": "Continue tracking"
+      },
+      {
+        "from": "late_order",
+        "to": "receiving_area",
+        "label": "Not overdue; when goods arrive"
+      },
+      {
+        "from": "receiving_area",
+        "to": "check_shipment",
+        "label": ""
+      },
+      {
+        "from": "check_shipment",
+        "to": "receipt_route",
+        "label": ""
+      },
+      {
+        "from": "receipt_route",
+        "to": "register_receipt",
+        "label": "Everything in order"
+      },
+      {
+        "from": "receipt_route",
+        "to": "record_actual",
+        "label": "Quantity mismatch"
+      },
+      {
+        "from": "receipt_route",
+        "to": "notify_buyer",
+        "label": "Wrong or damaged goods"
+      },
+      {
+        "from": "register_receipt",
+        "to": "put_in_stock",
+        "label": ""
+      },
+      {
+        "from": "put_in_stock",
+        "to": "stocked",
+        "label": ""
+      },
+      {
+        "from": "record_actual",
+        "to": "remaining_delivery",
+        "label": ""
+      },
+      {
+        "from": "remaining_delivery",
+        "to": "open_order_boundary",
+        "label": "Remaining quantity promised later"
+      },
+      {
+        "from": "remaining_delivery",
+        "to": "adjust_remainder",
+        "label": "Remaining quantity will not be delivered"
+      },
+      {
+        "from": "adjust_remainder",
+        "to": "adjustment_boundary",
+        "label": ""
+      },
+      {
+        "from": "notify_buyer",
+        "to": "separate_goods",
+        "label": ""
+      },
+      {
+        "from": "separate_goods",
+        "to": "agree_remedy",
+        "label": ""
+      },
+      {
+        "from": "agree_remedy",
+        "to": "remedy_boundary",
+        "label": ""
+      }
+    ],
+    "questions": [
+      {
+        "id": "q_plan_owner",
+        "kind": "role",
+        "text": "Who reviews stock, reservations, forecasts and sales history during need planning?",
+        "nodeIds": [
+          "plan_need"
+        ]
+      },
+      {
+        "id": "q_supplier_route_owner",
+        "kind": "role",
+        "text": "Who determines whether a new product or supplier unavailability requires sourcing?",
+        "nodeIds": [
+          "supplier_route"
+        ]
+      },
+      {
+        "id": "q_offer_owner",
+        "kind": "role",
+        "text": "Who requests offers from suppliers?",
+        "nodeIds": [
+          "request_offers"
+        ]
+      },
+      {
+        "id": "q_price_owner",
+        "kind": "role",
+        "text": "Who detects a difference between the system price and the last agreed supplier price?",
+        "nodeIds": [
+          "price_difference"
+        ]
+      },
+      {
+        "id": "q_route_owner",
+        "kind": "role",
+        "text": "Who routes an order to buyer confirmation or purchasing-manager approval?",
+        "nodeIds": [
+          "approval_route"
+        ]
+      },
+      {
+        "id": "q_approval_threshold",
+        "kind": "decision_rule",
+        "text": "What amount or other criteria distinguish regular smaller purchases from larger purchases?",
+        "nodeIds": [
+          "approval_route"
+        ]
+      },
+      {
+        "id": "q_cancel_owner",
+        "kind": "role",
+        "text": "Who performs order cancellation after the decision not to purchase?",
+        "nodeIds": [
+          "cancel_order"
+        ]
+      },
+      {
+        "id": "q_send_owner",
+        "kind": "role",
+        "text": "Who sends the purchase order to the supplier?",
+        "nodeIds": [
+          "send_order"
+        ]
+      },
+      {
+        "id": "q_changed_terms",
+        "kind": "missing_step",
+        "text": "How are changed supplier terms resolved and returned to the main flow, including acceptance of delay, partial delivery, alternative sourcing and customer negotiation?",
+        "nodeIds": [
+          "changed_terms_boundary"
+        ]
+      },
+      {
+        "id": "q_late_owner",
+        "kind": "role",
+        "text": "Who determines that an expected delivery is overdue?",
+        "nodeIds": [
+          "late_order"
+        ]
+      },
+      {
+        "id": "q_receiving_owner",
+        "kind": "role",
+        "text": "Who takes arriving goods to the receiving area?",
+        "nodeIds": [
+          "receiving_area"
+        ]
+      },
+      {
+        "id": "q_receipt_owner",
+        "kind": "role",
+        "text": "Who determines the receipt-check result?",
+        "nodeIds": [
+          "receipt_route"
+        ]
+      },
+      {
+        "id": "q_receipt_priority",
+        "kind": "decision_rule",
+        "text": "How are receipts handled when both a quantity mismatch and wrong or damaged goods occur?",
+        "nodeIds": [
+          "receipt_route"
+        ]
+      },
+      {
+        "id": "q_stock_owner",
+        "kind": "role",
+        "text": "Who moves accepted goods into stock?",
+        "nodeIds": [
+          "put_in_stock"
+        ]
+      },
+      {
+        "id": "q_actual_owner",
+        "kind": "role",
+        "text": "Who records the quantity actually received when it differs from the order?",
+        "nodeIds": [
+          "record_actual"
+        ]
+      },
+      {
+        "id": "q_remaining_owner",
+        "kind": "role",
+        "text": "Who establishes whether the supplier will deliver the remaining quantity?",
+        "nodeIds": [
+          "remaining_delivery"
+        ]
+      },
+      {
+        "id": "q_open_continuation",
+        "kind": "missing_step",
+        "text": "How is a later delivery against the open remainder followed up and received, and how are already received goods put into stock?",
+        "nodeIds": [
+          "open_order_boundary"
+        ]
+      },
+      {
+        "id": "q_adjust_continuation",
+        "kind": "missing_step",
+        "text": "What follows adjustment of the remaining quantity, including stocking the goods already received?",
+        "nodeIds": [
+          "adjustment_boundary"
+        ]
+      },
+      {
+        "id": "q_separate_owner",
+        "kind": "role",
+        "text": "Who separates wrong or damaged goods from other goods?",
+        "nodeIds": [
+          "separate_goods"
+        ]
+      },
+      {
+        "id": "q_remedy_continuation",
+        "kind": "missing_step",
+        "text": "What steps implement replacement, return or another agreed remedy, and where does each return to the purchasing flow?",
+        "nodeIds": [
+          "remedy_boundary"
+        ]
+      },
+      {
+        "id": "q_customer_entry",
+        "kind": "missing_step",
+        "text": "Where does the sales department's notification of a customer-specific sourcing need join the purchasing flow?",
+        "nodeIds": [
+          "review_need"
+        ]
+      },
+      {
+        "id": "q_customer_notification",
+        "kind": "missing_step",
+        "text": "Who informs sales that customer-specific goods are available, and at what point relative to stock receipt?",
+        "nodeIds": [
+          "put_in_stock"
+        ]
+      },
+      {
+        "id": "q_advance_notice",
+        "kind": "other",
+        "text": "The source says the warehouse informs the buyer for larger deliveries. Is that direction correct, and where does this notification occur relative to order tracking and arrival?",
+        "nodeIds": [
+          "track_orders",
+          "receiving_area"
+        ]
+      }
+    ],
+    "notes": [
+      "Reviewable as-is draft, not a human-approved model. Scope ends at goods receipt into stock; invoice checking and supplier payment are explicitly described as the next process, mainly performed by Finance.",
+      "The main path follows regular replenishment. Customer-specific sourcing is described as a separate trigger: sales receives a customer order for an item not normally stocked and notifies purchasing. Its exact joining point is unresolved; no artificial second start path is drawn.",
+      "Planning considers minimum inventory levels for some goods. A forecasted stock level below that minimum creates a need to order more. ERP recommendations apply to regular goods; the buyer also considers expected sales changes, discontinuation, supplier minimum quantities and package sizes.",
+      "Most products have a master supplier assigned in ERP. The normal supplier route assumes the supplier and purchase terms are known; the source does not describe a separate supplier lookup activity.",
+      "Order details include supplier, products, quantities, agreed prices and desired delivery time. The source does not specify how a checked price is corrected.",
+      "The purchasing manager normally adds a comment when returning an order. Cancellation is stated as an alternative when the item is no longer needed; detailed cancellation criteria and execution ownership are not provided.",
+      "Orders are usually sent by e-mail; some larger suppliers receive orders electronically. No named e-mail product or electronic transmission system is given. The sending card reflects the usual assisted route, not an assertion of automation.",
+      "Changed-confirmation handling is summarized at an explicit boundary. Stated options are accepting a modest delay for noncritical goods, asking for partial delivery when goods are urgent, seeking an alternative supplier if unsuitable, and buyer or sales negotiating a later date with a customer for customer-specific goods. The source does not give complete outcomes or rejoining steps for these options.",
+      "The confirmed delivery time must be held in ERP against the purchase order. Order tracking is not assigned an ERP system card because the source does not explicitly state which tool buyers use for that activity.",
+      "Advance delivery coordination is not positioned in the flow because its sequence is unclear. The source explicitly says the warehouse informs the buyer when exact arrival time is known or several pallets arrive; this has not been reversed. For regular deliveries, the warehouse sees expected purchase orders in ERP.",
+      "Shipment checks cover correct goods and quantities, with batch or expiration-date checks for some goods. The exact goods requiring these checks are not specified.",
+      "Quantity discrepancies and wrong or damaged goods are shown as separate stated exception routes. Their overlap, handling of excess quantities, and final stocking or closure after an exception remain unresolved.",
+      "Sales must also know when customer-specific purchases are available so the customer order can continue. The notification owner and exact placement are unresolved rather than invented."
+    ],
+    "systems": [
+      {
+        "id": "sys_25pf",
+        "label": "ERP"
+      }
+    ],
+    "source": "Example 2\nCompany name: Paljuriideid OÜ\nActivity: Wholesale and retail trade\nSample interview: the buying process of a trading company\nInterviewer: Please describe how you go through the process of buying goods. Let's start with how you decide what and how much you need to order.\nPurchasing manager: For us, the purchasing process actually starts with planning the need. We buy most of the assortment in stock for regular sales. We look at the existing stock in the ERP system, the quantities already reserved for customers, the sales forecast and previous sales. We also have a minimum inventory level for some goods. If the forecasted stock level falls below that, there is a need to order more.\nIn addition to the usual replenishment, there are customer-specific orders. For example, sales may receive an order from a customer for an item that we don't usually have in stock. In this case, the sales department notifies the purchase that the item needs to be sourced for a specific customer.\nInterviewer: Does ERP automatically give you a recommendation on how much to order?\nPurchasing manager: Partially. In the case of regular goods, we receive a purchase recommendation from the ERP, but the buyer still reviews it. We do not automatically send all the quantities recommended by the system to the supplier. For example, the buyer may know that next month's sales will be higher than usual or, conversely, that some goods are about to be discontinued. The supplier's minimum order quantities and package sizes must also be taken into account.\nInterviewer: What happens after the buyer has reviewed the need?\nPurchasing manager: First of all, it must be clear from which supplier to buy the goods. Most products have a master supplier assigned in the ERP. Once the supplier and the terms of purchase are known, the buyer can start creating a purchase order.\nIf it is a new product or a conventional supplier cannot provide the goods, we usually ask for an offer from one or more suppliers. The buyer compares the price, delivery time and other conditions and chooses a suitable offer.\nInterviewer: How does a buy order come about?\nPurchasing manager: The buyer creates a purchase order in the ERP system. The supplier, products, quantities, agreed prices and the desired delivery time go there. If the price in the system differs from the price last agreed with the supplier, the buyer must check which price is correct.\nWhen the order is ready, further action depends on the amount of the order. Regular smaller purchases can be confirmed by the buyer himself. In the case of a larger amount, the order goes to the purchasing manager for approval.\nInterviewer: What happens if you don't confirm the order?\nPurchasing manager: Then it goes back to the buyer. I usually add a comment that needs to be reviewed. For example, the quantity may be too high or the price may not meet the agreed conditions. The buyer makes corrections and sends the order for approval again.\nSometimes we also decide that it is not necessary to order this item at all. In this case, the order is canceled.\nInterviewer: Let's  say the order is confirmed. What happens next?\nPurchase manager: The purchase order is sent to the supplier, usually by e-mail. With some larger suppliers, orders are forwarded electronically, but not all of them have this option.\nThe supplier sends us an order confirmation. The confirmation can include quantities, prices, and an estimated delivery date.\nInterviewer: Does anyone compare the supplier's confirmation with your order?\nPurchasing Manager: Yes, the buyer should check on this. The most important are the quantities, prices, and delivery date.\nIf everything matches the order, the buyer enters the confirmed delivery time in the ERP. If the supplier says, for example, that it is not possible to deliver the entire quantity or the delivery time is longer, the buyer must decide what to do next.\nInterviewer: So what are the options?\nPurchasing Manager: It depends on the situation. If the delivery time is a bit longer and the goods are not critical, we can simply accept the new delivery time. If the goods are urgently needed, the buyer will ask if the supplier can make a partial delivery.\nIf this is not suitable either, we can look for an alternative supplier. If it is a product ordered for the customer, the buyer or sales will negotiate with the customer whether the customer is ready to accept a later delivery time.\nInterviewer: How do you know when the goods will actually arrive?\nPurchase manager: The supplier's confirmed delivery time must be in the ERP next to the purchase order. Buyers keep track of approaching and late purchase orders. If the goods should have already arrived but have not arrived, the buyer contacts the supplier and asks for new delivery information.\nInterviewer: Will the warehouse be notified in advance that the goods will arrive?\nPurchasing manager: In the case of larger deliveries, definitely. If the exact time of arrival is known or, for example, several pallets of goods arrive, the warehouse informs the buyer. In the case of regular deliveries, the warehouse sees the expected purchase orders from the ERP.\nInterviewer: What happens when the goods physically arrive?\nPurchasing manager: The goods are first taken to the receiving area. The warehouse worker finds the corresponding purchase order in the ERP and checks the shipment against the supplier's waybill and purchase order.\nIt is checked whether the correct goods and the right quantity have arrived. We also have goods for which you need to look at the batch or expiration date, for example.\nIf everything is in order, the warehouse worker registers the receipt of the goods in the ERP and the goods go to the warehouse.\nInterviewer: What if the quantity doesn't match the order?\nPurchasing manager: In this case, only the quantity that actually arrived is recorded. If the supplier promised to ship the remaining quantity later, the rest of the order remains open. If the supplier no longer delivers it, the buyer must adjust the remaining quantity of the order.\nInterviewer: What happens if the wrong or damaged goods arrive?\nPurchasing Manager: It should not be accepted as normal goods in the warehouse. The warehouse worker informs the buyer and the goods are separated from the rest of the goods. The buyer contacts the supplier and it is agreed whether the supplier will send a replacement item, return the item or make some other arrangement.\nInterviewer: When does this part of the buying process end for you?\nPurchasing manager: From the point of view of the goods, when the ordered goods have been received correctly, the receipt has been registered in the ERP and the goods are in stock for further use or sale. If it was a customer-based purchase, the sales must also know about it so that the customer's order can be continued.\nChecking the invoice and paying the supplier is already the next part of the process, which is mainly done by the finance department.",
+    "version": 3,
+    "origin": "model-api",
+    "reviewed": false,
+    "changeSummary": "AI draft from process description"
+  },
+  "providerDurationRecorded": false,
+  "appVersion": "0.9",
+  "phase": "initial",
+  "businessAcceptance": "not-established"
+}

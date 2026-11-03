@@ -1,0 +1,308 @@
+{
+  "caseId": "transcript",
+  "model": "gpt-6.1-sol",
+  "date": "2026-10-26",
+  "appVersion": "0.10",
+  "phase": "targeted-retest",
+  "outcome": "validated_draft",
+  "businessAcceptance": "not-established",
+  "providerDurationRecorded": false,
+  "error": "",
+  "draft": {
+    "schemaVersion": "1.0",
+    "title": "Sales orders, shift planning and finished-goods picking — review draft",
+    "mode": "as-is",
+    "roles": [
+      {
+        "id": "role_sales",
+        "label": "Sales team"
+      },
+      {
+        "id": "role_margus",
+        "label": "Margus — Bakery Manager"
+      },
+      {
+        "id": "role_picker",
+        "label": "Picker"
+      }
+    ],
+    "nodes": [
+      {
+        "id": "start",
+        "type": "start",
+        "label": "Customer orders arrive",
+        "roleId": null,
+        "evidence": "Orders come",
+        "systemId": null,
+        "execution": "unknown",
+        "humanDecision": null,
+        "systemEvidence": "",
+        "businessArea": "unknown",
+        "areaReason": "",
+        "areaReviewed": false
+      },
+      {
+        "id": "handle_orders",
+        "type": "activity",
+        "label": "Process customer orders and enter order data",
+        "roleId": "role_sales",
+        "evidence": "Order information must be handled and data entered.",
+        "systemId": "sys_rmkpt2",
+        "execution": "assisted",
+        "humanDecision": null,
+        "systemEvidence": "To the customer's system, to Directo. It depends on the customer.",
+        "businessArea": "sales",
+        "areaReason": "Administrative processing of customer sales orders.",
+        "areaReviewed": false
+      },
+      {
+        "id": "review_shift_inputs",
+        "type": "activity",
+        "label": "Review orders and previous-shift progress",
+        "roleId": "role_margus",
+        "evidence": "I look at what the orders are, what the previous shift did and what was left undone.",
+        "systemId": null,
+        "execution": "unknown",
+        "humanDecision": null,
+        "systemEvidence": "",
+        "businessArea": "production",
+        "areaReason": "Reviews demand and unfinished production to prepare shift work.",
+        "areaReviewed": false
+      },
+      {
+        "id": "prepare_shift_list",
+        "type": "activity",
+        "label": "Prepare the shift production list",
+        "roleId": "role_margus",
+        "evidence": "We put this information together and basically a list goes to the shift.",
+        "systemId": "sys_1lpy9j",
+        "execution": "assisted",
+        "humanDecision": null,
+        "systemEvidence": "We prepare in Excel, but paper is also used in production.",
+        "businessArea": "production",
+        "areaReason": "Creates the production work list for a shift.",
+        "areaReviewed": false
+      },
+      {
+        "id": "produce_pies",
+        "type": "activity",
+        "label": "Produce pies in shifts",
+        "roleId": null,
+        "evidence": "Production works in several shifts and at the beginning of the shift, we put together what needs to be done.",
+        "systemId": null,
+        "execution": "unknown",
+        "humanDecision": null,
+        "systemEvidence": "",
+        "businessArea": "production",
+        "areaReason": "Manufactures the finished products.",
+        "areaReviewed": false
+      },
+      {
+        "id": "move_to_picking",
+        "type": "activity",
+        "label": "Move finished pies to the picking area",
+        "roleId": null,
+        "evidence": "They go to the picking area.",
+        "systemId": null,
+        "execution": "unknown",
+        "humanDecision": null,
+        "systemEvidence": "",
+        "businessArea": "warehouse",
+        "areaReason": "Moves finished goods into the picking area.",
+        "areaReviewed": false
+      },
+      {
+        "id": "pick_orders",
+        "type": "activity",
+        "label": "Pick batches and assemble customer orders",
+        "roleId": "role_picker",
+        "evidence": "From there, customer orders are already put together.",
+        "systemId": null,
+        "execution": "unknown",
+        "humanDecision": null,
+        "systemEvidence": "",
+        "businessArea": "warehouse",
+        "areaReason": "Selects finished goods to assemble customer orders.",
+        "areaReviewed": false
+      },
+      {
+        "id": "end_logistics_boundary",
+        "type": "end",
+        "label": "Unmapped boundary: finished-product logistics after picking",
+        "roleId": null,
+        "evidence": "",
+        "systemId": null,
+        "execution": "unknown",
+        "humanDecision": null,
+        "systemEvidence": "",
+        "businessArea": "unknown",
+        "areaReason": "",
+        "areaReviewed": false
+      }
+    ],
+    "edges": [
+      {
+        "from": "start",
+        "to": "handle_orders",
+        "label": ""
+      },
+      {
+        "from": "handle_orders",
+        "to": "review_shift_inputs",
+        "label": "Sales orders inform production planning"
+      },
+      {
+        "from": "review_shift_inputs",
+        "to": "prepare_shift_list",
+        "label": ""
+      },
+      {
+        "from": "prepare_shift_list",
+        "to": "produce_pies",
+        "label": "Shift work list"
+      },
+      {
+        "from": "produce_pies",
+        "to": "move_to_picking",
+        "label": "Pies are ready"
+      },
+      {
+        "from": "move_to_picking",
+        "to": "pick_orders",
+        "label": ""
+      },
+      {
+        "from": "pick_orders",
+        "to": "end_logistics_boundary",
+        "label": "Subsequent logistics not described"
+      }
+    ],
+    "questions": [
+      {
+        "id": "q_production_owner",
+        "kind": "role",
+        "text": "Which role performs the production work in each shift?",
+        "nodeIds": [
+          "produce_pies"
+        ]
+      },
+      {
+        "id": "q_movement_owner",
+        "kind": "role",
+        "text": "Who moves finished pies to the picking area?",
+        "nodeIds": [
+          "move_to_picking"
+        ]
+      },
+      {
+        "id": "q_logistics",
+        "kind": "missing_step",
+        "text": "What happens after customer orders are assembled, including transport planning, dispatch, shipping documents and confirmation of receipt?",
+        "nodeIds": [
+          "end_logistics_boundary"
+        ]
+      },
+      {
+        "id": "q_customer_entry",
+        "kind": "other",
+        "text": "For each customer arrangement, which order data is entered in the customer's system and Directo, and in what order?",
+        "nodeIds": [
+          "handle_orders"
+        ]
+      },
+      {
+        "id": "q_sequence_cleaning",
+        "kind": "missing_step",
+        "text": "Who determines the production sequence, which product transitions require equipment cleaning, and where does cleaning occur within shift execution?",
+        "nodeIds": [
+          "prepare_shift_list",
+          "produce_pies"
+        ]
+      },
+      {
+        "id": "q_batch_tracking",
+        "kind": "missing_step",
+        "text": "How and by whom are raw-material batches linked to finished-product batches during production?",
+        "nodeIds": [
+          "produce_pies"
+        ]
+      },
+      {
+        "id": "q_raw_material_quality",
+        "kind": "missing_step",
+        "text": "How do raw materials move physically and in the system from receipt through quality control to production, including sampling, laboratory referral, holding, release and supplier return?",
+        "nodeIds": [
+          "produce_pies"
+        ]
+      },
+      {
+        "id": "q_picking_exceptions",
+        "kind": "other",
+        "text": "How does the picker select a batch in practice, and what happens when older goods are found remaining after a newer batch was picked?",
+        "nodeIds": [
+          "pick_orders"
+        ]
+      },
+      {
+        "id": "q_costing_connection",
+        "kind": "missing_step",
+        "text": "Where do predicted and actual cost calculations connect to sales offers and production data, and who performs each calculation?",
+        "nodeIds": [
+          "handle_orders",
+          "produce_pies"
+        ]
+      },
+      {
+        "id": "q_store_flow",
+        "kind": "missing_step",
+        "text": "How do the separate flagship-store companies place orders, receive goods and handle intercompany invoicing?",
+        "nodeIds": [
+          "handle_orders",
+          "end_logistics_boundary"
+        ]
+      },
+      {
+        "id": "q_separate_processes",
+        "kind": "other",
+        "text": "Can separate process descriptions be provided for payroll, employee certificate monitoring and management reporting, including their triggers, performers and outputs?",
+        "nodeIds": [
+          "start"
+        ]
+      }
+    ],
+    "notes": [
+      "Reviewable as-is draft, not a claim of human approval. The connected flow covers customer-order administration through shift planning, production at a high level and finished-goods picking. It does not treat workshop topic order as business-process order.",
+      "Other workshop topics are retained below rather than connected by invented handoffs. Production execution is only described at a high level; detailed manufacturing operations are not supplied.",
+      "Sales uses retail-chain systems and portals as well as Directo. The source does not name individual portal products or establish a universal entry sequence. Orders do not automatically arrive ready in Directo. CRM is retained from the supplied registry, but no source evidence connects it to an activity.",
+      "Production planning uses orders, Excel, paper and information from the previous shift. The source also confirms Directo information contributes to the shift picture, but does not isolate its use to a specific planning action. There is no consolidated view of waiting, in-progress and completed orders.",
+      "Production sequence is based on experience. Cleaning depends on the preceding and following product types; exact transition rules, performers and placement are not described. No cleaning decision or route has been invented.",
+      "Raw-material and finished-product batch traceability are important, and finished products have their own batches. The recording does not describe the recording actions or their performers.",
+      "Picking follows an intended older-goods-first principle, but newer boxes may be picked because they are easier to reach. Batch and shelf life are visible on the goods. The system does not direct the picker to a specific batch. FIFO is therefore not modeled as an enforced decision rule.",
+      "The separate raw-material quality fragment describes sampling when quality is in doubt, laboratory referral if necessary, holding the batch pending an answer and returning a non-compliant batch to the supplier. Quality information and documents are stored in a shared folder on Mati's computer. Performers, laboratory-referral criteria, compliant-result handling and the connection from receipt to production remain unspecified, so this fragment is not inserted into the connected flow.",
+      "Cost-price calculations currently use Excel alongside information in Directo and cover predicted and actual cost. The precise calculation workflow and performers are unresolved. Comparison of forecast and actual cost is expressed as a need, not mapped as an established activity.",
+      "Payroll is currently calculated in Merit Palk. Employee training, certificates and other personnel documents are monitored separately in Excel and other files. Detailed payroll and personnel workflows were explicitly deferred.",
+      "Management information is distributed across Directo, Excel, Merit Palk, files and conversations. An exact management-reporting workflow and report list were not provided.",
+      "Raw-material movement from reception to production, finished-product logistics after assembly and intercompany store processes were explicitly left unmapped in the workshop.",
+      "Future needs are excluded from the as-is flow: automated order integration, improved production-status visibility, sequencing support, FEFO or batch-directed picking, clearer quality statuses and linked documentation, more integrated personnel information, cloud deployment, reliability requirements and consolidated management reporting."
+    ],
+    "systems": [
+      {
+        "id": "sys_247y",
+        "label": "CRM"
+      },
+      {
+        "id": "sys_rmkpt2",
+        "label": "Directo"
+      },
+      {
+        "id": "sys_1lpy9j",
+        "label": "Excel"
+      }
+    ],
+    "source": "Transcribe a Teams recording\nMeeting: Mati Maasikapiukas AS – ERP process diagnostics\nType of appointment: Process Mapping Workshop\nRecording: Teams transcription\nParticipants\nJuulika – ERP service provider consultant, with a background in ERP implementations and logistics\nPriit – CEO of Mati Maasikapirukas AS, also responsible for IT solutions\nPeeter – Purchasing and Sales Manager\nMargus – bakery manager\nMarge – Accountant\nTranscription note: Bob and John are in the same room and use the same computer in the meeting. Therefore, their call is mostly under one participant in the Teams transcription. In the transcription, the speaker is differentiated according to the context, if possible.\n[09:02] Start of the match\nJuulika: Good morning! Can everyone hear me?\nPriit: Hello. Yes, I can hear it. Is my sound normal?\nJuulika: Yes, we can hear you very well.\nMarge: Hello! I'm there too.\nJuulika: Hello, Marge. Let's wait for Peeter and Margus as well.\nPeeter / Margus: Hello, we are here. We are both behind the same computer.\nJuulika: Very good. Teams probably doesn't quite understand which one of you is talking about.\nPeeter / Margus: Probably not.\nPriit: We'll understand from the voice.\nJuulika: I hope so. If it's very important, tell me your name first.\nMarge: Like at school.\nPeeter / Margus: Hands up too?\nJuulika: Fortunately, the Teams transcription does not require this.\nPriit: Juulika, are you working remotely today or are you in the office?\nJuulika: Today I'm far away. The last time I visited you, I was at least able to see the bakery. And I also got pies.\nPeeter / Margus: Then the most important diagnostics have already been done.\nMarge: Now you have to say which pie was the best.\nJuulika: I will abstain here. Otherwise, we will immediately have a new process problem.\nPriit: Very diplomatic.\nJuulika: But let's start. As we agreed before, the goal of today's meeting is not to choose a solution or start looking at which button could be in the program.\nFirst of all, I would like to understand how your processes actually work, where there are problem areas, what information flows between people and where the system does not support it enough.\nLet's go through the bigger processes and if something is left uncovered today, we'd better leave it as a separate issue. I don't want to start guessing the missing part myself.\nPriit: Yes, that's fine.\nJuulika: I have a general background about you, but let's put the context in place for a moment. You have about 35 people in your production company?\nPriit: Yes.\nJuulika: And four of your own flagship stores?\nPriit: Yes, but they are not within the same company. The owners are the same, Mati and Kati, but legally the companies are different.\nJuulika: Sure. And there are about 35 other employees in the shops?\nPriit: About yes.\nJuulika: Your main business is still the production and sale of pies to retail chains and then to your flagship stores?\nPriit: Yes.\nJuulika: And your main business software today is Directo?\nMarge: Yes, Directo. We do payroll separately at Merit Palga.\nJuulika: Of course. Directo will be what you call the current ERP or basic program, and the salary will be Merit Palgas.\nNote: Yes.\nJuulika: Very good. So let's start with production.\nProduction planning\n[09:09]\nJuulika: Margus, how do you know what to produce the next day or in the next shift?\nPeeter / Margus: Mainly according to sales orders. We have six main types of pies. Production works in several shifts and at the beginning of the shift, we put together what needs to be done.\nJuulika: Where does the  information come from?\nPeeter / Margus: Orders, Excel and then paper as well.\nJuulika: Maybe you don't have a production plan ready from Directo today?\nPeeter / Margus: No.\nJuulika: Describe a little bit what actually happens in the morning or at the beginning of the shift.\nMargus: I look at what the orders are, what the previous shift did and what was left undone. Then we have to take into account what the next shift has to do. We put this information together and basically a list goes to the shift.\nJuulika: Is this list in Excel or on paper?\nMargus: There are both. We prepare in Excel, but paper is also used in production.\nJuulika: If I were to come here now and ask which sales orders are already in production, which are waiting for production and which have been completed, would it be possible to see it in one place?\nMargus: No, there is no such good picture.\nPriit: This is one of the weak points.\nMargus: We ourselves understand more or less, because people communicate with each other. But there is no such overview in the system.\nJuulika: So today, people's experience helps the process to work quite a lot.\nMargus: Yes, definitely.\nPriit: With the current volume, we have managed. But if sales increase, it is no longer very good.\nProduction sequence and equipment cleaning\nJuulika: These six different types of pies, is the order in which they are produced important?\nMargus: Yes, it is.\nJuulika: Why?\nMargus: The equipment needs to be cleaned in the meantime. Depending on what you did before and what you produce next, cleaning is needed.\nJuulika: So, if the production queue is well planned, some cleaning can be avoided or at least reduced?\nMargus: Yes, in principle, yes.\nJuulika: Can Directo help you optimize this sequence?\nMargus: No. It's based on experience.\nJuulika: Maybe you know that if I make this pie before and after the second, it makes more sense?\nMargus: Yes.\nPriit: This knowledge is pretty much in people's minds today.\nBatch accounting and quality in production\n[09:18]\nJuulika: How does batch counting work in production? It is probably important in food production.\nMargus: Very important. We need to know from which batch the goods are produced.\nJuulika: If, for example, a quality problem arises later with one batch of pies, do you need to be able to go back to which batches of raw materials were used?\nMargus: Yes. Batch tracking is important.\nJuulika: And the finished product has its own batch?\nMargus: Yes.\nMarge: This is also needed if something comes back from the customer later or there is a quality issue.\nAssembling finished goods\n[09:22]\nJuulika: What happens when the pies are ready?\nMargus: They go to the picking area. From there, customer orders are already put together.\nJuulika: How does the picker know which batch to take from?\nMargus: Well, the principle is that older goods should go first.\nJuulika: FIFO?\nMargus: Yes, but in real life it doesn't always go so well.\nJuulika: What happens?\nMargus: For example, a box with a newer date is better in front or it is simply taken. Then the newer product goes to the customer and the older one stays with us.\nJuulika: And it can also happen because the system does not direct the picker to take a specific batch?\nMargus: Yes.\nJuulika: In the case of food, I would look at the logic of FEFO even next to FIFO. In other words, it is not only important which batch came in first, but which batch expires earlier.\nMargus: Yes, such a check would be better.\nMarge: Because otherwise there will be a write-off afterwards.\nMargus: Exactly. The customer received goods with a longer date and we were left with goods with a shorter date.\nCall interruption\n[09:27]\nPeeter / Margus: Sorry, Peeter's phone rings.\nPeeter: This is a call from a client. I have to take it. I go to another room for a moment.\nJuulika: Yes, of course.\nPeeter: Margus, tell me more. I'll be back.\nMargus: Good.\nPriit: This is a good example of the sales automation that we will talk about in a moment.\nMarge: Call answering automation will also be added to the new system.\nJuulika: I'm not writing down this requirement yet.\nMargus: Otherwise, our ERP project is going to be quite big.\nJuulika: That's right. We'll wait for Peeter's sales part. In the meantime, Margus and I will finish the assembly.\nJuulika: If the wrong batch is chosen, will it be discovered later in Directo or rather when you physically see that the older goods are still there?\nMargus: Rather, you can see it in the warehouse. You should do it right away during assembly.\nJuulika: Are the shelf life and batch visible on the goods?\nMargus: Yes.\nJuulika: Of course. In the future process, it could be important that the picker is not only left with the knowledge \"take this product\", but that the system is also able to direct them to the right batch.\nMargus: Yes, that would be reasonable.\nPeter returns\n[09:31]\nPeeter: I'm back. I'm sorry.\nJuulika: It's okay. In the meantime, Margus and I talked until the end of the assembly. Just about the fact that the customer may get a batch that is too fresh and the older one stays in.\nPeeter: Yes. I know that concern.\nJuulika: Very good. Then we'll use you now and go to sales.\nSales process\n[09:32]\nJuulika: How does the sales side work today? Is the main problem getting new customers or something else?\nPeeter: To  be honest, we don't have much of a problem with selling. The pies are doing well.\nJuulika: That's a good problem.\nPeeter: Yes. But I would like to expand the business. Today, it just takes a lot of time to serve existing customers.\nJuulika: Are we talking primarily about retail chains?\nPeeter: Yes.\nJuulika: What exactly does the sales person do there?\nPeeter: Orders come, then there are the chains' own programs and portals. Order information must be handled and data entered.\nJuulika: Is EDI in use?\nPeeter: Not in a form where the order would come in automatically and be immediately in Directo. There is a lot of handicraft.\nJuulika: Is the same information sometimes entered in several places?\nPeeter: Yes. To the customer's system, to Directo. It depends on the customer.\nJuulika: And your sales team is small?\nPeeter: Yes.\nJuulika: If you could reduce the administrative work of existing customer orders, what would be the business effect?\nPeeter: I could actually do more sales. Develop existing customers, but also look for new ones.\nPriit: We have a growth plan. That is why we would like to fix the systems before the volume becomes significantly larger.\nJuulika: Are there rather long-term relationships and price agreements with retail chains?\nPeeter: Yes, the prices and conditions are negotiated. In some places, there are prices for a longer period.\nJuulika: This brings us back to the cost price later, because in the case of the long-term price, you need to know how much it will actually cost to produce.\nPeeter: Exactly.\nPurchasing process and quality of raw materials\n[09:40]\nJuulika: Let's move on to the purchase. How complicated is your buying process?\nPeeter: The purchase itself is not very complicated. We mainly have certain suppliers and certain raw materials.\nJuulika: Maybe the supplier selection process doesn't have to be done from scratch for every purchase?\nPeeter: No.\nJuulika: Where does the biggest problem arise on the purchase side?\nPeeter: Quality.\nMargus: The quality of raw materials before production.\nJuulika: Describe it a bit.\nMargus: The raw material comes in and you have to be sure that it meets the requirements. There is not always a problem, but if there is a doubt, it should not be released into production immediately.\nJuulika: What is done then?\nMargus: A sample is taken. If necessary, we will send it to a separate laboratory.\nJuulika: And the batch will be on hold until then?\nMargus: Yes, you shouldn't use it until you have the answer.\nJuulika: Is it visible in Directo today that a specific batch is under quality control or blocked, for example?\nPeeter: Not properly.\nJuulika: Where do you keep this information then?\nPriit: We have a shared folder on Mati's computer. Information and documents are put there.\nMarge: And that's what makes things uncomfortable in retrospect. If you need to look at what happened to a particular batch later, the information is not in one place.\nJuulika: The lab's answer, for example, is a file?\nMarge: Yes, things like that.\nJuulika: What happens if the laboratory says that a batch does not meet the requirements?\nPeeter: We will return it to the supplier.\nJuulika: Will there be a clear note in Directo about the batch why it was returned?\nPeeter: Not in the way it could be right now.\nJuulika: Here it is important to distinguish at least \"for permitted use\", \"under inspection\" and \"non-compliant\". I am not yet proposing a solution, but it must be clear from a procedural point of view when a batch can go into production and when it cannot.\nMargus: Yes.\nPause\n[09:49]\nJuulika: We have already received quite a lot of information. Would you like to pause for a moment? About five minutes. Afterwards, we will take the finances, personnel, IT and management information.\nPriit: Fine.\nMarge: Yes, I would have more coffee.\nPeeter: Me too.\nMargus: I go to the bakery for a moment and check one thing.\nJuulika: Let's do that. Let's leave Teams open and continue from here.\n[Meeting on break]\n[Conversation in the room is not clearly audible.]\n[Background noise.]\n[Peter and Margus move away from the computer.]\n[An indistinct conversation can be heard from the microphone.]\nThe meeting continues\n[09:56]\nJuulika: Is everything back?\nNote: I am.\nPriit: Yes.\nPeeter / Margus: So do we.\nJuulika: Very good. Before the break, we more or less reviewed production, assembly, sales and purchasing. Now let's get to the finances.\nFinance and cost calculation\n[09:57]\nJuulika: Marge, if you look at the financial side, what causes you the most time or headache today?\nMarge: Cost price calculation for sure.\nJuulika: What's so difficult about it?\nNote: Some of the information is available in Directo, but we also use Excel to calculate the cost price.\nJuulika: Are we talking about the actual cost price or the planned cost price?\nNote: Both actually.\nPeeter: The predicted cost price is especially important to me.\nJuulika: For a sales offer?\nPeeter: Yes. If I make an offer to the retail chain for a longer period and promise the price, I have to know beforehand whether we are actually making money at that price.\nJuulika: If, for example, the prices of raw materials change during the next period, do you want to know what effect this will have on the cost price of the pie?\nPeeter: Exactly.\nMarge: And afterwards, it would be necessary to compare what we forecast and what the actual cost price was in the end.\nJuulika: In addition to materials, do production costs also come into play in the actual cost price?\nNote: Yes, the cost price components must be met.\nJuulika: And today, Excel is used next to Directo to get this picture?\nNote: Yes.\nJuulika: Is cost price information only important for finances?\nPeeter: No, definitely for me too. In a sense, in sales, it is even needed earlier, because I make a price promise to the customer.\nPriit: And profitability is important for management. If sales are growing, but we don't know which products or agreements we are making money on, then turnover alone is not enough.\nJuulika: Sure. In other words, there is a strong connection between production data, financial information in Directo and sales.\nPersonnel, Merit Palk and certificates\n[10:05]\nJuulika: What else do you have in separate solutions in finance or administration?\nMarge: We have Merit Palgas for payroll.\nJuulika: Maybe the salary is not in Directo?\nMarge: No. We use Directo for other business activities of the company, but payroll accounting is Merit Palgas.\nJuulika: Is personnel information all in Merit Palga?\nMarge: No, it is not. We also have food hygiene training, certificates and other necessary documents for our employees, which must be monitored separately.\nJuulika: Do you have to monitor their validity period?\nMarge: Yes. It would be good if the system would let you know when someone is about to expire.\nJuulika: And how do you do it now?\nMarge: In separate places. That's what is inconvenient for me. For payroll, I go to Merit Palka, for other information about the company, to Directo, and then there are Excels and other files.\nMy wish would be to get as much as possible into one whole.\nPriit: Mati doesn't really believe in it.\nJuulika: What exactly does Mati not believe?\nPriit: He is sceptical that one solution will solve all our problems.\nMarge: I don't necessarily think that absolutely everything has to be in one program. But I don't want to look for the same information in several places and put it together.\nJuulika: This is an important distinction. The goal of diagnostics should not be to simply replace Directo, Merit Palga and all other solutions with a single program. Rather, we need to understand which processes and data need to be interconnected. Then we can decide whether it is a single system or several well-integrated solutions.\nNote: Yes, exactly.\nJuulika: We do not map the salary and personnel process itself in great detail today. It would probably be reasonable to have a separate session for this.\nNote: Yes.\nIT solutions and the cloud\n[10:12]\nJuulika: Priit, let's take the IT side as well. You said quite clearly earlier that the next solution should be in the cloud.\nPriit: Yes. Definitely.\nJuulika: What is the main reason behind this?\nPriit: I don't want to pay for my own servers or server rent anymore and deal with managing them.\nJuulika: In other words, the desire is to get as much out of infrastructure management as possible.\nPriit: Yes.\nJuulika: At the same time, your production works in several shifts.\nPriit: Exactly. It's important. The cloud is a desire, but it can't be the case that production depends on the system and then you can't work at a certain time of the day or due to some kind of outage.\nJuulika: Is the need essentially 24/7?\nPriit: For some processes, definitely. Or at least you have to take into account that the work is not just from eight to five. We expect sales growth and then it will become even more important.\nJuulika: In the next stage, you should find out by process which activities are really critical around the clock. And what happens if, for example, a connection or a specific service temporarily fails.\nPriit: Yes. It is important that production does not stop because of this.\nManagement information\n[10:18]\nJuulika: Let's go to the level of management for a moment. What information would you like to see better as a manager today?\nPriit: The whole picture.\nJuulika: What do you mean by that exactly?\nPriit: At the moment, the information is in different places. Something is in Directo, you ask people about production, the cost price is done in Excel, the payroll is in Merit Palga and then there are other files.\nAs the company grows, you want to see what really happens without anyone having to put together the data before half a day.\nJuulika: Could such a view include, for example, sales orders, production status, batches, inventories of raw materials and finished products, cost price and profitability?\nPriit: Yes. They definitely.\nNote: Financial information as well.\nPriit: Yes.\nJuulika: But we don't have an exact list of management reports today?\nPriit: No. That should be thought through separately.\nJuulika: Let's leave it as a necessity instead of coming up with dashboards ourselves.\nFlagship stores and the view between companies\n[10:22]\nJuulika: I'd like to come back to your flagship stores for a moment. There are four of them?\nPriit: Yes.\nJuulika: Everyone owns Mati and Kati?\nPriit: Yes, but the companies are separate.\nJuulika: In other words, if a manufacturing company sends pies to its flagship store, then legally the goods are sold between different companies.\nPriit: Yes.\nJuulika: Then there is probably the logic of ordering between companies, moving goods and invoicing. But we have not really described this process in detail today.\nPriit: No, it is not.\nJuulika: I'd leave that for separate diagnostics. Otherwise, we're starting to guess how stores order and how invoicing between companies takes place.\nMarge: Yes, it has to be taken separately.\nClarifying discussion of problem areas\n[10:26]\nJuulika: I'll try to reflect back on what I heard for a moment. Correct me if something was wrong.\nThe first problem in production seems to be not so much that you don't know what to produce at all, but that there is no common systematic view of the status of orders and production.\nMargus: Yes.\nJuulika: At the beginning of the shift, this picture is created based on Directo information, Excel, paper and information from the previous shift.\nMargus: Yes.\nJuulika: Another topic is the order of production, as there are cleanings between different types of pies and the order affects efficiency.\nMargus: Right.\nJuulika: The third is batch information and quality.\nMargus: Yes.\nJuulika: The question of picking is that the right product does not necessarily mean the right batch. The customer may receive goods with a newer date and the older one may remain in the warehouse.\nMargus: Exactly.\nJuulika: The situation is a bit different in sales. The lack of demand is not the main problem. Rather, growth is hindered by the fact that a small sales team spends too much time on the administrative processing of orders from existing retail chains.\nPeeter: Yes, exactly.\nJuulika: So there is an important point for analysis of the topic of EDI and integration with Directo.\nPeeter: Yes.\nJuulika: The purchasing process itself is more standard, because the suppliers and materials are relatively stable. But the critical process is quality control and how to make the status of a suspicious batch visible in the system.\nMargus: Yes.\nMarge: And so that the documentation can be found afterwards.\nJuulika: Right.\nIn finance, both the predicted and the actual cost price are important, and the estimated cost price must be known early enough to make long-term price offers.\nPeeter: Yes.\nNote: Yes.\nJuulika: On the personnel side, we currently have Merit Palk for payroll, as well as information about training and certificates in other places. Marge would like to get a more comprehensive view of this.\nMarge: Just.\nJuulika: And the company's main economic information is in Directo, but in the case of several processes, information is still moving in Excel, on paper or in files.\nPriit: Yes.\nJuulika: On the IT side, the cloud, but not the cloud at the expense of reliability.\nPriit: Exactly.\nFixing uncovered processes\n[10:33]\nJuulika: Now there are two big things that we actually missed.\nFirst, we talked about how quality control and, if necessary, laboratory control is carried out in the case of raw materials. But we did not describe the process of how the goods move physically and in the system from reception to production.\nMargus: Yes, we didn't take that.\nJuulika: I wouldn't skip it right now. It should be discussed separately in the next workshop.\nPriit: Agreed.\nJuulika: The second part is after assembly. We talked about how the right or wrong batch is chosen, but we haven't really described how the logistics of the finished product for retail chains takes place.\nWe didn't talk about transport planning, dispatch, shipping documents, or how the retail chain's receipt is confirmed.\nPeeter: Yes, that's a separate topic.\nJuulika: Very good. We then deliberately put them \"not mapped yet\" instead of filling them with assumptions.\nSummary of the meeting\n[10:36]\nJuulika: I'll summarize the bigger topics at the end of today.\nOn the production side, the first topic is getting from a sales order to a production plan. Today, there is no good overview of which orders are waiting for production, which are in progress and which are ready.\nThe second is production sequencing and shift planning, where Excel, paper and equipment cleaning that affect people's experience and sequence are used in addition to Directo.\nThe third is batch and quality traceability.\nIn assembly, the implementation of FIFO or rather FEFO must be looked at so that the right batch is delivered to the customer and older production is not unjustifiably left in the warehouse.\nIn the case of sales, it is important to automate retail chains' orders, reduce EDI and manual entry so that the sales team has more time to develop customer relationships and make new sales.\nOn the purchasing side, the main problem does not seem to be the making of purchase orders, but  the quality control of the raw materials and the management of the batch status. It must be possible to clearly distinguish a batch sent to the laboratory or a batch under suspicion from the batch used in production, and the quality information should be linked to the batch.\nOn the financial side, a big topic is the predictable and actual cost price and comparing them. At the moment, Excel is used for this in addition to Directo. This is important for both finance and sales, especially in the case of long-term price agreements.\nOn the personnel side, payroll is calculated in Merit Palga, while training, certificates and other personnel information are monitored separately. This requires more thorough diagnostics on its own.\nToday's system picture can be roughly summarized as follows:\nDirecto – the company's basic ERP / business software;\nMerit Palk – payroll;\nExcel – additional activities of production planning and cost price calculation, among others;\npaper documents – used in the operational work of production;\na shared folder on Mati's computer – information related to quality and laboratory, among other things;\nretail chain systems and portals – sales must perform manual operations in them;\nEDI – without the necessary degree of automation.\nFrom the IT point of view, there is a desire for a cloud solution, but at the same time, the reliability of critical processes and the need for 24/7 must be defined.\nIn the future, management will need a better overall picture of sales, production, inventory, batches, cost price and profitability, but accurate management reports need to be discussed separately.\nIn addition, we have four related representative stores that are owned by the same owners but are separate companies. Therefore,  the logic of inter-company processes must be reviewed separately.\nAnd finally, there are two consciously unmapped processes:\nFirstly,  the movement of raw materials from reception to production, and secondly, the logistics of finished products to retail chains.\nIs this more or less the picture you take with you from today's meeting?\nPriit: Yes. I think so.\nNote: Yes.\nPeeter: From my side too.\nMargus: Yes.\nJuulika: Very good. I think it's also important that we don't immediately go to the point where \"we buy a new ERP and all the problems disappear\". This leads to several different process issues, and first the whole picture needs to become clear.\nPriit: I agree with that.\nMarge: Mati still needs to be convinced.\nPeeter: This is Priit's process.\nPriit: A separate workshop for that.\nJuulika: We will leave this process out of scope for now.\n[Laughter]\nJuulika: But thank you. Here is very good material to go on.\nPriit: Thank you.\nMarge: Thank you.\nPeeter / Margus: Thank you.\nJuulika: Have a nice day!\nPriit: To you too. Chow.\nNote: Chow.\n[End of meeting]\n[Transcription ends]",
+    "version": 3,
+    "origin": "model-api",
+    "reviewed": false,
+    "changeSummary": "AI draft from process description"
+  }
+}

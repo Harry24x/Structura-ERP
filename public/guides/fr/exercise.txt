@@ -1,0 +1,53 @@
+Décrire la demande
+
+Le client envoie une demande d’intervention par courriel. Le coordinateur enregistre la demande et vérifie que l’adresse et les coordonnées sont complètes. Si des informations manquent, il les demande au client puis refait la vérification. Sinon, il envoie un devis. Si le client accepte, un rendez-vous est fixé. En cas de refus, le coordinateur note le motif.
+
+Générer un diagramme
+
+Demande reçue → Enregistrer → Vérifier le dossier → Envoyer un devis → Décision du client
+
+Préciser les points ouverts
+
+Qui fixe le rendez-vous ? → Le coordinateur de service.
+Que se passe-t-il après un refus ? → Le coordinateur clôt la demande sans fixer de rendez-vous.
+
+Relire les étapes et les rôles
+
+Acceptation → Fixer le rendez-vous → Fin
+Refus → Noter le motif → Clôturer la demande
+
+Demander une première modification
+
+Ajoutez « Envoyer un accusé de réception sous un jour ouvré » après l’enregistrement et avant la vérification. Confiez cette tâche au coordinateur. Conservez toutes les branches existantes.
+
+Exporter et créer la fiche
+
+Exporter en JSON → Enregistrer le diagramme sur le compte
+Titre de la fiche : Demande d’intervention · Exemple
+
+Préparer le retour du client
+
+Étape : Fixer le rendez-vous
+Rôle de démonstration : Client
+
+Rédiger la proposition
+
+Titre : Confirmer le rendez-vous
+Problème : Le client ne dispose pas d’une confirmation écrite.
+Proposition : Envoyer un courriel avec la date, le créneau et les coordonnées de contact.
+Bénéfice : Réduire les oublis et les appels de confirmation.
+
+Examiner et décider
+
+Décision : Approuver
+Motif : Une confirmation écrite rend le rendez-vous vérifiable.
+Retour : Merci pour la proposition. Nous allons intégrer le courriel de confirmation.
+
+Mettre en œuvre sur la même fiche
+
+Après « Fixer le rendez-vous », ajoutez « Envoyer la confirmation du rendez-vous ». Le coordinateur envoie la date, le créneau et les coordonnées de contact. Conservez le reste du processus.
+
+Vérifier le résultat et conserver une copie
+
+Fixer le rendez-vous → Envoyer la confirmation → Fin
+Historique : proposition → décision → mise en œuvre

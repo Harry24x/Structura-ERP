@@ -1,0 +1,23 @@
+diff --git a/wrangler-dist/ProxyWorker.js b/wrangler-dist/ProxyWorker.js
+index cd7ccbb7d7c8459aecb9c9b6db055ee3d930ef57..c8adbd2f1cb338fe849c9a593739a3a8ae694307 100644
+--- a/wrangler-dist/ProxyWorker.js
++++ b/wrangler-dist/ProxyWorker.js
+@@ -140,6 +140,10 @@ var ProxyWorker = class {
+           headers.set(key, value);
+         }
+       }
++      // Local preview: avoid KJ's 5-second keep-alive close/reuse race on
++      // both proxy hops. Preserve upgrades and never replay a POST.
++      const isWebSocket = request.headers.get("Upgrade")?.toLowerCase() === "websocket";
++      if (!isWebSocket) headers.set("Connection", "close");
+       const attemptUserWorkerFetch = (attempt = 0) => void fetch(userWorkerUrl, new Request(request, { headers })).then(
+         async (res) => {
+           if (attempt > 0) {
+@@ -149,6 +153,7 @@ var ProxyWorker = class {
+           }
+           res = new Response(res.body, res);
+           rewriteUrlRelatedHeaders(res.headers, innerUrl, outerUrl);
++          if (res.status !== 101) res.headers.set("Connection", "close");
+           await checkForPreviewTokenError(res, this.env, proxyData);
+           if (isHtmlResponse(res)) {
+             res = insertLiveReloadScript(request, res, this.env, proxyData);

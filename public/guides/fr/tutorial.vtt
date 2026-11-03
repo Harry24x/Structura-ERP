@@ -1,0 +1,219 @@
+WEBVTT
+
+1
+00:00:00.352 --> 00:00:06.214
+Dans Process Studio ouvrez le sélecteur de langue et choisissez Français Le
+menu Guides
+
+2
+00:00:06.227 --> 00:00:11.981
+mène à la documentation correspondante Nous allons cartographier une demande
+d’intervention
+
+3
+00:00:11.994 --> 00:00:18.219
+fictive vérifier le diagramme puis traiter une proposition du client Les
+écrans de ce
+
+4
+00:00:18.232 --> 00:00:21.617
+tutoriel sont illustrés et les textes sont réutilisables
+
+5
+00:00:23.434 --> 00:00:28.555
+Ouvrez Créer un diagramme à partir d’un texte Collez cette description dans
+le champ
+
+6
+00:00:28.568 --> 00:00:35.677
+Votre texte Vous pouvez aussi importer un document puis vérifier le texte
+extrait Ici
+
+7
+00:00:36.068 --> 00:00:40.599
+nous laissons volontairement deux détails ouverts pour montrer comment
+préciser le processus
+
+8
+00:00:42.435 --> 00:00:48.440
+Cliquez sur Générer un diagramme Le résultat présenté ici est un exemple de
+brouillon
+
+9
+00:00:49.339 --> 00:00:55.029
+Comparez-le à la description Si le dossier est incomplet le chemin doit
+revenir à
+
+10
+00:00:55.042 --> 00:01:00.055
+la vérification après la réponse du client Le devis n’est envoyé que lorsque
+les
+
+11
+00:01:00.068 --> 00:01:01.656
+informations sont complètes
+
+12
+00:01:03.476 --> 00:01:08.883
+Renseignez le rôle qui fixe le rendez-vous Pour la suite d’un refus
+saisissez la
+
+13
+00:01:08.896 --> 00:01:13.987
+réponse dans le champ de précision et appliquez-la au brouillon Contrôlez
+que le refus
+
+14
+00:01:14.000 --> 00:01:18.896
+mène à la clôture et que l’acceptation mène à la prise de rendez-vous
+Vérifiez
+
+15
+00:01:18.909 --> 00:01:21.943
+aussi que la boucle de vérification est toujours présente
+
+16
+00:01:23.769 --> 00:01:29.383
+Avant de poursuivre ouvrez les détails des étapes et vérifiez les
+responsables Les vues
+
+17
+00:01:29.396 --> 00:01:33.576
+du diagramme et les détails des étapes permettent de lire séparément les
+transitions et
+
+18
+00:01:33.589 --> 00:01:38.406
+les rôles Une fois les deux branches et les points ouverts vérifiés utilisez
+la
+
+19
+00:01:38.419 --> 00:01:40.372
+commande de validation de la revue
+
+20
+00:01:42.185 --> 00:01:47.511
+Dans Modification du processus souhaitée collez cette consigne et lancez la
+modification
+
+21
+00:01:48.410 --> 00:01:53.319
+Vérifiez que la nouvelle étape est placée exactement entre l’enregistrement
+et la vérification
+
+22
+00:01:54.218 --> 00:01:59.635
+Le délai et le rôle doivent apparaître dans l’étape Comparez avec
+l’historique des versions
+
+23
+00:01:59.648 --> 00:02:01.198
+si un autre élément a changé
+
+24
+00:02:03.019 --> 00:02:08.971
+Exportez le diagramme en JSON pour garder une copie que vous pourrez
+réimporter Enregistrez
+
+25
+00:02:08.984 --> 00:02:14.544
+ensuite le diagramme sur le compte Pour cet exercice créez une fiche dédiée
+et
+
+26
+00:02:14.557 --> 00:02:20.677
+retrouvez-la dans Mes processus et améliorations La fiche servira à
+conserver les propositions
+
+27
+00:02:20.690 --> 00:02:21.615
+et leurs décisions
+
+28
+00:02:23.435 --> 00:02:29.492
+Sélectionnez l’étape Fixer le rendez-vous Pour une collaboration réelle le
+responsable peut
+
+29
+00:02:29.505 --> 00:02:35.612
+partager l’étape avec le compte autorisé Pour s’entraîner utilisez le rôle
+de démonstration
+
+30
+00:02:35.625 --> 00:02:41.315
+Client sur une fiche fictive Dans la vue client ouvrez l’étape et choisissez
+Proposer
+
+31
+00:02:41.328 --> 00:02:42.318
+une amélioration
+
+32
+00:02:44.144 --> 00:02:50.395
+Saisissez un titre court expliquez le problème et indiquez la solution
+attendue Le bénéfice
+
+33
+00:02:50.408 --> 00:02:56.008
+aide le responsable à décider Envoyez la proposition puis vérifiez son état
+dans la
+
+34
+00:02:56.021 --> 00:03:00.656
+fiche La proposition reste liée à l’étape Fixer le rendez-vous
+
+35
+00:03:02.477 --> 00:03:07.907
+Dans le rôle responsable qualité ou consultant ouvrez la proposition et
+relisez le problème
+
+36
+00:03:08.258 --> 00:03:13.677
+la solution et le bénéfice Dans cet exemple approuvez-la avec un motif et un
+
+37
+00:03:13.690 --> 00:03:20.851
+retour Si vous choisissez de refuser une autre proposition expliquez
+également pourquoi La
+
+38
+00:03:20.864 --> 00:03:23.455
+décision et le retour restent dans l’historique
+
+39
+00:03:25.269 --> 00:03:29.357
+Saisissez une note de mise en œuvre et appliquez-la au modèle numérique
+avant de
+
+40
+00:03:29.370 --> 00:03:34.528
+modifier le diagramme Ouvrez ensuite le diagramme de la fiche dans le
+générateur et
+
+41
+00:03:34.541 --> 00:03:40.218
+saisissez cette consigne Vérifiez l’ordre et le rôle puis enregistrez le
+résultat sur la
+
+42
+00:03:40.231 --> 00:03:44.228
+fiche existante pour retrouver ensemble la décision et la modification
+
+43
+00:03:46.059 --> 00:03:51.844
+Rouvrez la fiche et vérifiez que la confirmation figure sur la branche
+acceptée Consultez
+
+44
+00:03:51.857 --> 00:03:57.181
+l’historique pour retrouver le retour fait au client Exportez la version
+finale si vous
+
+45
+00:03:57.194 --> 00:04:02.780
+souhaitez une copie de travail Le guide écrit et le fichier d’exercice
+restent disponibles
+
+46
+00:04:02.793 --> 00:04:04.877
+dans Guides sur la page française

@@ -1,0 +1,716 @@
+WEBVTT
+
+1
+00:00:00.389 --> 00:00:06.296
+Welcome to Process Studio version forty four We will turn a fictional Digimax
+service
+
+2
+00:00:06.309 --> 00:00:12.329
+request into a checked diagram improve it download JSON submit a customer
+suggestion and
+
+3
+00:00:12.342 --> 00:00:18.388
+review it The benefit is a clear conversation about responsibilities and changes
+recorded
+
+4
+00:00:18.400 --> 00:00:19.944
+against the same process
+
+5
+00:00:21.267 --> 00:00:27.072
+Choose Open text file above the description The supplied English text file is
+included
+
+6
+00:00:27.085 --> 00:00:34.521
+beside this video Markdown Word and text-based PDF are also supported Importing a
+description
+
+7
+00:00:34.534 --> 00:00:40.019
+reads the file it does not call AI An image-only flowchart uses the separate
+
+8
+00:00:40.031 --> 00:00:42.021
+PDF or image workflow
+
+9
+00:00:43.389 --> 00:00:48.735
+The file opens in a preview Read the extracted description and check the beginning
+
+10
+00:00:48.952 --> 00:00:55.061
+ending and any missing lines Our example deliberately leaves two responsibilities
+and one
+
+11
+00:00:55.074 --> 00:01:01.285
+continuation unspecified Choose Use as description to load this text into the
+generator
+
+12
+00:01:02.639 --> 00:01:08.315
+The customer emails a request missing details cause a clarification loop and a
+quotation
+
+13
+00:01:08.328 --> 00:01:14.643
+leads to acceptance or decline Email is manual and Excel records the request Named
+
+14
+00:01:14.656 --> 00:01:20.344
+roles both decision outcomes and explicit uncertainties give AI a stronger basis
+than a
+
+15
+00:01:20.357 --> 00:01:21.849
+list of department names
+
+16
+00:01:23.155 --> 00:01:29.355
+Alternatively click in Process description and paste copied text We use the same
+English
+
+17
+00:01:29.368 --> 00:01:35.261
+description here During normal work choose either file import or pasting both are
+not
+
+18
+00:01:35.274 --> 00:01:41.371
+required The earlier diagram remains a preview until you explicitly generate a
+replacement
+
+19
+00:01:42.684 --> 00:01:49.253
+Click Generate diagram The existing server-side OpenAI setup processes the
+description and
+
+20
+00:01:49.266 --> 00:01:55.452
+requests a structured draft The API key stays on the server Generation waits are
+
+21
+00:01:55.465 --> 00:02:01.550
+shortened in this edited tutorial The first result represents the current process
+not an
+
+22
+00:02:01.563 --> 00:02:03.591
+automatically approved improvement
+
+23
+00:02:04.892 --> 00:02:10.862
+Compare the result with the source Missing information must return to the
+completeness check
+
+24
+00:02:11.246 --> 00:02:16.922
+Acceptance must lead to booking decline follows its own branch Read the arrows and
+
+25
+00:02:16.935 --> 00:02:22.789
+open questions not just the box labels Valid JSON alone does not establish that
+
+26
+00:02:22.802 --> 00:02:24.613
+the business process is correct
+
+27
+00:02:25.973 --> 00:02:31.726
+The completeness check needs a responsible role Enter Service coordinator and use
+the arrow
+
+28
+00:02:31.739 --> 00:02:38.104
+beside this question This answer resolves that activity only It should not
+silently assign
+
+29
+00:02:38.116 --> 00:02:43.270
+the same person to every other unresolved step Use knowledge of the actual work
+
+30
+00:02:43.282 --> 00:02:44.137
+when answering
+
+31
+00:02:45.473 --> 00:02:51.545
+Answer the separate booking question with Service coordinator Notice that a source
+gap becomes
+
+32
+00:02:51.558 --> 00:02:57.259
+an explicit human clarification The diagram can now show the confirmed role while
+an
+
+33
+00:02:57.272 --> 00:03:02.590
+unrelated missing continuation stays open Do not use a role answer to invent a
+
+34
+00:03:02.603 --> 00:03:03.560
+new activity
+
+35
+00:03:04.918 --> 00:03:10.020
+For the free-text question explain what happens after the customer declines the
+service
+
+36
+00:03:10.033 --> 00:03:15.684
+coordinator closes the request without booking and that branch ends Choose Map
+answer with
+
+37
+00:03:15.696 --> 00:03:22.866
+AI A useful clarification identifies the action performer and continuation rather
+than saying
+
+38
+00:03:22.878 --> 00:03:24.537
+simply handle it appropriately
+
+39
+00:03:25.864 --> 00:03:31.758
+Inspect the revised decline branch The closing action should connect to its end
+while
+
+40
+00:03:31.770 --> 00:03:36.503
+the accepted booking route and the clarification loop remain If a question is
+still
+
+41
+00:03:36.515 --> 00:03:41.809
+unresolved leave it visible and answer it from real knowledge AI must not turn
+
+42
+00:03:41.821 --> 00:03:44.168
+uncertainty into an invented rule
+
+43
+00:03:45.514 --> 00:03:50.323
+After checking the full flow and resolving the relevant questions mark the draft
+as
+
+44
+00:03:50.336 --> 00:03:55.643
+reviewed This records a human review of this version It is not a legal
+
+45
+00:03:55.656 --> 00:04:01.726
+or quality certificate and a later material change needs another review Keep
+current practice
+
+46
+00:04:01.739 --> 00:04:03.844
+separate from proposed improvements
+
+47
+00:04:05.155 --> 00:04:10.858
+The overall process is above and the selected subprocess is below Each window has
+
+48
+00:04:10.871 --> 00:04:16.674
+its own direction and Fit controls Choose a subprocess to inspect a smaller scope
+
+49
+00:04:17.082 --> 00:04:21.547
+These are two views of the same model so changing presentation does not create
+
+50
+00:04:21.560 --> 00:04:23.753
+another process or alter its history
+
+51
+00:04:25.072 --> 00:04:31.042
+Business Central view associates existing activities with documents or actions A
+proposed
+
+52
+00:04:31.055 --> 00:04:36.170
+reference is not proof that the company uses that function The owner can inspect
+
+53
+00:04:36.183 --> 00:04:41.400
+the step check the setup and record a reason before confirmation This view does
+
+54
+00:04:41.412 --> 00:04:45.481
+not create ERP documents or execute an ERP workflow
+
+55
+00:04:46.767 --> 00:04:53.223
+Dynamics 365 catalog offers another reference structure using the same process
+Search an
+
+56
+00:04:53.236 --> 00:04:59.536
+official catalog name or identifier and choose the relevant scope Catalog names
+remain English
+
+57
+00:04:59.549 --> 00:05:05.825
+source data controls use the selected interface language Suggestions need human
+checking
+
+58
+00:05:06.194 --> 00:05:08.975
+Browsing this catalog does not call AI
+
+59
+00:05:10.322 --> 00:05:17.057
+Select an activity to inspect its responsible role system execution type business
+area and
+
+60
+00:05:17.070 --> 00:05:23.525
+source evidence These are separate properties Excel being mentioned does not prove
+automatic
+
+61
+00:05:23.537 --> 00:05:30.463
+execution Keep an unknown value unknown until it is clarified Source quotations
+remain in
+
+62
+00:05:30.476 --> 00:05:31.828
+their original language
+
+63
+00:05:33.168 --> 00:05:38.565
+Switch between Left to right and Top to bottom then use Fit Expand diagram
+
+64
+00:05:38.577 --> 00:05:44.764
+provides more reading space and Restore workspace returns to editing Layout
+controls change
+
+65
+00:05:44.776 --> 00:05:51.256
+presentation only Boxes beside each other are not automatically parallel
+activities conditional
+
+66
+00:05:51.269 --> 00:05:54.292
+branches and concurrent work are different concepts
+
+67
+00:05:55.639 --> 00:06:00.716
+In Refine with a change request a receipt acknowledgement after registration and
+before the
+
+68
+00:06:00.729 --> 00:06:06.660
+completeness check owned by the service coordinator within one business day Also
+ask to
+
+69
+00:06:06.673 --> 00:06:12.592
+preserve the remaining flow The instruction names the action owner and position
+instead of
+
+70
+00:06:12.605 --> 00:06:14.747
+asking vaguely for a better process
+
+71
+00:06:16.085 --> 00:06:21.225
+Apply the change and find the new acknowledgement activity Check its role and its
+
+72
+00:06:21.238 --> 00:06:26.724
+incoming and outgoing arrows The new version is TO BE because the change is
+
+73
+00:06:26.736 --> 00:06:32.348
+proposed work Check that both quotation outcomes and the missing-information loop
+are still
+
+74
+00:06:32.361 --> 00:06:36.252
+present Earlier generator versions remain available
+
+75
+00:06:37.600 --> 00:06:43.865
+Choose Export JSON in the top toolbar This downloads the editable process model
+not
+
+76
+00:06:43.878 --> 00:06:49.183
+just an image You can open it through Import later JSON export and a
+
+77
+00:06:49.196 --> 00:06:54.770
+full process-card backup are different files the card backup also contains the
+original file
+
+78
+00:06:54.986 --> 00:06:56.747
+suggestions and decisions
+
+79
+00:06:58.059 --> 00:07:03.379
+Choose Save diagram to account A saved card can be opened in another browser
+
+80
+00:07:03.392 --> 00:07:09.629
+using the same signed-in account Unsaved generator text and local draft history
+can remain
+
+81
+00:07:09.642 --> 00:07:15.216
+browser-specific Wait for Saved to your account before assuming the process has
+reached the
+
+82
+00:07:15.229 --> 00:07:16.198
+account library
+
+83
+00:07:17.543 --> 00:07:23.449
+From here the tutorial uses an isolated local training account and recorded
+genuine AI
+
+84
+00:07:23.462 --> 00:07:28.985
+drafts Choose This is a new process create a card Do not select an
+
+85
+00:07:28.998 --> 00:07:34.700
+existing Mainsten process as the update target Returning an improved version of
+the same
+
+86
+00:07:34.713 --> 00:07:38.399
+process should update its existing card and preserve its history
+
+87
+00:07:39.739 --> 00:07:44.166
+Name the training card clearly and use the process search to find it The
+
+88
+00:07:44.179 --> 00:07:51.015
+diagram original representation steps and suggestions now belong to the same saved
+card My
+
+89
+00:07:51.028 --> 00:07:56.207
+processes and improvements contains your own cards Parts shared with me is for
+access
+
+90
+00:07:56.219 --> 00:07:57.635
+granted by another owner
+
+91
+00:07:58.960 --> 00:08:04.253
+Sharing lets the owner choose a Digmatix employee or Customer their account email
+and
+
+92
+00:08:04.266 --> 00:08:11.384
+Selected step or Whole process Whole process includes future active steps too New
+recipients
+
+93
+00:08:11.397 --> 00:08:16.869
+also need private-site visitor access We do not grant a real person access in
+
+94
+00:08:16.882 --> 00:08:20.810
+this demonstration the next role switch stays within one account
+
+95
+00:08:22.155 --> 00:08:28.368
+Select the booking step and switch Workspace to Customer Employee supports the
+same suggestion
+
+96
+00:08:28.381 --> 00:08:33.776
+workflow This dropdown demonstrates a role within the owner’s account it does not
+sign
+
+97
+00:08:33.789 --> 00:08:38.968
+in as a customer or bypass access permissions A real recipient works through their
+
+98
+00:08:38.980 --> 00:08:40.830
+own Parts shared with me view
+
+99
+00:08:42.181 --> 00:08:47.041
+Enter a clear title and describe the problem the customer lacks a written
+appointment
+
+100
+00:08:47.053 --> 00:08:53.751
+confirmation Suggest an email after booking containing the date time window and
+contact details
+
+101
+00:08:54.159 --> 00:09:00.344
+Explain the benefit fewer missed visits and clarification calls Choose a general
+improvement
+
+102
+00:09:00.357 --> 00:09:03.916
+because this adds behaviour rather than merely renaming a step
+
+103
+00:09:05.239 --> 00:09:10.686
+Submit the suggestion Submitted means the idea has reached the review queue on
+this
+
+104
+00:09:10.699 --> 00:09:16.298
+process card It does not alter the diagram automatically approve the request or
+send
+
+105
+00:09:16.311 --> 00:09:21.579
+a normal email The author target step and initial text stay attached to the
+
+106
+00:09:21.592 --> 00:09:22.293
+suggestion
+
+107
+00:09:23.627 --> 00:09:29.890
+Switch Workspace to Digmatix ERP consultant or Quality manager Both can manage
+their own
+
+108
+00:09:29.903 --> 00:09:36.319
+processes review suggestions and implement approved improvements Open proposals on
+this same
+
+109
+00:09:36.332 --> 00:09:41.230
+card and choose the new confirmation idea The role does not grant access to
+
+110
+00:09:41.242 --> 00:09:43.092
+another person’s private account
+
+111
+00:09:44.447 --> 00:09:51.247
+Read the problem suggestion benefit and step version before deciding Record a
+decision-maker if
+
+112
+00:09:51.259 --> 00:09:56.948
+relevant explain why the confirmation closes a communication gap and thank the
+contributor
+
+113
+00:09:57.331 --> 00:10:04.142
+Rejection also requires a concrete reason and respectful feedback AI can draft
+wording the
+
+114
+00:10:04.155 --> 00:10:05.711
+reviewer makes the judgement
+
+115
+00:10:07.017 --> 00:10:13.830
+Choose Accept The decision reason and thanks stay with the proposal Acceptance
+alone has
+
+116
+00:10:13.843 --> 00:10:19.659
+not drawn a confirmation box That is deliberate deciding to implement an idea and
+
+117
+00:10:19.672 --> 00:10:25.628
+updating the process model are separate actions Next we record the approved
+instruction before
+
+118
+00:10:25.641 --> 00:10:27.427
+editing the diagram structure
+
+119
+00:10:28.739 --> 00:10:33.752
+Enter an implementation note stating what will change and choose Apply to digital
+map
+
+120
+00:10:34.135 --> 00:10:39.314
+For a general improvement this stores the instruction and records implementation
+against the
+
+121
+00:10:39.327 --> 00:10:45.258
+current step Apply it before structural edits the version check protects against
+applying an
+
+122
+00:10:45.270 --> 00:10:47.337
+old suggestion to a changed step
+
+123
+00:10:48.681 --> 00:10:53.694
+The suggestion now shows Implemented and decision history contains acceptance and
+
+124
+00:10:53.706 --> 00:10:59.677
+implementation The approved instruction appears on the step It still does not
+replace the
+
+125
+00:10:59.690 --> 00:11:04.804
+model edit needed for a new activity We now complete that structural part through
+
+126
+00:11:04.817 --> 00:11:07.534
+the linked generator while keeping this same card
+
+127
+00:11:08.864 --> 00:11:13.851
+Open AI and text generator on the existing card then open its diagram in
+
+128
+00:11:13.864 --> 00:11:20.434
+the text generator The origin link travels with it Request Send appointment
+confirmation after
+
+129
+00:11:20.446 --> 00:11:26.046
+booking and before the successful end owned by the service coordinator Ask to
+preserve
+
+130
+00:11:26.059 --> 00:11:28.559
+the other activities and identifiers
+
+131
+00:11:29.931 --> 00:11:35.709
+Apply the change and inspect Send appointment confirmation in its actual position
+Check the
+
+132
+00:11:35.722 --> 00:11:42.024
+responsible role and both connections The decline branch must still end without
+booking A
+
+133
+00:11:42.037 --> 00:11:47.317
+successful response is a candidate model so inspect the business facts before
+returning it
+
+134
+00:11:47.330 --> 00:11:48.159
+to the account
+
+135
+00:11:49.475 --> 00:11:54.745
+Choose Save diagram to account again Because this generator work came from the
+saved
+
+136
+00:11:54.758 --> 00:11:59.999
+card it updates the same process Do not create another training card for this
+
+137
+00:12:00.012 --> 00:12:06.378
+return The original identity connects the new diagram to earlier suggestions
+decisions and
+
+138
+00:12:06.390 --> 00:12:08.048
+existing access grants
+
+139
+00:12:09.364 --> 00:12:16.189
+Open the same proposal and its decision history The original customer idea
+acceptance thanks
+
+140
+00:12:16.291 --> 00:12:22.082
+and implementation should still be present Compare the new diagram with that
+history The
+
+141
+00:12:22.094 --> 00:12:27.515
+software release card version and diagram version can differ because they count
+different kinds
+
+142
+00:12:27.528 --> 00:12:28.230
+of change
+
+143
+00:12:29.585 --> 00:12:35.020
+Return to Customer view and show the saved feedback and Implemented status A real
+
+144
+00:12:35.032 --> 00:12:39.917
+recipient sees this feedback through their own shared view They do not receive the
+
+145
+00:12:39.930 --> 00:12:45.657
+owner’s private proposal queue Closing the feedback loop shows that the person’s
+contribution
+
+146
+00:12:45.669 --> 00:12:48.003
+was considered and explains the outcome
+
+147
+00:12:49.348 --> 00:12:55.254
+The full process-card backup is separate from model JSON First prepare the backup
+then
+
+148
+00:12:55.267 --> 00:13:00.063
+save the backup file using the second action It includes the source file and
+
+149
+00:13:00.076 --> 00:13:05.879
+this card’s history Store it safely Restoring creates a separate copy and does not
+
+150
+00:13:05.892 --> 00:13:09.030
+automatically inherit another card’s sharing permissions
+
+151
+00:13:10.364 --> 00:13:15.582
+Export the final diagram as JSON and compare it with the earlier download The
+
+152
+00:13:15.594 --> 00:13:20.888
+new confirmation activity is now part of the model while the saved suggestion
+explains
+
+153
+00:13:20.900 --> 00:13:26.857
+why it was added The exercise folder includes actual exported models the source
+text
+
+154
+00:13:27.125 --> 00:13:29.281
+subtitles and chapter timings
+
+155
+00:13:30.614 --> 00:13:36.851
+AI maps supplied text into structured activities decisions and questions the
+server checks the
+
+156
+00:13:36.864 --> 00:13:43.548
+response before rendering it People verify the business logic and approve changes
+Navigation
+
+157
+00:13:43.561 --> 00:13:49.466
+and catalog browsing do not call AI AI buttons can use API credit Keep
+
+158
+00:13:49.479 --> 00:13:54.249
+the source accurate ask about uncertainty and preserve the same process history

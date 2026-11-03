@@ -1,0 +1,14 @@
+{
+  "id": "transcript",
+  "title": "Supplied Example 5-a — ERP diagnostic transcript",
+  "reference": [
+    "Multiple processes are discussed; no invented sequential link between independent topics.",
+    "Production planning uses Excel/paper and experience; Directo does not produce the plan or optimize sequence.",
+    "Batch-picking FIFO is imperfect; system-enforced FEFO is a future idea.",
+    "Existing sales entry uses retail portals/Directo manually; EDI is not automatic.",
+    "Preserve samples/quality hold/optional lab and nonconforming supplier return without inventing an accepted-release route.",
+    "Raw-material movement from reception to production and finished-goods logistics to retail chains are explicitly not mapped; do not invent receipt/posting, dispatch, transport documents or customer receipt.",
+    "Payroll is Merit Palk; detailed personnel, intercompany store flow, management reports and cloud continuity are not fully mapped.",
+    "Do not turn small talk or phone-answering jokes into requirements; keep ambiguous speakers unknown."
+  ]
+}

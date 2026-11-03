@@ -1,0 +1,63 @@
+{
+  "recorded": "2026-10-26",
+  "environment": "Managed preview; synthetic eight-node order example imported through the UI. No model request.",
+  "fixture": "customer-overview-demo.json",
+  "fixtureNotes": "The fixture was marked reviewed only to verify that display changes preserve that status; it is not a customer-approved or live-AI result.",
+  "viewOnlyJSONIdentical": true,
+  "beforeAndAfterSHA256": "d9095b7acfef53fe5b4febfd0fea37977e71f098d13ef832ea08aed6944eeebe",
+  "checks": {
+    "overviewGroups": 2,
+    "originalNodes": 8,
+    "overviewNodes": 6,
+    "overviewNodeIds": [
+      "start",
+      "record",
+      "credit",
+      "pick",
+      "inform",
+      "end"
+    ],
+    "overviewDirection": "TD",
+    "detailedDirectionRestored": "LR",
+    "groupClickOriginalRows": [
+      "Record order",
+      "Verify order"
+    ],
+    "sourceAndUnsentCommandPreservedOnViewChange": true,
+    "viewChangePreservedReviewAndVersion": true,
+    "manualAssignmentVersionBefore": 2,
+    "manualAssignmentVersionAfter": 3,
+    "manualAssignmentResetProcessReview": true,
+    "manualAssignmentPreservedSource": true,
+    "manualAssignmentReason": "Kliendi müügitellimuse registreerimine.",
+    "manualAssignmentReloadPersisted": true,
+    "frenchConfirmedBadge": "VentesConfirmé",
+    "germanConfirmedBadge": "VertriebBestätigt",
+    "languageChangesPreservedSourceAndVersion": true
+  },
+  "viewportChecks": [
+    {
+      "cssViewport": 390,
+      "documentClientWidth": 375,
+      "documentScrollWidth": 375
+    },
+    {
+      "cssViewport": 1920,
+      "documentClientWidth": 1905,
+      "documentScrollWidth": 1905,
+      "outputWidth": 1234
+    },
+    {
+      "cssViewport": 3440,
+      "documentClientWidth": 3425,
+      "documentScrollWidth": 3425,
+      "outputWidth": 2754
+    }
+  ],
+  "limits": [
+    "Simulated iframe viewports, not physical monitor acceptance.",
+    "Local preview SVG download event was not observed; serializer geometry and safe output are covered by tests.",
+    "No live model-quality or customer-reference acceptance was established.",
+    "The PDF guides and full backup remain dated v0.7 snapshots."
+  ]
+}

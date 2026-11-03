@@ -1,0 +1,433 @@
+{
+  "appVersion": "0.8",
+  "environment": "Managed preview, same-origin iframe test viewports; no model calls",
+  "viewports": [
+    {
+      "label": "3440 normal",
+      "geometry": [
+        {
+          "class": "antialiased",
+          "clientWidth": 3425,
+          "element": "body",
+          "height": 1471.84375,
+          "right": 3425,
+          "scrollWidth": 3425,
+          "width": 3425,
+          "x": 0
+        },
+        {
+          "class": null,
+          "clientWidth": 3221,
+          "element": "main",
+          "height": 1398.84375,
+          "right": 3425,
+          "scrollWidth": 3221,
+          "width": 3221,
+          "x": 204
+        },
+        {
+          "class": "workspace-grid",
+          "clientWidth": 3131,
+          "element": "div",
+          "height": 1155.59375,
+          "right": 3380,
+          "scrollWidth": 3131,
+          "width": 3131,
+          "x": 249
+        },
+        {
+          "class": "input-column",
+          "clientWidth": 350,
+          "element": "section",
+          "height": 850.78125,
+          "right": 599,
+          "scrollWidth": 350,
+          "width": 350,
+          "x": 249
+        },
+        {
+          "class": "output-column",
+          "clientWidth": 2754,
+          "element": "section",
+          "height": 1155.59375,
+          "right": 3380,
+          "scrollWidth": 2754,
+          "width": 2754,
+          "x": 626
+        },
+        {
+          "class": "diagram-scroll",
+          "clientWidth": 2752,
+          "element": "div",
+          "height": 590,
+          "right": 3379,
+          "scrollWidth": 2752,
+          "width": 2752,
+          "x": 627
+        }
+      ]
+    },
+    {
+      "label": "3440 expanded",
+      "geometry": [
+        {
+          "class": "antialiased",
+          "clientWidth": 3425,
+          "element": "body",
+          "height": 2051.84375,
+          "right": 3425,
+          "scrollWidth": 3425,
+          "width": 3425,
+          "x": 0
+        },
+        {
+          "class": null,
+          "clientWidth": 3221,
+          "element": "main",
+          "height": 1978.84375,
+          "right": 3425,
+          "scrollWidth": 3221,
+          "width": 3221,
+          "x": 204
+        },
+        {
+          "class": "workspace-grid diagram-expanded",
+          "clientWidth": 3131,
+          "element": "div",
+          "height": 1735.59375,
+          "right": 3380,
+          "scrollWidth": 3131,
+          "width": 3131,
+          "x": 249
+        },
+        {
+          "class": "input-column",
+          "clientWidth": 0,
+          "element": "section",
+          "height": 0,
+          "right": 0,
+          "scrollWidth": 0,
+          "width": 0,
+          "x": 0
+        },
+        {
+          "class": "output-column",
+          "clientWidth": 3131,
+          "element": "section",
+          "height": 1735.59375,
+          "right": 3380,
+          "scrollWidth": 3131,
+          "width": 3131,
+          "x": 249
+        },
+        {
+          "class": "diagram-scroll",
+          "clientWidth": 3129,
+          "element": "div",
+          "height": 1170,
+          "right": 3379,
+          "scrollWidth": 3129,
+          "width": 3129,
+          "x": 250
+        }
+      ]
+    },
+    {
+      "label": "1920 normal",
+      "geometry": [
+        {
+          "class": "antialiased",
+          "clientWidth": 1905,
+          "element": "body",
+          "height": 1471.84375,
+          "right": 1905,
+          "scrollWidth": 1905,
+          "width": 1905,
+          "x": 0
+        },
+        {
+          "class": null,
+          "clientWidth": 1701,
+          "element": "main",
+          "height": 1398.84375,
+          "right": 1905,
+          "scrollWidth": 1701,
+          "width": 1701,
+          "x": 204
+        },
+        {
+          "class": "workspace-grid",
+          "clientWidth": 1611,
+          "element": "div",
+          "height": 1155.59375,
+          "right": 1860,
+          "scrollWidth": 1611,
+          "width": 1611,
+          "x": 249
+        },
+        {
+          "class": "input-column",
+          "clientWidth": 350,
+          "element": "section",
+          "height": 898.375,
+          "right": 599,
+          "scrollWidth": 350,
+          "width": 350,
+          "x": 249
+        },
+        {
+          "class": "output-column",
+          "clientWidth": 1234,
+          "element": "section",
+          "height": 1155.59375,
+          "right": 1860,
+          "scrollWidth": 1234,
+          "width": 1234,
+          "x": 626
+        },
+        {
+          "class": "diagram-scroll",
+          "clientWidth": 1232,
+          "element": "div",
+          "height": 590,
+          "right": 1859,
+          "scrollWidth": 1750,
+          "width": 1232,
+          "x": 627
+        }
+      ]
+    },
+    {
+      "label": "1920 expanded",
+      "geometry": [
+        {
+          "class": "antialiased",
+          "clientWidth": 1905,
+          "element": "body",
+          "height": 1691.84375,
+          "right": 1905,
+          "scrollWidth": 1905,
+          "width": 1905,
+          "x": 0
+        },
+        {
+          "class": null,
+          "clientWidth": 1701,
+          "element": "main",
+          "height": 1618.84375,
+          "right": 1905,
+          "scrollWidth": 1701,
+          "width": 1701,
+          "x": 204
+        },
+        {
+          "class": "workspace-grid diagram-expanded",
+          "clientWidth": 1611,
+          "element": "div",
+          "height": 1375.59375,
+          "right": 1860,
+          "scrollWidth": 1611,
+          "width": 1611,
+          "x": 249
+        },
+        {
+          "class": "input-column",
+          "clientWidth": 0,
+          "element": "section",
+          "height": 0,
+          "right": 0,
+          "scrollWidth": 0,
+          "width": 0,
+          "x": 0
+        },
+        {
+          "class": "output-column",
+          "clientWidth": 1611,
+          "element": "section",
+          "height": 1375.59375,
+          "right": 1860,
+          "scrollWidth": 1611,
+          "width": 1611,
+          "x": 249
+        },
+        {
+          "class": "diagram-scroll",
+          "clientWidth": 1609,
+          "element": "div",
+          "height": 810,
+          "right": 1859,
+          "scrollWidth": 1750,
+          "width": 1609,
+          "x": 250
+        }
+      ]
+    },
+    {
+      "label": "390 normal",
+      "geometry": [
+        {
+          "class": "antialiased",
+          "clientWidth": 375,
+          "element": "body",
+          "height": 2448.15625,
+          "right": 375,
+          "scrollWidth": 375,
+          "width": 375,
+          "x": 0
+        },
+        {
+          "class": null,
+          "clientWidth": 375,
+          "element": "main",
+          "height": 2359.15625,
+          "right": 375,
+          "scrollWidth": 375,
+          "width": 375,
+          "x": 0
+        },
+        {
+          "class": "workspace-grid",
+          "clientWidth": 343,
+          "element": "div",
+          "height": 2072.5625,
+          "right": 359,
+          "scrollWidth": 343,
+          "width": 343,
+          "x": 16
+        },
+        {
+          "class": "input-column",
+          "clientWidth": 0,
+          "element": "section",
+          "height": 0,
+          "right": 0,
+          "scrollWidth": 0,
+          "width": 0,
+          "x": 0
+        },
+        {
+          "class": "output-column",
+          "clientWidth": 343,
+          "element": "section",
+          "height": 1281.1875,
+          "right": 359,
+          "scrollWidth": 343,
+          "width": 343,
+          "x": 16
+        },
+        {
+          "class": "diagram-scroll",
+          "clientWidth": 341,
+          "element": "div",
+          "height": 525,
+          "right": 358,
+          "scrollWidth": 1750,
+          "width": 341,
+          "x": 17
+        }
+      ]
+    },
+    {
+      "label": "390 expanded",
+      "geometry": [
+        {
+          "class": "antialiased",
+          "clientWidth": 375,
+          "element": "body",
+          "height": 1705.78125,
+          "right": 375,
+          "scrollWidth": 375,
+          "width": 375,
+          "x": 0
+        },
+        {
+          "class": null,
+          "clientWidth": 375,
+          "element": "main",
+          "height": 1616.78125,
+          "right": 375,
+          "scrollWidth": 375,
+          "width": 375,
+          "x": 0
+        },
+        {
+          "class": "workspace-grid diagram-expanded",
+          "clientWidth": 343,
+          "element": "div",
+          "height": 1330.1875,
+          "right": 359,
+          "scrollWidth": 343,
+          "width": 343,
+          "x": 16
+        },
+        {
+          "class": "input-column",
+          "clientWidth": 0,
+          "element": "section",
+          "height": 0,
+          "right": 0,
+          "scrollWidth": 0,
+          "width": 0,
+          "x": 0
+        },
+        {
+          "class": "output-column",
+          "clientWidth": 343,
+          "element": "section",
+          "height": 1330.1875,
+          "right": 359,
+          "scrollWidth": 343,
+          "width": 343,
+          "x": 16
+        },
+        {
+          "class": "diagram-scroll",
+          "clientWidth": 341,
+          "element": "div",
+          "height": 574,
+          "right": 358,
+          "scrollWidth": 1750,
+          "width": 341,
+          "x": 17
+        }
+      ]
+    }
+  ],
+  "preservedAfterExpandRestore": {
+    "command": true,
+    "history": true,
+    "review": true,
+    "source": true,
+    "subline": true,
+    "svg": true,
+    "zoom": true
+  },
+  "localeChecks": [
+    {
+      "locale": "en",
+      "expand": "Expand diagram",
+      "restore": "Restore workspace",
+      "passed": true
+    },
+    {
+      "locale": "et",
+      "expand": "Laienda diagrammi",
+      "restore": "Taasta töövaade",
+      "passed": true
+    },
+    {
+      "locale": "fr",
+      "expand": "Agrandir le diagramme",
+      "restore": "Rétablir l’espace de travail",
+      "passed": true
+    },
+    {
+      "locale": "de",
+      "expand": "Diagramm vergrößern",
+      "restore": "Arbeitsbereich wiederherstellen",
+      "passed": true
+    }
+  ],
+  "escapeRestores": true,
+  "mobileFitZoom": "15%"
+}

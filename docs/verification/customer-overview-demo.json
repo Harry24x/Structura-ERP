@@ -1,0 +1,185 @@
+{
+  "schemaVersion": "1.0",
+  "title": "Sales order · prepared overview demo",
+  "mode": "as-is",
+  "roles": [
+    {
+      "id": "sales",
+      "label": "Sales"
+    },
+    {
+      "id": "finance",
+      "label": "Finance"
+    },
+    {
+      "id": "warehouse",
+      "label": "Warehouse"
+    }
+  ],
+  "nodes": [
+    {
+      "id": "start",
+      "type": "start",
+      "label": "Order received",
+      "roleId": null,
+      "evidence": "",
+      "systemId": null,
+      "execution": "unknown",
+      "humanDecision": null,
+      "systemEvidence": "",
+      "businessArea": "unknown",
+      "areaReason": "",
+      "areaReviewed": false
+    },
+    {
+      "id": "record",
+      "type": "activity",
+      "label": "Record order",
+      "roleId": "sales",
+      "evidence": "Sales records an order",
+      "businessArea": "sales",
+      "areaReason": "Prepared example: Record order",
+      "areaReviewed": false,
+      "systemId": null,
+      "execution": "unknown",
+      "humanDecision": null,
+      "systemEvidence": ""
+    },
+    {
+      "id": "verify",
+      "type": "activity",
+      "label": "Verify order",
+      "roleId": "sales",
+      "evidence": "Sales verifies the order",
+      "businessArea": "sales",
+      "areaReason": "Prepared example: Verify order",
+      "areaReviewed": false,
+      "systemId": null,
+      "execution": "unknown",
+      "humanDecision": null,
+      "systemEvidence": ""
+    },
+    {
+      "id": "credit",
+      "type": "decision",
+      "label": "Credit approved?",
+      "roleId": "finance",
+      "evidence": "Finance checks credit",
+      "businessArea": "finance",
+      "areaReason": "Prepared example: Credit approved?",
+      "areaReviewed": false,
+      "systemId": null,
+      "execution": "unknown",
+      "humanDecision": null,
+      "systemEvidence": ""
+    },
+    {
+      "id": "pick",
+      "type": "activity",
+      "label": "Pick goods",
+      "roleId": "warehouse",
+      "evidence": "Warehouse picks goods",
+      "businessArea": "warehouse",
+      "areaReason": "Prepared example: Pick goods",
+      "areaReviewed": false,
+      "systemId": null,
+      "execution": "unknown",
+      "humanDecision": null,
+      "systemEvidence": ""
+    },
+    {
+      "id": "pack",
+      "type": "activity",
+      "label": "Pack goods",
+      "roleId": "warehouse",
+      "evidence": "Warehouse packs goods",
+      "businessArea": "warehouse",
+      "areaReason": "Prepared example: Pack goods",
+      "areaReviewed": false,
+      "systemId": null,
+      "execution": "unknown",
+      "humanDecision": null,
+      "systemEvidence": ""
+    },
+    {
+      "id": "inform",
+      "type": "activity",
+      "label": "Inform customer",
+      "roleId": "sales",
+      "evidence": "Sales informs the customer",
+      "businessArea": "sales",
+      "areaReason": "Prepared example: Inform customer",
+      "areaReviewed": false,
+      "systemId": null,
+      "execution": "unknown",
+      "humanDecision": null,
+      "systemEvidence": ""
+    },
+    {
+      "id": "end",
+      "type": "end",
+      "label": "Process complete",
+      "roleId": null,
+      "evidence": "",
+      "systemId": null,
+      "execution": "unknown",
+      "humanDecision": null,
+      "systemEvidence": "",
+      "businessArea": "unknown",
+      "areaReason": "",
+      "areaReviewed": false
+    }
+  ],
+  "edges": [
+    {
+      "from": "start",
+      "to": "record",
+      "label": ""
+    },
+    {
+      "from": "record",
+      "to": "verify",
+      "label": ""
+    },
+    {
+      "from": "verify",
+      "to": "credit",
+      "label": ""
+    },
+    {
+      "from": "credit",
+      "to": "pick",
+      "label": "Approved"
+    },
+    {
+      "from": "pick",
+      "to": "pack",
+      "label": ""
+    },
+    {
+      "from": "pack",
+      "to": "end",
+      "label": ""
+    },
+    {
+      "from": "credit",
+      "to": "inform",
+      "label": "Refused"
+    },
+    {
+      "from": "inform",
+      "to": "end",
+      "label": ""
+    }
+  ],
+  "questions": [],
+  "notes": [
+    "Synthetic prepared example for interface checks; not a live AI result."
+  ],
+  "systems": [],
+  "source": "Sales records an order. Sales verifies the order. Finance checks credit. If credit is approved, Warehouse picks goods. Warehouse packs goods. If credit is refused, Sales informs the customer. Then the process ends.",
+  "version": 2,
+  "origin": "imported",
+  "reviewed": true,
+  "changeSummary": "Human review recorded"
+}

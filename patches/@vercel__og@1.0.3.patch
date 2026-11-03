@@ -1,0 +1,21 @@
+diff --git a/dist/index.node.js b/dist/index.node.js
+index 4f360de7f45abe8b89697a6f3c20b6b8f1a7548a..2aac8c38f5792d7012bec9f101ce74d03bcf8e58 100644
+--- a/dist/index.node.js
++++ b/dist/index.node.js
+@@ -4343,13 +4343,9 @@ var require_hb = __commonJS({
+ // node_modules/.pnpm/harfbuzzjs@0.10.0/node_modules/harfbuzzjs/index.js
+ var require_harfbuzzjs = __commonJS({
+   "node_modules/.pnpm/harfbuzzjs@0.10.0/node_modules/harfbuzzjs/index.js"(exports2, module) {
+-    var hbjs = require_hbjs();
+-    var hb = require_hb();
+-    module.exports = new Promise(function(resolve, reject) {
+-      hb().then((instance) => {
+-        resolve(hbjs(instance));
+-      }, reject);
+-    });
++    // Keep HarfBuzz in its published CommonJS package so fs, __dirname and
++    // the sibling hb.wasm resolve correctly from this Node ESM bundle.
++    module.exports = createRequire(createRequire(import.meta.url).resolve("satori"))("harfbuzzjs");
+   }
+ });
+ 

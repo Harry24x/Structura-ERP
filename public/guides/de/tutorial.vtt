@@ -1,0 +1,226 @@
+WEBVTT
+
+1
+00:00:00.352 --> 00:00:06.839
+Öffnen Sie in Process Studio die Sprachauswahl und wählen Sie Deutsch Über
+Anleitungen gelangen
+
+2
+00:00:06.852 --> 00:00:14.404
+Sie zur passenden Dokumentation Wir modellieren eine fiktive Serviceanfrage
+prüfen das Diagramm
+
+3
+00:00:14.417 --> 00:00:22.073
+und bearbeiten anschließend einen Kundenvorschlag Die gezeigten Ansichten
+sind illustriert Die
+
+4
+00:00:22.086 --> 00:00:25.641
+Beispieltexte können Sie für eine eigene Übung übernehmen
+
+5
+00:00:27.476 --> 00:00:33.234
+Öffnen Sie Diagramm aus Text erstellen Fügen Sie die Beschreibung in das
+Feld Ihre
+
+6
+00:00:33.247 --> 00:00:40.786
+Eingabe ein Sie können auch ein Dokument importieren und den übernommenen
+Text prüfen In
+
+7
+00:00:40.800 --> 00:00:46.281
+dieser Übung bleiben zwei Details bewusst offen damit wir sie im nächsten
+Schritt präzisieren
+
+8
+00:00:46.294 --> 00:00:46.750
+können
+
+9
+00:00:48.602 --> 00:00:54.685
+Starten Sie die Diagrammerstellung Das hier gezeigte Ergebnis ist ein
+Beispiel für einen
+
+10
+00:00:54.698 --> 00:01:02.250
+Entwurf Vergleichen Sie die Schritte mit der Beschreibung Wenn Angaben
+fehlen muss der Ablauf
+
+11
+00:01:02.263 --> 00:01:08.630
+nach der Antwort des Kunden zur Prüfung zurückführen Das Angebot folgt erst
+wenn die
+
+12
+00:01:08.643 --> 00:01:10.440
+Angaben vollständig sind
+
+13
+00:01:12.269 --> 00:01:18.430
+Tragen Sie die zuständige Rolle für die Terminvereinbarung ein Geben Sie für
+den Ablauf
+
+14
+00:01:18.443 --> 00:01:23.234
+nach einer Ablehnung die zweite Antwort als Klarstellung ein und übernehmen
+Sie sie in
+
+15
+00:01:23.247 --> 00:01:29.549
+den Entwurf Prüfen Sie den Abschluss nach einer Ablehnung die
+Terminvereinbarung nach einer
+
+16
+00:01:29.562 --> 00:01:32.388
+Annahme und die Schleife zur erneuten Prüfung
+
+17
+00:01:34.227 --> 00:01:40.115
+Öffnen Sie die Schrittinformationen und kontrollieren Sie die
+Zuständigkeiten In den
+
+18
+00:01:40.128 --> 00:01:44.906
+Diagrammansichten und den Schrittdetails können Sie die Übergänge und Rollen
+getrennt
+
+19
+00:01:44.919 --> 00:01:51.938
+betrachten Prüfen Sie beide Zweige und die offenen Fragen Markieren Sie den
+Entwurf
+
+20
+00:01:51.951 --> 00:01:53.643
+anschließend als geprüft
+
+21
+00:01:55.477 --> 00:02:02.198
+Fügen Sie diese Anweisung in Gewünschte Prozessänderung ein und starten Sie
+die Änderung Prüfen
+
+22
+00:02:02.211 --> 00:02:06.872
+Sie dass der neue Schritt genau zwischen Erfassen und Prüfen liegt und dass
+Frist
+
+23
+00:02:06.885 --> 00:02:13.253
+und Rolle stimmen Wenn sich weitere Elemente geändert haben vergleichen Sie
+den Entwurf mit
+
+24
+00:02:13.266 --> 00:02:14.542
+dem Versionsverlauf
+
+25
+00:02:16.352 --> 00:02:23.229
+Exportieren Sie das Diagramm als JSON damit Sie es später wieder importieren
+können Speichern
+
+26
+00:02:23.242 --> 00:02:29.466
+Sie es anschließend im Konto Legen Sie für diese Übung eine eigene
+Prozesskarte an
+
+27
+00:02:29.479 --> 00:02:35.143
+und suchen Sie sie unter Meine Prozesse und Verbesserungen Auf dieser Karte
+sammeln Sie
+
+28
+00:02:35.156 --> 00:02:37.122
+die Vorschläge und Entscheidungen
+
+29
+00:02:38.977 --> 00:02:45.190
+Wählen Sie den Schritt Termin vereinbaren Bei echter Zusammenarbeit kann die
+verantwortliche
+
+30
+00:02:45.203 --> 00:02:51.076
+Person den Schritt für das berechtigte Konto freigeben Für die Übung
+verwenden Sie die
+
+31
+00:02:51.089 --> 00:02:57.365
+Rolle Kunde auf einer fiktiven Prozesskarte Öffnen Sie in der Kundenansicht
+den Schritt und
+
+32
+00:02:57.378 --> 00:03:00.477
+wählen Sie die Funktion für einen Verbesserungsvorschlag
+
+33
+00:03:02.310 --> 00:03:08.549
+Geben Sie einen kurzen Titel ein Beschreiben Sie das Problem die gewünschte
+Lösung und
+
+34
+00:03:08.562 --> 00:03:14.292
+den erwarteten Nutzen Senden Sie den Vorschlag ab und prüfen Sie seinen
+Status in
+
+35
+00:03:14.305 --> 00:03:20.229
+der Prozesskarte Der Vorschlag bleibt mit dem Schritt Termin vereinbaren
+verbunden
+
+36
+00:03:22.060 --> 00:03:29.302
+Öffnen Sie den Vorschlag als Qualitätsverantwortliche oder als Berater Lesen
+Sie Problem Lösung
+
+37
+00:03:29.315 --> 00:03:35.721
+und Nutzen In diesem Beispiel genehmigen Sie den Vorschlag mit Begründung
+und Rückmeldung
+
+38
+00:03:36.620 --> 00:03:41.750
+Begründen Sie auch eine Ablehnung falls Sie bei einem anderen Vorschlag so
+entscheiden
+
+39
+00:03:42.648 --> 00:03:45.826
+Entscheidung und Rückmeldung bleiben im Verlauf erhalten
+
+40
+00:03:47.644 --> 00:03:53.152
+Erfassen Sie zuerst eine Umsetzungsnotiz und wenden Sie sie auf das digitale
+Modell an
+
+41
+00:03:54.052 --> 00:03:58.974
+Öffnen Sie danach das Diagramm der Karte im Generator und geben Sie diese
+Anweisung
+
+42
+00:03:58.987 --> 00:04:06.201
+ein Prüfen Sie die Reihenfolge und die Zuständigkeit Speichern Sie das
+Ergebnis auf der
+
+43
+00:04:06.214 --> 00:04:11.344
+vorhandenen Karte damit Entscheidung und Änderung zusammen auffindbar
+bleiben
+
+44
+00:04:13.185 --> 00:04:19.568
+Öffnen Sie die Karte erneut und kontrollieren Sie die Terminbestätigung im
+Annahmezweig Im
+
+45
+00:04:19.581 --> 00:04:25.857
+Verlauf finden Sie die Rückmeldung an den Kunden Exportieren Sie die
+endgültige Fassung für
+
+46
+00:04:25.870 --> 00:04:31.977
+eine Arbeitskopie Das Handbuch und die Übungsdatei finden Sie über
+Anleitungen auf der
+
+47
+00:04:31.990 --> 00:04:32.914
+deutschen Seite

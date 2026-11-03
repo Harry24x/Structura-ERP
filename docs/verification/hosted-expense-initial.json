@@ -1,0 +1,162 @@
+{
+  "schemaVersion": "1.0",
+  "title": "Expense approval",
+  "mode": "to-be",
+  "roles": [
+    {
+      "id": "employee",
+      "label": "Employee"
+    },
+    {
+      "id": "manager",
+      "label": "Manager"
+    },
+    {
+      "id": "finance",
+      "label": "Finance"
+    }
+  ],
+  "nodes": [
+    {
+      "id": "start",
+      "type": "start",
+      "label": "Process starts",
+      "roleId": null,
+      "evidence": ""
+    },
+    {
+      "id": "submit",
+      "type": "activity",
+      "label": "Submit expense claim",
+      "roleId": "employee",
+      "evidence": "An employee submits an expense claim."
+    },
+    {
+      "id": "review",
+      "type": "activity",
+      "label": "Review claim",
+      "roleId": "manager",
+      "evidence": "The manager reviews it."
+    },
+    {
+      "id": "approved",
+      "type": "decision",
+      "label": "Claim approved?",
+      "roleId": "manager",
+      "evidence": "If approved"
+    },
+    {
+      "id": "receipt_check",
+      "type": "activity",
+      "label": "Check receipt is attached",
+      "roleId": "finance",
+      "evidence": "finance checks that a receipt is attached."
+    },
+    {
+      "id": "receipt_attached",
+      "type": "decision",
+      "label": "Receipt attached?",
+      "roleId": "finance",
+      "evidence": "If it is missing"
+    },
+    {
+      "id": "request_receipt",
+      "type": "activity",
+      "label": "Ask employee to attach receipt",
+      "roleId": "employee",
+      "evidence": "ask the employee to attach it"
+    },
+    {
+      "id": "reimburse",
+      "type": "activity",
+      "label": "Reimburse employee",
+      "roleId": "finance",
+      "evidence": "finance reimburses the employee"
+    },
+    {
+      "id": "rejected",
+      "type": "activity",
+      "label": "Employee receives reason",
+      "roleId": "employee",
+      "evidence": "the employee receives the reason"
+    },
+    {
+      "id": "end_approved",
+      "type": "end",
+      "label": "Process ends after reimbursement",
+      "roleId": null,
+      "evidence": "the process ends"
+    },
+    {
+      "id": "end_rejected",
+      "type": "end",
+      "label": "Process ends after rejection",
+      "roleId": null,
+      "evidence": "the process ends"
+    }
+  ],
+  "edges": [
+    {
+      "from": "start",
+      "to": "submit",
+      "label": ""
+    },
+    {
+      "from": "submit",
+      "to": "review",
+      "label": ""
+    },
+    {
+      "from": "review",
+      "to": "approved",
+      "label": ""
+    },
+    {
+      "from": "approved",
+      "to": "receipt_check",
+      "label": "Approved"
+    },
+    {
+      "from": "approved",
+      "to": "rejected",
+      "label": "Rejected"
+    },
+    {
+      "from": "receipt_check",
+      "to": "receipt_attached",
+      "label": ""
+    },
+    {
+      "from": "receipt_attached",
+      "to": "request_receipt",
+      "label": "Missing"
+    },
+    {
+      "from": "request_receipt",
+      "to": "receipt_check",
+      "label": "Repeat check"
+    },
+    {
+      "from": "receipt_attached",
+      "to": "reimburse",
+      "label": "Attached"
+    },
+    {
+      "from": "reimburse",
+      "to": "end_approved",
+      "label": ""
+    },
+    {
+      "from": "rejected",
+      "to": "end_rejected",
+      "label": ""
+    }
+  ],
+  "questions": [],
+  "notes": [],
+  "source": "An employee submits an expense claim. The manager reviews it. If approved, finance reimburses the employee and the process ends. If rejected, the employee receives the reason and the process ends.\nRequested improvement: After the manager approves, finance checks that a receipt is attached. If it is missing, ask the employee to attach it and repeat the receipt check. Otherwise reimburse as before.",
+  "version": 3,
+  "origin": "model-api",
+  "reviewed": false,
+  "changeSummary": "AI proposal from requested change"
+}

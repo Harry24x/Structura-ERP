@@ -1,0 +1,11 @@
+{
+  "id": "interview",
+  "title": "Supplied Example 2 — purchasing interview",
+  "reference": [
+    "Purchasing work and physical warehouse work are separate functions even when both use ERP.",
+    "No invented approval amount or cancellation authority.",
+    "Preserve correction/resubmission, supplier deviations, actual received quantity, remaining order and separation of damaged goods.",
+    "The source's contradictory warehouse/buyer advance notice must not be silently reversed.",
+    "Invoice checking and payment are explicitly outside this view; do not add them."
+  ]
+}

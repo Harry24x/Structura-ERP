@@ -1,0 +1,134 @@
+{
+  "schemaVersion": "1.0",
+  "title": "Expense approval",
+  "mode": "to-be",
+  "roles": [
+    {
+      "id": "employee",
+      "label": "Employee"
+    },
+    {
+      "id": "manager",
+      "label": "Manager"
+    },
+    {
+      "id": "finance",
+      "label": "Finance"
+    }
+  ],
+  "nodes": [
+    {
+      "id": "start",
+      "type": "start",
+      "label": "Expense received",
+      "roleId": null,
+      "evidence": ""
+    },
+    {
+      "id": "submit",
+      "type": "activity",
+      "label": "Submit expense claim",
+      "roleId": "employee",
+      "evidence": "employee submits an expense claim"
+    },
+    {
+      "id": "approval",
+      "type": "decision",
+      "label": "Claim approved?",
+      "roleId": "manager",
+      "evidence": "The manager reviews it. If approved"
+    },
+    {
+      "id": "receipt_check",
+      "type": "decision",
+      "label": "Receipt attached?",
+      "roleId": "finance",
+      "evidence": "finance checks that a receipt is attached"
+    },
+    {
+      "id": "attach_receipt",
+      "type": "activity",
+      "label": "Attach receipt",
+      "roleId": "employee",
+      "evidence": "ask the employee to attach it"
+    },
+    {
+      "id": "reimburse",
+      "type": "activity",
+      "label": "Reimburse employee",
+      "roleId": "finance",
+      "evidence": "finance reimburses the employee"
+    },
+    {
+      "id": "rejected",
+      "type": "activity",
+      "label": "Receive rejection reason",
+      "roleId": "employee",
+      "evidence": "the employee receives the reason"
+    },
+    {
+      "id": "end",
+      "type": "end",
+      "label": "Process complete",
+      "roleId": null,
+      "evidence": ""
+    }
+  ],
+  "edges": [
+    {
+      "from": "start",
+      "to": "submit",
+      "label": ""
+    },
+    {
+      "from": "submit",
+      "to": "approval",
+      "label": ""
+    },
+    {
+      "from": "approval",
+      "to": "receipt_check",
+      "label": "Approved"
+    },
+    {
+      "from": "approval",
+      "to": "rejected",
+      "label": "Rejected"
+    },
+    {
+      "from": "receipt_check",
+      "to": "attach_receipt",
+      "label": "Receipt missing"
+    },
+    {
+      "from": "attach_receipt",
+      "to": "receipt_check",
+      "label": "Repeat receipt check"
+    },
+    {
+      "from": "receipt_check",
+      "to": "reimburse",
+      "label": "Receipt attached"
+    },
+    {
+      "from": "reimburse",
+      "to": "end",
+      "label": ""
+    },
+    {
+      "from": "rejected",
+      "to": "end",
+      "label": ""
+    }
+  ],
+  "questions": [],
+  "notes": [
+    "Reviewable to-be draft incorporating the requested receipt check and attachment loop; not human-approved.",
+    "The employee's attachment task is mapped directly; no separate request activity or unspecified requester is assigned."
+  ],
+  "source": "An employee submits an expense claim. The manager reviews it. If approved, finance reimburses the employee and the process ends. If rejected, the employee receives the reason and the process ends.\nRequested improvement: After the manager approves, finance checks that a receipt is attached. If it is missing, ask the employee to attach it and repeat the receipt check. Otherwise reimburse as before.",
+  "version": 2,
+  "origin": "model-api",
+  "reviewed": false,
+  "changeSummary": "AI proposal from requested change"
+}

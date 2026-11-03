@@ -1,0 +1,4 @@
+Töötaja esitab taotluse. Juht kontrollib taotlust.
+Kui juht kinnitab taotluse, teeb raamatupidaja makse.
+Kui juht lükkab taotluse tagasi, saab töötaja põhjenduse.
+Français : réception et vérification. Deutsch: Prüfung und Freigabe.
