@@ -491,7 +491,7 @@ Vali eesti, inglise, prantsuse või saksa keel.|Choose Estonian, English, French
 Protsessiosa|Process step|Étape du processus|Prozessschritt
 PROTOTÜÜP 39|PROTOTYPE 39|PROTOTYPE 39|PROTOTYP 39
 PROTOTÜÜP 40|PROTOTYPE 40|PROTOTYPE 40|PROTOTYP 40
-PROTOTÜÜP 50|PROTOTYPE 50|PROTOTYPE 50|PROTOTYP 50
+PROTOTÜÜP 61|PROTOTYPE 61|PROTOTYPE 61|PROTOTYP 61
 Digmatix ERP consultant|Digmatix ERP consultant|Consultant ERP Digmatix|Digmatix ERP-Berater
 Kvaliteedijuht ja Digmatix ERP consultant saavad hallata oma konto protsesse, vaadata ettepanekuid üle ning jagada sammu või kogu protsessi töötaja või kliendiga. Töövaate valimine ei anna ligipääsu teise inimese kontole. AI kasutab olemasolevat serveriseadistust.|The quality manager and Digmatix ERP consultant can manage their own processes, review suggestions and share a step or a whole process with an employee or client. Selecting a work view does not grant access to another person's account. AI uses the existing server configuration.|Le responsable qualité et le consultant ERP Digmatix peuvent gérer leurs propres processus, examiner les suggestions et partager une étape ou un processus entier avec un employé ou un client. Le choix d'une vue ne donne pas accès au compte d'une autre personne. L'IA utilise la configuration serveur existante.|Qualitätsmanager und Digmatix ERP-Berater können ihre eigenen Prozesse verwalten, Vorschläge prüfen und einen Schritt oder einen gesamten Prozess mit Mitarbeitenden oder Kunden teilen. Die Wahl einer Arbeitsansicht gewährt keinen Zugriff auf ein fremdes Konto. Die KI verwendet die vorhandene Serverkonfiguration.
 Jagamine · konto ligipääs ({0})|Sharing · account access ({0})|Partage · accès au compte ({0})|Freigabe · Kontozugriff ({0})

@@ -1,5 +1,210 @@
 // Generated from lib/quality-translations.tsv and the generator catalogue.
 export const QUALITY_TRANSLATIONS = {
+ "Värviteema": [
+  "Colour theme",
+  "Thème de couleurs",
+  "Farbschema"
+ ],
+ "Stuudio roheline": [
+  "Studio green",
+  "Vert Studio",
+  "Studio-Grün"
+ ],
+ "Türkiislaguun": [
+  "Turquoise lagoon",
+  "Lagon turquoise",
+  "Türkisblaue Lagune"
+ ],
+ "Sügav ookeanisinine": [
+  "Deep ocean blue",
+  "Bleu océan profond",
+  "Tiefes Ozeanblau"
+ ],
+ "Projekti menüü": [
+  "Project navigation",
+  "Menu du projet",
+  "Projektnavigation"
+ ],
+ "Protsessi sisend": [
+  "Process inputs",
+  "Saisie du processus",
+  "Prozesseingabe"
+ ],
+ "Peida projekti menüü": [
+  "Hide project navigation",
+  "Masquer le menu du projet",
+  "Projektnavigation ausblenden"
+ ],
+ "Näita projekti menüüd": [
+  "Show project navigation",
+  "Afficher le menu du projet",
+  "Projektnavigation anzeigen"
+ ],
+ "Peida protsessi sisend": [
+  "Hide process inputs",
+  "Masquer la saisie du processus",
+  "Prozesseingabe ausblenden"
+ ],
+ "Näita protsessi sisendit": [
+  "Show process inputs",
+  "Afficher la saisie du processus",
+  "Prozesseingabe anzeigen"
+ ],
+ "Mahuta kõrgusesse": [
+  "Fit diagram height",
+  "Ajuster à la hauteur",
+  "An Höhe anpassen"
+ ],
+ "Genereeri kuvatav mustand enne salvestamist.": [
+  "Generate the visible draft before saving it.",
+  "Générez le brouillon affiché avant de l’enregistrer.",
+  "Erstellen Sie den angezeigten Entwurf vor dem Speichern."
+ ],
+ "Protsessi ulatus (valikuline)": [
+  "Process scope (optional)",
+  "Périmètre du processus (facultatif)",
+  "Prozessumfang (optional)"
+ ],
+ "Näide: kaupade vastuvõtt tarnijatelt ilma eelneva tellimuseta": [
+  "Example: Goods receipt from suppliers without a pre-created order",
+  "Exemple : réception sans commande préalable",
+  "Beispiel: Wareneingang ohne vorherige Bestellung"
+ ],
+ "Algtekst või ulatus muutus. Genereeri uus mustand.": [
+  "The source or scope changed. Generate a new draft.",
+  "La source ou le périmètre a changé. Générez un nouveau brouillon.",
+  "Quelle oder Umfang wurde geändert. Erstellen Sie einen neuen Entwurf."
+ ],
+ "Khaledi mustandi kontroll": [
+  "Review Khaled draft",
+  "Vérifier le brouillon de Khaled",
+  "Khaleds Entwurf prüfen"
+ ],
+ "AI ei esitanud täpsustusküsimusi. Kontrolli enne kinnitamist skeemi ja selle vastavust algtekstile.": [
+  "AI returned no clarification questions. Review the source coverage and the diagram before approval.",
+  "L’IA n’a proposé aucune question. Vérifiez le diagramme et sa couverture de la source avant approbation.",
+  "Die KI hat keine Rückfragen erstellt. Prüfen Sie vor der Freigabe das Diagramm und die Abdeckung der Quelle."
+ ],
+ "Ava mustand, et vastata küsimustele, muuta samme või paluda AI-l muudatus teha. Varasem mustand säilib versiooniajaloos.": [
+  "Open this draft to answer questions, edit steps or request an AI change. The previous draft is saved in version history.",
+  "Ouvrez le brouillon pour répondre aux questions, modifier les étapes ou demander un changement à l’IA. Le brouillon précédent reste dans l’historique.",
+  "Öffnen Sie den Entwurf, um Fragen zu beantworten, Schritte zu bearbeiten oder eine KI-Änderung anzufordern. Der vorherige Entwurf bleibt im Versionsverlauf."
+ ],
+ "Ava Khaledi mustand muutmiseks": [
+  "Open Khaled draft for editing",
+  "Ouvrir le brouillon de Khaled pour modification",
+  "Khaleds Entwurf zur Bearbeitung öffnen"
+ ],
+ "Khaledi mustand avati muutmiseks": [
+  "Khaled draft opened for editing",
+  "Brouillon de Khaled ouvert pour modification",
+  "Khaleds Entwurf zur Bearbeitung geöffnet"
+ ],
+ "Kontrolli konteerimise järjekorda": [
+  "Check posting order",
+  "Vérifier l’ordre de validation",
+  "Buchungsreihenfolge prüfen"
+ ],
+ "Kontrolli Business Centrali järgi": [
+  "Check against Business Central",
+  "Vérifier avec Business Central",
+  "Mit Business Central abgleichen"
+ ],
+ "Kontroll otsib vasteid märksõnade ja lahtiste küsimuste põhjal. Võrdle leide algteksti ja oma seadistusega.": [
+  "This check looks for matching terms and existing questions. Confirm findings against the source and your configuration.",
+  "Ce contrôle repère des termes et des questions ouvertes. Vérifiez les résultats dans la source et votre configuration.",
+  "Die Prüfung sucht nach Begriffen und offenen Fragen. Prüfen Sie die Ergebnisse anhand der Quelle und Ihrer Konfiguration."
+ ],
+ "Selle mustandi puhul vasteid ei leitud.": [
+  "No matching Business Central checks for this draft.",
+  "Aucun contrôle Business Central pertinent pour ce brouillon.",
+  "Für diesen Entwurf wurden keine passenden Prüfungen gefunden."
+ ],
+ "Kontrolli, kas samm on puudu": [
+  "Check for a missing step",
+  "Vérifier si une étape manque",
+  "Auf fehlenden Schritt prüfen"
+ ],
+ "Business Centrali võimalus": [
+  "Business Central option",
+  "Possibilité dans Business Central",
+  "Möglichkeit in Business Central"
+ ],
+ "Lisa muudatuse väljale": [
+  "Add to requested change",
+  "Ajouter à la demande de modification",
+  "Zum Änderungswunsch hinzufügen"
+ ],
+ "Business Centrali soovitus lisati muudatuse väljale.": [
+  "Business Central suggestion added to the change field.",
+  "La suggestion Business Central a été ajoutée au champ de modification.",
+  "Der Business-Central-Vorschlag wurde zum Änderungsfeld hinzugefügt."
+ ],
+ "Ostutellimus": [
+  "BC topic purchase",
+  "Commande achat",
+  "Einkaufsbestellung"
+ ],
+ "Vastuvõtt": [
+  "BC topic receipt",
+  "Réception",
+  "Wareneingang"
+ ],
+ "Ostuarve": [
+  "BC topic purchaseInvoice",
+  "Facture achat",
+  "Einkaufsrechnung"
+ ],
+ "Müük ja lähetamine": [
+  "BC topic sales",
+  "Vente et expédition",
+  "Verkauf und Versand"
+ ],
+ "Tarnijamakse": [
+  "BC topic payment",
+  "Paiement fournisseur",
+  "Lieferantenzahlung"
+ ],
+ "Kinnitamine": [
+  "BC topic approval",
+  "Approbation",
+  "Genehmigung"
+ ],
+ "Arve kontroll ja lahknevused": [
+  "BC topic match",
+  "Contrôle et écarts de facture",
+  "Rechnungsprüfung und Abweichungen"
+ ],
+ "Kasuta ostutellimust, kui kaup saabub osade kaupa.": [
+  "Use a purchase order for partial receipts.",
+  "Utiliser une commande achat si la réception est partielle.",
+  "Bei Teillieferungen eine Einkaufsbestellung verwenden."
+ ],
+ "Erista kauba vastuvõtt ja lattu paigutamine, kui lao seadistus näeb ette eraldi toimingud.": [
+  "Separate receipt and put-away where warehouse setup requires separate operations.",
+  "Distinguer la réception du rangement si la configuration prévoit des opérations séparées.",
+  "Wareneingang und Einlagerung trennen, wenn die Lagerkonfiguration separate Vorgänge vorsieht."
+ ],
+ "Ostutellimuse alusel arveldamisel registreeri vastuvõtt enne arve konteerimist või samal ajal.": [
+  "When invoicing from a purchase order, post the receipt before or together with the invoice.",
+  "Pour facturer une commande achat, enregistrer la réception avant la validation de la facture ou en même temps.",
+  "Bei einer Rechnung aus einer Einkaufsbestellung den Wareneingang vorher oder gleichzeitig buchen."
+ ],
+ "Erista pakkumine, tellimus, lähetamine ja arve. Osalise lähetuse puhul kasuta müügitellimust.": [
+  "Distinguish quote, order, shipment and invoice. Use a sales order for partial shipments.",
+  "Distinguer le devis, la commande, l’expédition et la facture. Utiliser une commande vente en cas d’expédition partielle.",
+  "Angebot, Auftrag, Versand und Rechnung trennen. Bei Teillieferung einen Verkaufsauftrag verwenden."
+ ],
+ "Erista arve konteerimine, tarnijale maksmine ja makse sidumine avatud arvega.": [
+  "Distinguish posting the invoice, paying the vendor and applying the payment to the open invoice.",
+  "Distinguer la validation de la facture, le paiement du fournisseur et le lettrage de la facture ouverte.",
+  "Rechnungsbuchung, Lieferantenzahlung und Ausgleich des offenen Postens trennen."
+ ],
+ "Täpsusta kinnitaja ja summapiir. Erista kinnitustaotlus, otsus ja dokumendi töötlemine.": [
+  "Confirm the approver and amount limit. Distinguish the approval request, decision and document processing.",
+  "Préciser l’approbateur et le seuil. Distinguer la demande, la décision et le traitement du document.",
+  "Genehmiger und Betragsgrenze klären. Anfrage, Entscheidung und Belegverarbeitung trennen."
+ ],
  "Khaledi reeglid": [
   "Khaled’s rules",
   "Règles de Khaled",
@@ -4555,10 +4760,10 @@ export const QUALITY_TRANSLATIONS = {
   "PROTOTYPE 40",
   "PROTOTYP 40"
  ],
- "PROTOTÜÜP 50": [
-  "PROTOTYPE 50",
-  "PROTOTYPE 50",
-  "PROTOTYP 50"
+ "PROTOTÜÜP 61": [
+  "PROTOTYPE 61",
+  "PROTOTYPE 61",
+  "PROTOTYP 61"
  ],
  "Digmatix ERP consultant": [
   "Digmatix ERP consultant",

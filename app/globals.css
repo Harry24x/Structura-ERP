@@ -51,3 +51,31 @@
 
 .unified-language{margin-left:auto;flex:none}.unified-header{height:auto;min-height:54px;flex-wrap:wrap;padding-block:6px}.unified-header nav{flex-wrap:wrap;min-width:0}.unified-header nav button{max-width:100%;white-space:normal}.unified-language select{max-width:120px}@media(max-width:850px){.unified-header{gap:8px}.unified-header nav{order:3;width:100%;padding-bottom:3px}.unified-language{margin-left:auto}}
 .diagram-toolbar .view-tabs{height:auto;min-height:43px;flex-wrap:wrap;max-width:100%}
+
+@media screen{.diagram-area.bpmn-area{height:max(440px,calc(82dvh - 80px));}.workspace-grid.diagram-expanded .diagram-area.bpmn-area{height:max(440px,calc(100dvh - 135px));}}
+
+/* The generator header spans the navigation and content columns. */
+@media screen {
+ .generator-studio {display:grid;grid-template-columns:204px minmax(0,1fr);grid-template-rows:auto 1fr;align-items:start}
+ .generator-studio.navigation-hidden {grid-template-columns:minmax(0,1fr)}
+ .generator-topbar {grid-column:1/-1;position:sticky;top:0;z-index:5}
+ .generator-header-start,.generator-panel-controls {display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+ .generator-header-start .brand {margin:0}
+ .generator-panel-controls button {display:flex;align-items:center;gap:5px;padding:6px 8px;border:1px solid var(--border);border-radius:7px;background:#fff;color:#52675b}
+ .generator-panel-controls button[aria-expanded="true"] {background:#edf3ee}
+ .generator-studio .sidebar {position:relative;inset:auto;z-index:auto;width:auto;max-height:100dvh;padding-top:12px}
+ .generator-studio .main-shell {margin-left:0;width:100%;min-width:0}
+ .generator-studio [hidden].sidebar,.generator-studio [hidden].input-column {display:none}
+ .generator-studio .inputs-hidden {grid-template-columns:minmax(0,1fr)}
+}
+@media screen and (max-width:1150px) {.generator-studio {grid-template-columns:170px minmax(0,1fr)}}
+@media screen and (max-width:900px) {
+ .generator-header-start .brand>span:last-child {display:block}
+ .generator-topbar .breadcrumb {display:none}
+}
+@media screen and (max-width:900px) {
+ .generator-studio {grid-template-columns:minmax(0,1fr);grid-template-rows:auto}
+ .generator-studio .sidebar:not([hidden]) {display:flex;position:static;max-height:45dvh}
+ .generator-studio .sidebar .nav-label,.generator-studio .sidebar .nav-item,.generator-studio .sidebar .sample-item,.generator-studio .sidebar .workspace-name {display:flex}
+ .generator-studio .sidebar .nav-item.active {font-size:11px;justify-content:flex-start;gap:10px;margin-top:0}
+}

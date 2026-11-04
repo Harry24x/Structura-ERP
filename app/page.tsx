@@ -2,7 +2,7 @@
 
 import {useEffect, useMemo, useRef, useState} from 'react';
 import {flushSync} from 'react-dom';
-import {ArrowDownToLine, ArrowRight, ArrowUpRight, Check, ChevronDown, CircleHelp, Clipboard, FileJson, FileText, GitBranch, History, Languages, LayoutDashboard, Maximize2, MessageSquare, Minimize2, Network, Plus, RotateCcw, Sparkles, Upload, X, ZoomIn, ZoomOut} from 'lucide-react';
+import {ArrowDownToLine, ArrowRight, ArrowUpRight, Check, ChevronDown, CircleHelp, Clipboard, FileJson, FileText, GitBranch, History, Languages, LayoutDashboard, Maximize2, MessageSquare, Minimize2, Network, Palette, PanelLeft, Plus, RotateCcw, Sparkles, Upload, X, ZoomIn, ZoomOut} from 'lucide-react';
 import {applyClarification, applyReceiptDemo, clone, createDocument, bpmnLayout, diagramLayout, difference, explicitFutureNeeds, RECEIPT_COMMAND, toMermaid, toSVG, validateProcess} from '@/lib/process.mjs';
 import {sourceWithoutStepEvidence} from '@/lib/source-coverage.mjs';
 import {isResponsibilityConflict} from '@/lib/i18n.mjs';
@@ -19,6 +19,8 @@ import {matchesAIRequest} from '@/lib/ai-workspace.mjs';
 import {ProcessExplorer} from '@/components/process-explorer';
 import {reconcileExplorer} from '@/lib/process-explorer.mjs';
 import {explorerText} from '@/lib/explorer-i18n.mjs';
+import {reviewBusinessCentral} from '@/lib/business-central-review.mjs';
+import {pinBpmnLanes} from '@/lib/bpmn.mjs';
 import {APP_RELEASE} from '@/lib/release-info';
 import {PROCESS_SCHEMA} from '@/lib/process-contract.mjs';
 import {workspaceAssistantRequest,workspaceAIContext} from '@/lib/process-prompt.mjs';
@@ -47,10 +49,24 @@ export default function Home(){
  const [locale,setLocale]=useState('en');
  const [studioMode,setStudioMode]=useState('library'),[qualityURL,setQualityURL]=useState('/quality/?embedded=1');
  const qualityFrame=useRef<HTMLIFrameElement>(null);
- function openLibrary(transfer=false){if(transfer){try{localStorage.setItem('quality-generator-transfer',JSON.stringify({process,source,qualityOrigin:qualityOrigin.current,transferId:crypto.randomUUID()}));}catch{tell('Browser storage unavailable. Export JSON first.',true);return;}}setQualityURL('/quality/?embedded=1'+(transfer?'&from=generator&transfer='+crypto.randomUUID():''));setStudioMode('library');}
+ function openLibrary(transfer=false){if(transfer){
+  if(aiAbort.current)return;
+  let active=process;
+  if(view==='khaled'){
+   if(!khaledDraft||khaledDraft.draft.source!==source||khaledDraft.scope!==effectiveKhaledScope){tell('Generate the visible draft before saving it.',true);return;}
+   active={...khaledDraft.draft,version:process.version+1};
+  }else if(dirty){tell('Generate the visible draft before saving it.',true);return;}
+  try{localStorage.setItem('quality-generator-transfer',JSON.stringify({process:active,source:active.source,qualityOrigin:qualityOrigin.current,transferId:crypto.randomUUID()}));}catch{tell('Browser storage unavailable. Export JSON first.',true);return;}}setQualityURL('/quality/?embedded=1'+(transfer?'&from=generator&transfer='+crypto.randomUUID():''));setStudioMode('library');}
  useEffect(()=>{if(new URLSearchParams(location.search).get('view')==='generator')setStudioMode('generator');if(new URLSearchParams(location.search).get('view')==='shared')setQualityURL('/quality/shared.html?embedded=1');const receive=(event:MessageEvent)=>{if(event.origin!==location.origin||event.source!==qualityFrame.current?.contentWindow)return;if(event.data?.type==='studio:locale'){setLocale(syncLanguagePreference(event.data.locale));return;}if(event.data?.type==='studio:shared-view'){setQualityURL('/quality/shared.html?embedded=1');setStudioMode('library');return;}if(event.data?.type==='studio:library-view'){setQualityURL('/quality/?embedded=1');setStudioMode('library');return;}if(event.data?.type==='studio:generator-view'){setStudioMode('generator');return;}if(event.data?.type!=='studio:open-generator')return;try{const loaded=loadWorkspaceWithTransfer(localStorage).workspace;if(!loaded)return;setProcess(loaded.process);setSource(loaded.source);setSample(loaded.sample);setVersions(loaded.versions);setCommand(loaded.command);setAnswers(loaded.answers);qualityOrigin.current=loaded.qualityOrigin;setView('overview');setStudioMode('generator');}catch{tell('Browser storage unavailable. Export JSON first.',true);}};window.addEventListener('message',receive);return()=>window.removeEventListener('message',receive);},[]);
  const [direction,setDirection]=useState('LR');
+ const [theme,setTheme]=useState('original');
+ useEffect(()=>{try{const saved=localStorage.getItem('process-studio-theme');if(saved==='lagoon'||saved==='ocean')setTheme(saved);}catch{}},[]);
+ useEffect(()=>{document.documentElement.dataset.studioTheme=theme;},[theme]);
  const [diagramExpanded,setDiagramExpanded]=useState(false);
+ const [navigationVisible,setNavigationVisible]=useState(true);
+ const [inputsVisible,setInputsVisible]=useState(true);
+ const showInputs=inputsVisible&&!diagramExpanded;
+ useEffect(()=>{if(window.matchMedia('(max-width: 900px)').matches)setNavigationVisible(false);},[]);
  const t=(key:string,values:Record<string,unknown>={})=>translate(locale,key,values);
  const q=(key:string)=>qualityText(key,{},locale);
  const summary=(text:string)=>translatedSummary(locale,text);
@@ -58,6 +74,7 @@ export default function Home(){
  const [process,setProcess]=useState<Process>(()=>withBusinessAreas(withSystemRegistry(clone(examples[0].process))));
  const [source,setSource]=useState(examples[0].source),[sample,setSample]=useState('expense');
  const [versions,setVersions]=useState<Process[]>([]),[command,setCommand]=useState('');
+ const [khaledScope,setKhaledScope]=useState('');
  const [khaledDraft,setKhaledDraft]=useState<{draft:Process;evidence:Process;scope:string}|null>(null);
  const [panel,setPanel]=useState<Panel>('none'),[view,setView]=useState('overview'),[selected,setSelected]=useState<string|null>(null);
  const [stepIds,setStepIds]=useState<string[]|null>(null);
@@ -76,12 +93,15 @@ export default function Home(){
  const inputRef=useRef<HTMLInputElement>(null),diagramRef=useRef<HTMLDivElement>(null),workspace=useRef<any>(null),timer=useRef<ReturnType<typeof setTimeout>|null>(null);
  const before=versions.at(-1),diff=difference(before,process),changed=[...diff.added,...diff.changed],dirty=source!==process.source;
  const overview=customerOverview(process,t),showingOverview=view==='overview',showingBpmn=view==='bpmn',displayProcess=process,displayDirection=showingOverview?'TD':direction;
+ const khaledUncovered=useMemo(()=>khaledDraft?sourceWithoutStepEvidence(khaledDraft.draft,locale):[],[khaledDraft,locale]);
+ const bpmnVisible=showingBpmn||view==='khaled';
  const layout=showingBpmn?bpmnLayout(displayProcess,svgLabels.unknownRoleLabel):diagramLayout(displayProcess,displayDirection),displayLabels={...svgLabels,direction:displayDirection,startLabel:t('Start event'),endLabel:t('End event'),activityLabel:t('Activity'),decisionLabel:t('Decision'),loopLabel:t('Rework loop'),clarificationLabel:t('Needs clarification'),notation:showingBpmn?'bpmn':'flowchart',viewLabel:showingOverview?t('Customer overview'):showingBpmn?'BPMN':''};
  const displayChanged=showingOverview?displayProcess.nodes.filter((node:Process)=>(overview.members[node.id]||[node.id]).some((id:string)=>changed.includes(id))).map((node:Process)=>node.id):changed;
  const uncovered=useMemo(()=>sourceWithoutStepEvidence(process,locale),[process,locale]);
  const activeNode=process.nodes.find((n:Process)=>n.id===selected);
  const activeExample=examples.find(e=>e.id===sample),activeGroup=CASE_GROUPS.find(g=>g.id===(activeExample as any)?.family);
  const requestScope=activeGroup&&!dirty?`${t(activeGroup.title)}. Selected view: ${activeExample?.label}. ${process.notes.join(' ')}`:'';
+ const effectiveKhaledScope=khaledScope.trim()||requestScope;
  function requestForAssistant(){return workspaceAssistantRequest({source,current:process,command,locale,scope:requestScope});}
  const assistantCopy=panel==='assistant'?requestForAssistant():{text:'',error:null};
  const caseStages=examples.filter((e:any)=>e.family===activeGroup?.id&&e.family),futureNeeds=explicitFutureNeeds(source);
@@ -137,10 +157,11 @@ export default function Home(){
  async function runAI(intent='generate',questionId='',ruleSet?:'khaled'){
   if(aiAbort.current)return;
   if(intent!=='generate'&&dirty){tell('Generate a draft for the edited description before changing the diagram.',true);return;}
+  const scope=ruleSet==='khaled'?effectiveKhaledScope:requestScope;
   const snapshot={intent,locale,version:process.version,process:clone(process),source,command,questionId,answer:answers[questionId]||''};
   const controller=new AbortController();aiAbort.current=controller;setAIPending(ruleSet||intent);setAIError('');setAIDetails([]);
   try{
-   const response=await fetch('/api/process',{method:'POST',headers:{'Content-Type':'application/json'},signal:controller.signal,body:JSON.stringify({intent,ruleSet,locale:snapshot.locale,systems:snapshot.process.systems||[],source,expectedVersion:snapshot.version,current:dirty||ruleSet?undefined:snapshot.process,scope:requestScope,command:intent==='edit'?command:undefined,questionId:intent==='clarify'?questionId:undefined,answer:intent==='clarify'?snapshot.answer:undefined})});
+   const response=await fetch('/api/process',{method:'POST',headers:{'Content-Type':'application/json'},signal:controller.signal,body:JSON.stringify({intent,ruleSet,locale:snapshot.locale,systems:snapshot.process.systems||[],source,expectedVersion:snapshot.version,current:dirty||ruleSet?undefined:snapshot.process,scope,command:intent==='edit'?command:undefined,questionId:intent==='clarify'?questionId:undefined,answer:intent==='clarify'?snapshot.answer:undefined})});
    const result=await response.json() as {draft:Process;evidence?:Process;expectedVersion:number;error?:string;code?:string;details?:string[]};
    if(!response.ok){setAIDetails(processDiagnostics(result));throw new Error(apiErrorKey(result.code));}
    if(controller.signal.aborted)return;
@@ -148,7 +169,7 @@ export default function Home(){
    const nextSource=intent==='edit'?snapshot.source+'\nRequested improvement: '+snapshot.command.trim():intent==='clarify'?snapshot.source+`\nClarification: ${snapshot.process.questions.find((q:Process)=>q.id===questionId).text}\nAnswer: ${snapshot.answer.trim()}`:snapshot.source;
    const next=createDocument(result.draft,nextSource,'model-api');next.version=snapshot.version+1;next.changeSummary=result.draft.changeSummary;
    if(ruleSet==='khaled'){
-    if(workspace.current.scope===requestScope)setKhaledDraft({draft:next,evidence:result.evidence||{},scope:requestScope});
+    if(workspace.current.khaledScope===scope)setKhaledDraft({draft:next,evidence:result.evidence||{},scope});
     return;
    }
    commit(next);setSample('custom');setView('overview');setAIReady(true);
@@ -159,9 +180,28 @@ export default function Home(){
    else{const message=error instanceof TypeError?'The model service could not be reached. Try again later.':error instanceof SyntaxError?'The model service returned an unreadable response. Your draft is unchanged.':clientErrorKey(error);setAIError(message);tell(message,true);}
   }finally{if(aiAbort.current===controller){aiAbort.current=null;setAIPending('');}}
  }
+ function editKhaledDraft(){
+  if(!khaledDraft||aiAbort.current||khaledDraft.draft.source!==source||khaledDraft.scope!==effectiveKhaledScope)return;
+  const next=clone(khaledDraft.draft);
+  next.version=process.version+1;
+  next.changeSummary='Khaled draft opened for editing';
+  commit(next);
+  setSample('custom');
+  setAnswers({});
+  showView('bpmn');
+ }
+ function fitBpmnHeight(){
+  const scroller=diagramRef.current;
+  const target=view==='khaled'?khaledDraft?.draft:process;
+  if(!scroller||!target)return;
+  const {height}=bpmnLayout(target,svgLabels.unknownRoleLabel);
+  setZoom(Math.max(.02,Math.min(1.6,(scroller.clientHeight-64)/height)));
+  scroller.scrollTo({top:0,left:0});
+ }
+ useEffect(()=>{if(bpmnVisible&&diagramRef.current)pinBpmnLanes(diagramRef.current);},[bpmnVisible,zoom,diagramExpanded,process,khaledDraft,locale]);
  function showView(next:string){setView(next);setStepIds(null);setZoom(.85);diagramRef.current?.scrollTo({top:0,left:0});}
  function selectNode(event:any){const element=event.target.closest?.('[data-node]');if(!element)return;const id=element.getAttribute('data-node'),members=showingOverview?overview.members[id]:null;if(members&&members.length>1){setStepIds(members);setView('steps');setSelected(null);}else setSelected(members?.[0]||id);}
- workspace.current={process,source,command,answers,locale,scope:requestScope,importDraft,commit};
+ workspace.current={process,source,command,answers,locale,scope:requestScope,khaledScope:effectiveKhaledScope,importDraft,commit};
  useEffect(()=>{
   if(panel==='none'&&!selected)return;
   const previous=document.activeElement as HTMLElement|null;
@@ -196,12 +236,17 @@ export default function Home(){
    if(!life.signal.aborted)setAgentReady(true);
   }register().catch(()=>setAgentReady(false));return()=>life.abort();
  },[]);
+ const themePicker = <label className="language-picker theme-picker"><Palette size={15}/><span className="sr-only">{t('Colour theme')}</span><select aria-label={t('Colour theme')} value={theme} onChange={event=>{const value=event.target.value;setTheme(value);try{localStorage.setItem('process-studio-theme',value);}catch{}}}><option value="original">{t('Studio green')}</option><option value="lagoon">{t('Turquoise lagoon')}</option><option value="ocean">{t('Deep ocean blue')}</option></select></label>;
+ const studioBrand=<a className="brand" href="/" aria-label={t("Process Studio home")}><span className="brand-icon"><Network size={21}/></span><span>process<span className="brand-light">studio</span><small>{t("TEAM 5 · DIGMATIX")}</small></span></a>;
  const guideLink = <a className="button soft" href={`/guides/${locale}/index.html`} target="_blank" rel="noopener">{t('Guides')}</a>;
- if(studioMode==='library')return <div className="unified-home"><header className="unified-header"><a href="/" className="unified-brand"><img src="/favicon.svg" alt=""/>Process Studio <small>{APP_RELEASE}</small></a><nav aria-label={q('Töövaade')}><button className={qualityURL.includes('shared.html')?'':'selected'} onClick={()=>openLibrary()}>{q('Minu protsessid ja parendused')}</button><button className={qualityURL.includes('shared.html')?'selected':''} onClick={()=>setQualityURL('/quality/shared.html?embedded=1')}>{q('Mulle jagatud osad')}</button><button onClick={()=>setStudioMode('generator')}>{q('Loo tekstist skeem')}</button>{guideLink}</nav><label className="language-picker unified-language"><Languages size={15}/><span className="sr-only">{t('Language')}</span><select aria-label={t('Language')} value={locale} onChange={event=>setLocale(setLanguagePreference(event.target.value))}>{LOCALES.map(language=><option key={language.id} value={language.id}>{language.label}</option>)}</select></label></header><iframe ref={qualityFrame} title={q('Protsessid ja parendused')} src={qualityURL} onLoad={()=>{if(hydrated)qualityFrame.current?.contentWindow?.postMessage({type:'studio:locale',locale},location.origin);}}/></div>;
- return <div className="studio">
+ if(studioMode==='library')return <div className="unified-home"><header className="unified-header studio-header">{studioBrand}<span className="studio-release">{APP_RELEASE}</span><nav aria-label={q('Töövaade')}><button className={qualityURL.includes('shared.html')?'':'selected'} onClick={()=>openLibrary()}>{q('Minu protsessid ja parendused')}</button><button className={qualityURL.includes('shared.html')?'selected':''} onClick={()=>setQualityURL('/quality/shared.html?embedded=1')}>{q('Mulle jagatud osad')}</button><button onClick={()=>setStudioMode('generator')}>{q('Loo tekstist skeem')}</button>{guideLink}</nav>{themePicker}<label className="language-picker unified-language"><Languages size={15}/><span className="sr-only">{t('Language')}</span><select aria-label={t('Language')} value={locale} onChange={event=>setLocale(setLanguagePreference(event.target.value))}>{LOCALES.map(language=><option key={language.id} value={language.id}>{language.label}</option>)}</select></label></header><iframe ref={qualityFrame} title={q('Protsessid ja parendused')} src={qualityURL} onLoad={()=>{if(hydrated)qualityFrame.current?.contentWindow?.postMessage({type:'studio:locale',locale},location.origin);}}/></div>;
+ return <div className={'studio generator-studio'+(navigationVisible?'':' navigation-hidden')}>
   <input hidden ref={markdownInput} type="file" accept={FILE_ACCEPT} aria-label={t('Open text file')} onChange={e=>{const file=e.target.files?.[0];e.target.value='';if(file)void openMarkdown(file);}}/>
-  <aside className="sidebar">
-   <a className="brand" href="/" aria-label={t("Process Studio home")}><span className="brand-icon"><Network size={21}/></span><span>process<span className="brand-light">studio</span><small>{t("TEAM 5 · DIGMATIX")}</small></span></a>
+  <header className="topbar generator-topbar studio-header"><div className="generator-header-start">{studioBrand}<div className="generator-panel-controls">
+    <button type="button" aria-controls="generator-navigation" aria-expanded={navigationVisible} title={t(navigationVisible?'Hide project navigation':'Show project navigation')} onClick={()=>setNavigationVisible(value=>!value)}><PanelLeft size={16}/><span>{t('Project navigation')}</span></button>
+    <button type="button" aria-controls="generator-inputs" aria-expanded={showInputs} title={t(showInputs?'Hide process inputs':'Show process inputs')} onClick={()=>{setInputsVisible(!showInputs);if(diagramExpanded)setDiagramExpanded(false);}}><FileText size={16}/><span>{t('Process inputs')}</span></button>
+   </div><div className="breadcrumb">{t('Team 5')} <span>/</span><strong>{t("Process workspace")}</strong></div></div><div className="topbar-actions">{guideLink}{themePicker}<label className="language-picker"><Languages size={15}/><span className="sr-only">{t('Language')}</span><select aria-label={t('Language')} value={locale} onChange={event=>setLocale(setLanguagePreference(event.target.value))}>{LOCALES.map(language=><option key={language.id} value={language.id}>{language.label}</option>)}</select></label><span className="save-status"><span/>{hydrated?t(storageSaved?"Saved in this browser":"Not saved in this browser"):t("Opening workspace")}</span><button className="button ghost" onClick={()=>setPanel('import')}><Upload size={15}/>{t("Import")}</button><button className="button dark" onClick={()=>download('process-v'+process.version+'.json',JSON.stringify(process,null,2),'application/json')}><ArrowDownToLine size={15}/>{t("Export JSON")}</button><button className="button soft" onClick={exportMarkdown} title={t('Markdown includes the full process, source and pending edits. Review it before sharing in chat.')}><FileText size={15}/>{t('Export Markdown')}</button><span className="avatar">ST</span></div></header>
+  <aside className="sidebar" id="generator-navigation" hidden={!navigationVisible}>
    <div className="workspace-name"><span className="project-avatar">T5</span><span>{t("Digmatix challenge")}<small>BIP 2026</small></span><ChevronDown size={13}/></div>
    <div className="nav-label">{t("PROJECT")}</div>
    <button className="nav-item active" onClick={closeDrawer}><LayoutDashboard size={17}/>{t("Workspace")}<span className="nav-dot"/></button>
@@ -217,14 +262,13 @@ export default function Home(){
    <div className="sidebar-bottom"><span className="prototype-pill"><span/>{t("PROTOTYPE")} {APP_RELEASE}</span><p>{t("A clearer process starts")}<br/>{t("with the right questions.")}</p><button onClick={()=>setPanel('assistant')}><CircleHelp size={15}/>{t("How to use this workspace")}</button></div>
   </aside>
   <div className="main-shell">
-   <header className="topbar"><div className="breadcrumb">{t('Team 5')} <span>/</span><strong>{t("Process workspace")}</strong></div><div className="topbar-actions">{guideLink}<label className="language-picker"><Languages size={15}/><span className="sr-only">{t('Language')}</span><select aria-label={t('Language')} value={locale} onChange={event=>setLocale(setLanguagePreference(event.target.value))}>{LOCALES.map(language=><option key={language.id} value={language.id}>{language.label}</option>)}</select></label><span className="save-status"><span/>{hydrated?t(storageSaved?"Saved in this browser":"Not saved in this browser"):t("Opening workspace")}</span><button className="button ghost" onClick={()=>setPanel('import')}><Upload size={15}/>{t("Import")}</button><button className="button dark" onClick={()=>download('process-v'+process.version+'.json',JSON.stringify(process,null,2),'application/json')}><ArrowDownToLine size={15}/>{t("Export JSON")}</button><button className="button soft" onClick={exportMarkdown} title={t('Markdown includes the full process, source and pending edits. Review it before sharing in chat.')}><FileText size={15}/>{t('Export Markdown')}</button><span className="avatar">ST</span></div></header>
    <main>
     <div className="page-intro"><div><div className="eyebrow">{t("BUSINESS PROCESS DIAGRAM AGENT")}</div><h1>{t("From words to workflow.")}</h1><p>{t("Understand the process. Clarify the gaps. Keep improving.")}</p></div><button className="assistant-status" onClick={()=>setPanel('assistant')}><span className={aiReady?'online-light':'sample-light'}/>{aiReady?t("AI generation ready"):aiReady===false?t("AI setup needed"):t("Checking AI connection")}<ArrowUpRight size={13}/></button></div>
     <div className="case-picker"><label htmlFor="example-picker">{t("Try a process")}</label><select id="example-picker" value={activeExample?sample:'custom'} onChange={event=>loadExample(event.target.value)}>{!activeExample&&<option value="custom">{t("Your process draft")}</option>}<optgroup label={t("Prepared demonstrations")}>{examples.filter((e:any)=>!e.family).map(e=><option key={e.id} value={e.id}>{t(e.label)}</option>)}</optgroup>{CASE_GROUPS.map(g=><optgroup key={g.id} label={t(g.title)}>{examples.filter((e:any)=>e.family===g.id).map(e=><option key={e.id} value={e.id}>{t(e.label)}</option>)}</optgroup>)}</select></div>
     <p className="language-note">{t('Interface and new AI drafts use this language. Existing process text and source quotes keep their original language.')}</p>
     {activeGroup&&<section className="case-banner" aria-label={t("Supplied source views")}><div><strong>{t(activeGroup.title)}</strong><p>{t("The complete source is loaded. Each view is an unapproved draft with visible gaps.")}</p></div><div className="case-stages">{caseStages.map((e:any)=><button key={e.id} aria-pressed={sample===e.id} className={sample===e.id?'chosen':''} onClick={()=>loadExample(e.id)}>{e.stage}. {t(e.label)}</button>)}</div></section>}
-    <div className={'workspace-grid'+(diagramExpanded?' diagram-expanded':'')}>
-     <section className="input-column">
+    <div className={'workspace-grid'+(diagramExpanded?' diagram-expanded':'')+(!showInputs?' inputs-hidden':'')}>
+     <section className="input-column" id="generator-inputs" hidden={!showInputs}>
       <div className="card source-card"><div className="section-heading"><span className="step-number">1</span><h2>{t("Describe your process")}</h2><FileText size={16}/></div><p className="section-description">{t("Start with a description, interview or meeting notes.")}</p><button className="button soft full markdown-source-button" onClick={()=>markdownInput.current?.click()}><Upload size={15}/>{t('Open text file')}</button><p className="file-formats">{t('PDF, Word (.docx), TXT or Markdown')}</p><label htmlFor="process-source" className="field-label">{t("PROCESS DESCRIPTION")}<span>{sample==='custom'?t("Your input"):(activeExample as any)?.family?t("Supplied source"):t("Prepared sample")}</span></label><textarea id="process-source" value={source} maxLength={120000} onChange={e=>setSource(e.target.value)} spellCheck={false}/><div className="source-meta"><span>{t('{count} words',{count:source.trim().split(/\s+/).filter(Boolean).length})}</span><span><span className="tiny-dot"/>{dirty?t("Description changed"):t("Ready for review")}</span></div><button className="button primary full" disabled={!!aiPending||!source.trim()} onClick={()=>runAI()}><Sparkles size={16}/>{aiPending==='generate'?t("Generating diagram…"):t("Generate diagram")}<ArrowRight size={16}/></button>{!!aiPending&&<div className="ai-progress" role="status"><span>{t("Mapping steps, roles and decisions…")}</span><button onClick={()=>aiAbort.current?.abort()}>{t("Cancel request")}</button></div>}{!!aiError&&<div className="ai-error" role="alert"><p>{t(aiError)}</p>{aiError===apiErrorKey("INVALID_DRAFT")&&<><p>{diagnosticCopy(locale).explanation}</p><p>{diagnosticCopy(locale).next}</p>{aiDetails.length>0&&<details><summary>{diagnosticCopy(locale).details}</summary><pre className="validation-details">{aiDetails.join("\n")}</pre></details>}</>}</div>}<button className="import-draft-link" onClick={()=>setPanel('import')}>{t("Already have an AI draft? Import it")}<ArrowUpRight size={12}/></button><div className="mode-note"><CircleHelp size={13}/><span>{aiReady===false?t("AI generation needs server setup. You can still explore examples or import a draft."):t("Generate sends this description to OpenAI. Each result stays a draft until you review it.")}</span></div></div>
       {!!futureNeeds.length&&<section className="card future-needs-card" aria-label={t("Future needs from source")}><h2>{t("Future needs from source")}</h2><p>{t("Kept separate from today’s process. These statements describe requested improvements.")}</p><ul>{futureNeeds.map((text:string,i:number)=><li key={i}>{text}</li>)}</ul><small>{t("Check the full source and scope notes before approving a draft.")}</small></section>}
       <div className="card change-card"><div className="section-heading"><span className="step-number">3</span><h2>{t("Refine with a change")}</h2><MessageSquare size={16}/></div><p className="section-description">{t("Describe what should change. Earlier versions stay available.")}</p><textarea aria-label={t("Requested process change")} value={command} onChange={e=>setCommand(e.target.value)} placeholder={t("e.g. Add a receipt check after approval…")} rows={3}/><div className="change-actions"><button className="button soft" onClick={()=>runAI('edit')} disabled={!!aiPending||dirty||!command.trim()}><GitBranch size={15}/>{aiPending==='edit'?t("Applying change…"):t("Apply change")}</button><button className="icon-button" aria-label={t("Copy change request for AI")} onClick={copyRequest}><Clipboard size={16}/></button></div><small className="hint">{t("Changes create a proposed to-be version. Review it against your request.")}</small>{sample==='expense'&&<div className="sample-edit-options"><button onClick={()=>setCommand(RECEIPT_COMMAND)}>{t("Use sample command")}</button><button onClick={applySampleChange} disabled={!!aiPending}>{t("Prepared sample edit")}</button></div>}</div>
@@ -233,17 +277,29 @@ export default function Home(){
       <div className="card diagram-card">
        <div className="diagram-heading"><div><div className="section-heading"><span className="step-number">2</span><h2>{view==='khaled'?(khaledDraft?.draft.title||t('Khaled’s rules')):process.title}</h2></div><div className="diagram-subline" style={view==='khaled'?{display:'none'}:undefined}><span className={'mode-badge '+(process.mode==='to-be'?'future':'')}>{process.mode==='as-is'?t("AS-IS · CURRENT PROCESS"):t("TO-BE · PROPOSED PROCESS")}</span><span>v{process.version}</span><span className="sub-dot">·</span><span>{t('{count} activities',{count:process.nodes.filter((n:Process)=>n.type==='activity').length})}</span><span className="sub-dot">·</span><span>{t('{count} roles',{count:process.roles.length})}</span></div></div><div className="diagram-heading-actions"><button className="button ghost diagram-expand-button" aria-controls="process-output" aria-pressed={diagramExpanded} title={t(diagramExpanded?'Show the source and change panels again.':'Temporarily hide the input panels to give the diagram more space.')} onClick={()=>setDiagramExpanded(v=>!v)}>{diagramExpanded?<Minimize2 size={14}/>:<Maximize2 size={14}/>}<span>{t(diagramExpanded?'Restore workspace':'Expand diagram')}</span></button><button className="icon-button" aria-label={t("Open version history")} onClick={()=>setPanel('history')}><History size={17}/></button></div></div>
        <div className="diagram-toolbar"><div className="view-tabs"><button className={view==='overview'?'chosen':''} onClick={()=>showView('overview')}>{explorerText(locale)('overall')}</button><button className={view==='diagram'?'chosen':''} onClick={()=>showView('diagram')}><GitBranch size={14}/>{t("Flowchart")}</button><button className={showingBpmn?'chosen':''} aria-pressed={showingBpmn} onClick={()=>showView('bpmn')}>BPMN</button><button className={view==='khaled'?'chosen':''} aria-pressed={view==='khaled'} onClick={()=>showView('khaled')}>{t('Khaled’s rules')}</button><button className={view==='steps'?'chosen':''} onClick={()=>showView('steps')}>{t("Process steps")}</button><button className={view==='mermaid'?'chosen':''} onClick={()=>showView('mermaid')}>Mermaid</button></div><div className="diagram-display-options" style={view==='khaled'?{display:'none'}:undefined}>{!showingOverview&&!showingBpmn&&<label className="direction-picker"><span>{t("Direction")}</span><select aria-label={t("Diagram direction")} title={t(showingOverview?"Customer view uses top-to-bottom layout. Your detailed view keeps its direction.":"Change the layout without changing your process.")} disabled={showingOverview} value={displayDirection} onChange={e=>{setDirection(normalizeDirection(e.target.value));setZoom(.85);diagramRef.current?.scrollTo({top:0,left:0});}}>{DIAGRAM_DIRECTIONS.map(d=><option key={d.id} value={d.id}>{t(d.label)}</option>)}</select></label>}<span className={'review-state '+(process.reviewed?'reviewed':'')}>{process.reviewed?<Check size={13}/>:<span className="review-dot"/>}{process.reviewed?t("Human reviewed"):process.questions.length?t("Needs clarification"):t("Draft · ready to review")}</span></div></div>
+       {view==='khaled'
+        ?khaledDraft&&khaledDraft.draft.source===source&&khaledDraft.scope===effectiveKhaledScope&&<BusinessCentralReview key="khaled" process={khaledDraft.draft} locale={locale} t={t}/>
+        :!dirty&&<BusinessCentralReview key="standard" process={process} locale={locale} t={t} onSuggest={note=>{setCommand(previous=>[previous,note].filter(Boolean).join('\n'));tell('Business Central suggestion added to the change field.');}}/>}
        {view==='khaled'?<>
         <section className="mapping-notes">
          <p>{t('Generate a separate AS-IS draft from the text in the source field.')}</p>
+         <p><label>{t('Process scope (optional)')} <input value={khaledScope} onChange={event=>setKhaledScope(event.target.value)} maxLength={4000} placeholder={t('Example: Goods receipt from suppliers without a pre-created order')}/></label></p>
          <button className="button soft" disabled={!source.trim()||!!aiPending} onClick={()=>runAI('generate','','khaled')}>{t(aiPending==='khaled'?'Generating…':'Generate with Khaled’s rules')}</button>
          {aiPending==='khaled'&&<button className="button ghost" onClick={()=>aiAbort.current?.abort()}>{t('Cancel request')}</button>}
         </section>
-        {khaledDraft&&(khaledDraft.draft.source!==source||khaledDraft.scope!==requestScope)?<p className="dirty-note">{t('The source changed. Generate a new draft for this text.')}</p>:khaledDraft&&<>
-         <div className="diagram-area"><div className="diagram-scroll" ref={diagramRef}>
+        {khaledDraft&&(khaledDraft.draft.source!==source||khaledDraft.scope!==effectiveKhaledScope)?<p className="dirty-note">{t('The source or scope changed. Generate a new draft.')}</p>:khaledDraft&&<>
+         <div className={bpmnVisible?'diagram-area bpmn-area':'diagram-area'}><div className="diagram-scroll" ref={diagramRef} onScroll={event=>pinBpmnLanes(event.currentTarget)}>
           <div className="svg-holder" style={{width:bpmnLayout(khaledDraft.draft,svgLabels.unknownRoleLabel).width*zoom}} dangerouslySetInnerHTML={{__html:toSVG(khaledDraft.draft,[],{...displayLabels,notation:'bpmn',includeSystemLegend:false})}}/>
-         </div><div className="zoom-tools"><button aria-label={t('Zoom out')} onClick={()=>setZoom(v=>Math.max(.1,v-.1))}><ZoomOut size={15}/></button><span>{Math.round(zoom*100)}%</span><button aria-label={t('Zoom in')} onClick={()=>setZoom(v=>Math.min(1.6,v+.1))}><ZoomIn size={15}/></button></div></div>
-         {!!khaledDraft.draft.questions.length&&<section className="mapping-notes"><h3>{t('Needs clarification')}</h3><ul>{khaledDraft.draft.questions.map((q:Process)=><li key={q.id}>{q.text}</li>)}</ul></section>}
+         </div><div className="zoom-tools"><button aria-label={t('Zoom out')} onClick={()=>setZoom(v=>Math.max(.1,v-.1))}><ZoomOut size={15}/></button><span>{Math.round(zoom*100)}%</span><button aria-label={t('Zoom in')} onClick={()=>setZoom(v=>Math.min(1.6,v+.1))}><ZoomIn size={15}/></button><button title={t('Fit diagram height')} aria-label={t('Fit diagram height')} onClick={fitBpmnHeight}><Maximize2 size={14}/></button></div></div>
+         <section className="mapping-notes">
+          <h3>{t('Review Khaled draft')}</h3>
+          {khaledDraft.draft.questions.length>0
+           ?<ul>{khaledDraft.draft.questions.map((q:Process)=><li key={q.id}>{q.text}</li>)}</ul>
+           :<p>{t('AI returned no clarification questions. Review the source coverage and the diagram before approval.')}</p>}
+          {khaledUncovered.length>0&&<details><summary>{t('Source passages without step evidence')} ({khaledUncovered.length})</summary><ul>{khaledUncovered.map(passage=><li key={passage}>{passage}</li>)}</ul></details>}
+          <p>{t('Open this draft to answer questions, edit steps or request an AI change. The previous draft is saved in version history.')}</p>
+          <button className="button soft" disabled={!!aiPending} onClick={editKhaledDraft}>{t('Open Khaled draft for editing')}</button>
+         </section>
          {!!khaledDraft.draft.notes.length&&<section className="mapping-notes"><h3>{t('Source and scope notes')}</h3>{khaledDraft.draft.notes.map((note:string,i:number)=><p key={i}>{note}</p>)}</section>}
          <details className="mapping-notes">
           <summary>{t('Source references')}</summary>
@@ -257,7 +313,7 @@ export default function Home(){
        </>:<>
        {dirty&&<div className="dirty-note">{t("Description changed. Select Generate diagram to map the new text. The previous draft is shown below.")}</div>}
        {process.origin==='model-api'&&<div className="sample-caption"><span>{t("AI DRAFT · UNREVIEWED")}</span>{t("Check each step against its source evidence. Missing information stays open.")}</div>}{['sample','source-draft'].includes(process.origin)&&<div className="sample-caption"><span>{process.origin==='source-draft'?t("SUPPLIED SOURCE DRAFT"):t("PREPARED EXAMPLE")}</span>{process.origin==='source-draft'?t("Review the scope notes and unresolved handoffs below."):t("Explore the workflow. This is not a live AI result.")}</div>}
-       {showingOverview?<ProcessExplorer process={process} locale={locale} editable={!aiPending&&!dirty} onSave={(next,expected)=>{if(expected!==workspace.current?.process.version)throw new Error('Stale process');commit(next);}} onNodeSelect={id=>setSelected(id)}/>:(view==='diagram'||showingBpmn)?<div className="diagram-area"><div className="diagram-scroll" ref={diagramRef}><div className="svg-holder" style={{width:layout.width*zoom}} onClick={selectNode} onKeyDown={e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();selectNode(e);}}} dangerouslySetInnerHTML={{__html:toSVG(displayProcess,displayChanged,{...displayLabels,includeSystemLegend:false})}}/></div><div className="zoom-tools"><button aria-label={t("Zoom out")} onClick={()=>setZoom(v=>Math.max(.1,v-.1))}><ZoomOut size={15}/></button><span>{Math.round(zoom*100)}%</span><button aria-label={t("Zoom in")} onClick={()=>setZoom(v=>Math.min(1.6,v+.1))}><ZoomIn size={15}/></button><i/><button aria-label={t("Fit diagram")} onClick={()=>{setZoom(Math.max(.08,Math.min(1,((diagramRef.current?.clientWidth||680)-50)/layout.width,((diagramRef.current?.clientHeight||558)-60)/layout.height)));diagramRef.current?.scrollTo({top:0,left:0});}}><Maximize2 size={14}/></button></div></div>:view==='steps'?<div className="steps-view">{stepIds&&<div className="step-filter"><span>{t("Overview group")} · {stepIds.length}</span><button onClick={()=>setStepIds(null)}>{t("Show all steps")}</button></div>}<table><thead><tr><th>{t("Step")}</th><th>{t("Business area")}</th><th>{t("Role")}</th><th>{t("System")}</th><th>{t("Execution")}</th><th>{t("Human decision")}</th></tr></thead><tbody>{process.nodes.filter((n:Process)=>!stepIds||stepIds.includes(n.id)).map((n:Process)=><tr key={n.id} onClick={()=>setSelected(n.id)} tabIndex={0} onKeyDown={e=>{if(e.key==='Enter')setSelected(n.id);}}><td>{n.label}</td><td>{isTask(n)?<AreaBadge node={n} t={t}/>:"—"}</td><td>{process.roles.find((r:Process)=>r.id===n.roleId)?.label||(['start','end'].includes(n.type)?'—':t("Unknown"))}</td><td>{isTask(n)?process.systems?.find((s:Process)=>s.id===taskCard(n).systemId)?.label||t(taskCard(n).execution==='manual'?'No software':'System unknown'):'—'}</td><td>{isTask(n)?t(EXECUTION_LABELS[taskCard(n).execution]):'—'}</td><td>{isTask(n)?t(taskCard(n).humanDecision===null?'Unknown':taskCard(n).humanDecision?'Yes':'No'):'—'}</td></tr>)}</tbody></table></div>:<pre className="mermaid-view">{toMermaid(process,svgLabels)}</pre>}
+       {showingOverview?<ProcessExplorer process={process} locale={locale} editable={!aiPending&&!dirty} onSave={(next,expected)=>{if(expected!==workspace.current?.process.version)throw new Error('Stale process');commit(next);}} onNodeSelect={id=>setSelected(id)}/>:(view==='diagram'||showingBpmn)?<div className={bpmnVisible?'diagram-area bpmn-area':'diagram-area'}><div className="diagram-scroll" ref={diagramRef} onScroll={event=>pinBpmnLanes(event.currentTarget)}><div className="svg-holder" style={{width:layout.width*zoom}} onClick={selectNode} onKeyDown={e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();selectNode(e);}}} dangerouslySetInnerHTML={{__html:toSVG(displayProcess,displayChanged,{...displayLabels,includeSystemLegend:false})}}/></div><div className="zoom-tools"><button aria-label={t("Zoom out")} onClick={()=>setZoom(v=>Math.max(.1,v-.1))}><ZoomOut size={15}/></button><span>{Math.round(zoom*100)}%</span><button aria-label={t("Zoom in")} onClick={()=>setZoom(v=>Math.min(1.6,v+.1))}><ZoomIn size={15}/></button><i/>{showingBpmn&&<button title={t('Fit diagram height')} aria-label={t('Fit diagram height')} onClick={fitBpmnHeight}><Maximize2 size={14}/></button>}<button aria-label={t("Fit diagram")} onClick={()=>{setZoom(Math.max(.08,Math.min(1,((diagramRef.current?.clientWidth||680)-50)/layout.width,((diagramRef.current?.clientHeight||558)-60)/layout.height)));diagramRef.current?.scrollTo({top:0,left:0});}}><Maximize2 size={14}/></button></div></div>:view==='steps'?<div className="steps-view">{stepIds&&<div className="step-filter"><span>{t("Overview group")} · {stepIds.length}</span><button onClick={()=>setStepIds(null)}>{t("Show all steps")}</button></div>}<table><thead><tr><th>{t("Step")}</th><th>{t("Business area")}</th><th>{t("Role")}</th><th>{t("System")}</th><th>{t("Execution")}</th><th>{t("Human decision")}</th></tr></thead><tbody>{process.nodes.filter((n:Process)=>!stepIds||stepIds.includes(n.id)).map((n:Process)=><tr key={n.id} onClick={()=>setSelected(n.id)} tabIndex={0} onKeyDown={e=>{if(e.key==='Enter')setSelected(n.id);}}><td>{n.label}</td><td>{isTask(n)?<AreaBadge node={n} t={t}/>:"—"}</td><td>{process.roles.find((r:Process)=>r.id===n.roleId)?.label||(['start','end'].includes(n.type)?'—':t("Unknown"))}</td><td>{isTask(n)?process.systems?.find((s:Process)=>s.id===taskCard(n).systemId)?.label||t(taskCard(n).execution==='manual'?'No software':'System unknown'):'—'}</td><td>{isTask(n)?t(EXECUTION_LABELS[taskCard(n).execution]):'—'}</td><td>{isTask(n)?t(taskCard(n).humanDecision===null?'Unknown':taskCard(n).humanDecision?'Yes':'No'):'—'}</td></tr>)}</tbody></table></div>:<pre className="mermaid-view">{toMermaid(process,svgLabels)}</pre>}
        <BusinessAreaLegend process={process} t={t} onComplete={()=>{setView('steps');setStepIds(null);setSelected((process.nodes.find((node:Process)=>isTask(node)&&!areaCard(node).areaReviewed)||process.nodes.find((node:Process)=>isTask(node)))?.id||null);}}/>
        <SystemLegend process={process} t={t} onComplete={()=>{setView('steps');setSelected((process.nodes.find((n:Process)=>systemGaps(n).length)||process.nodes.find((n:Process)=>isTask(n)))?.id||null);}}/>
        <footer className="diagram-footer">{!showingBpmn&&<div className="legend"><span><i className="activity-symbol"/>{t("Activity")}</span><span><i className="decision-symbol"/>{t("Decision")}</span><span><i className="terminal-symbol"/>{t("Start / end")}</span></div>}<button onClick={exportPDF} disabled={pdfPending} title={pdfCopy(locale).hint}><ArrowDownToLine size={14}/>{pdfPending?pdfCopy(locale).busy:"PDF"}</button><button onClick={()=>download('process-v'+process.version+(showingOverview?'-overview':showingBpmn?'-bpmn':'')+'.svg',toSVG(showingOverview?process:displayProcess,[],showingOverview?{...displayLabels,direction}:displayLabels),'image/svg+xml')}><ArrowDownToLine size={14}/>SVG</button><button onClick={()=>download('process-v'+process.version+'.mmd',toMermaid(process,svgLabels),'text/plain')}>{showingOverview?t('Detailed Mermaid'):'Mermaid'}<ArrowDownToLine size={14}/></button></footer>
@@ -286,3 +342,25 @@ export default function Home(){
  </div>;
 }
 
+
+function BusinessCentralReview({process,locale,t,onSuggest}:{process:Process;locale:string;t:(key:string)=>string;onSuggest?:(note:string)=>void}) {
+ const [open,setOpen]=useState(false);
+ const findings=open?reviewBusinessCentral(process,locale):[];
+ const labels={missing:'Check for a missing step',question:'Needs clarification',reference:'Business Central option',order:'Check posting order'};
+ return <section className="mapping-notes">
+  <button className="button soft" aria-expanded={open} onClick={()=>setOpen(value=>!value)}>{t('Check against Business Central')}</button>
+  {open&&<>
+   <p>{t('This check looks for matching terms and existing questions. Confirm findings against the source and your configuration.')}</p>
+   {!findings.length&&<p>{t('No matching Business Central checks for this draft.')}</p>}
+   {findings.map(({rule,kind,sources,nodes,questions})=><details key={rule.id+kind}>
+    <summary>{t(labels[kind as keyof typeof labels])} · {t('BC topic '+rule.id)}</summary>
+    {nodes.length>0&&<p>{t('Process steps')} · {nodes.map((node:Process)=>node.label).join(', ')}</p>}
+    {(kind==='reference'||kind==='order')&&rule.guide&&<p>{t(rule.guide)}</p>}
+    {sources.map((passage,index)=><blockquote key={index}>{passage}</blockquote>)}
+    {questions.map((question:Process)=><p key={question.id}>{question.text}</p>)}
+    <p><a href={rule.url} target="_blank" rel="noreferrer">Microsoft Learn ↗</a></p>
+    {kind==='reference'&&rule.guide&&onSuggest&&<button className="button soft" onClick={()=>onSuggest(t(rule.guide))}>{t('Add to requested change')}</button>}
+   </details>)}
+  </>}
+ </section>;
+}

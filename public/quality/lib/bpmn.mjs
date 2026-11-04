@@ -74,11 +74,13 @@ export function renderRoleLanes(process, layout, highlighted, copy) {
   const conflicts = new Map((process.questions || []).filter(isResponsibilityConflict)
     .flatMap(question => question.nodeIds.map(id => [id,question.text])));
   const parts = [`<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${width} ${height}" font-family="Arial,sans-serif" role="img" aria-label="${escape(process.title)}" data-process-svg="true"><title>${escape(process.title)}</title><defs><marker id="bpmn-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 0L10 5L0 10Z" fill="#56636e"/></marker><marker id="bpmn-return" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 0L10 5L0 10Z" fill="#aa5d20"/></marker></defs><rect width="${width}" height="${height}" fill="white"/><text x="16" y="27" font-size="19" font-weight="600" fill="#263640">${escape(process.title)}</text><text x="16" y="49" font-size="11" fill="#52616b">BPMN · ${escape(process.mode.toUpperCase())}</text>`];
+  const laneLabels = [];
   for (const [index, lane] of lanes.entries()) {
     const unknown = lane.id === null;
     const stroke = unknown ? '#b47640' : '#d3dbe1';
     parts.push(`<rect x="1" y="${lane.top}" width="${width-2}" height="${lane.height}" fill="${index%2?'#fff':'#f4f6f8'}" stroke="${stroke}" ${unknown?'stroke-dasharray="6 4"':''}/><path d="M${laneHeader} ${lane.top}v${lane.height}" stroke="${stroke}"/>`);
-    parts.push(label(lane.label, laneHeader/2, lane.top+lane.height/2-5, {width:19,color:unknown?'#98531e':'#263640'}));
+    laneLabels.push(`<rect x="1" y="${lane.top}" width="${laneHeader-1}" height="${lane.height}" fill="${index%2?'#fff':'#f4f6f8'}" fill-opacity=".88" stroke="${stroke}"${unknown?' stroke-dasharray="6 4"':''}/>`);
+    laneLabels.push(label(lane.label, laneHeader/2, lane.top+lane.height/2-5, {width:19,color:unknown?'#98531e':'#263640'}));
   }
   for (const [index, edge] of process.edges.entries()) {
     const a = nodes.get(edge.from), b = nodes.get(edge.to);
@@ -142,5 +144,15 @@ export function renderRoleLanes(process, layout, highlighted, copy) {
     parts.push(`<text x="${left}" y="${legendTop+line*16}" font-size="10" fill="${colors[index]}">${escape([symbols[index],item].filter(Boolean).join(' '))}</text>`);
     left += span;
   }
+  parts.push('<g data-bpmn-lanes pointer-events="none">'+laneLabels.join('')+'</g>');
   return parts.join('')+'</svg>';
+}
+
+export function pinBpmnLanes(scroller) {
+ const group=scroller.querySelector('[data-bpmn-lanes]');
+ const svg=group?.ownerSVGElement;
+ const scale=svg?.getScreenCTM()?.a;
+ if(!scale)return;
+ // Scroll offsets are CSS pixels; SVG transforms use diagram coordinates.
+ group.setAttribute('transform', 'translate('+Math.max(0,scroller.scrollLeft)/scale+' 0)');
 }
