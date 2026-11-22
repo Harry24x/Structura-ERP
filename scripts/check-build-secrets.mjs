@@ -8,7 +8,7 @@ for(const file of ['.env.local','.env']){
  try{const parsed=parseEnv(await readFile(file,'utf8'));for(const [name,value] of Object.entries(parsed))if(/KEY|SECRET|TOKEN/.test(name)&&value)candidates.push(value);}
  catch(error){if(error.code!=='ENOENT')throw error;}
 }
-if(process.env.OPENAI_API_KEY)candidates.push(process.env.OPENAI_API_KEY);
+for(const name of ['OPENAI_API_KEY','GEMINI_API_KEY'])if(process.env[name])candidates.push(process.env[name]);
 let count=0;
 async function scan(directory){
  for(const item of await readdir(directory,{withFileTypes:true})){
@@ -17,9 +17,9 @@ async function scan(directory){
   if(item.isDirectory()){await scan(target);continue;}
   if(!item.isFile())continue;
   count++;const bytes=await readFile(target);
-  if(candidates.some(value=>bytes.includes(Buffer.from(value)))||/sk-(?:proj-)?[A-Za-z0-9_-]{24,}/.test(bytes.toString('utf8')))throw new Error('Credential-like material found in build output. Publication blocked.');
+  if(candidates.some(value=>bytes.includes(Buffer.from(value)))||/sk-(?:proj-)?[A-Za-z0-9_-]{24,}|AIza[0-9A-Za-z_-]{35}/.test(bytes.toString('utf8')))throw new Error('Credential-like material found in build output. Publication blocked.');
   if(/^\.(?:env|dev\.vars)(?:\.|$)/.test(item.name))throw new Error('Local environment file found in build output. Publication blocked.');
-  if(target.startsWith(path.join('dist','client'))&&bytes.includes(Buffer.from('https://api.openai.com/v1/responses')))throw new Error('Provider endpoint found in client output. Publication blocked.');
+  if(target.startsWith(path.join('dist','client'))&&['https://api.openai.com/v1/responses','https://generativelanguage.googleapis.com/v1beta/models'].some(endpoint=>bytes.includes(Buffer.from(endpoint))))throw new Error('Provider endpoint found in client output. Publication blocked.');
  }
 }
 await scan('dist');
