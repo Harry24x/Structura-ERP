@@ -9,7 +9,7 @@ async function seed(f){return commitAccount(f.db,f.bucket,a,{baseRevision:0,reco
 
 test('assigned Digmatix accounts receive consultant role without access to other accounts',async()=>{
  const f=fixture();await seed(f);
- for(const [i,email]of ['sandertammela@gmail.com',' JANA.RAUDVERE@gmail.com '].entries()){
+ for(const [i,email]of ['consultant@example.com',' CLIENT@example.com '].entries()){
   const account=await readAccount(f.db,f.bucket,{userId:'consultant-'+i,email,displayName:'Consultant'});
   assert.equal(account.user.role,'consultant');assert.equal(account.permissions.manage,true);assert.equal(account.documents.length,0);
  }

@@ -35,4 +35,4 @@ The scopes are three separate diagrams, not an automatically linked composite pr
 
 TypeScript and production build checks are required for publication. Local browser checks cover the stage selector, visible source and scope notes, approval blocking, process-step view, context-preserving clarification request and history across stage switches. Hosted execution remains subject to the private site's sign-in; no direct WebMCP success is claimed.
 
-Next gate: review the 16 questions with a person who knows the process, complete the unresolved paths, then compare model outputs against an accepted reference and run the planned repeated edit tests. T3 is partial, not passed. Work allocation and both held questions for Jana remain unchanged.
+Next gate: review the 16 questions with a person who knows the process, complete the unresolved paths, then compare model outputs against an accepted reference and run the planned repeated edit tests. T3 is partial, not passed. Work allocation and both held questions for the client remain unchanged.

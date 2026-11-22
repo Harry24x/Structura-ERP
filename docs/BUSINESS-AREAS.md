@@ -1,6 +1,6 @@
 # Business areas and customer overview — v0.10
 
-This implements the first bounded response to Jana's guidance, recorded on 26 October 2026. Her email predates access to the app and is not customer acceptance of v0.8 or v0.9. The purpose is consistent, source-supported diagrams across varied memos, with a customer summary and a detailed working view.
+This implements the first bounded response to the client’s guidance, recorded on 26 October 2026. Her email predates access to the app and is not customer acceptance of v0.8 or v0.9. The purpose is consistent, source-supported diagrams across varied memos, with a customer summary and a detailed working view.
 
 ## Reference and scope
 
@@ -16,7 +16,7 @@ Reference profile: `bc-project-areas-2026-10-26`. The official [Business Central
 | other | A clear function outside the five categories | Project fallback |
 | unknown | Insufficient or ambiguous evidence | Project fallback |
 
-Microsoft's [process levels](https://learn.microsoft.com/en-us/dynamics365/guidance/business-processes/about-catalog-levels) distinguish end-to-end processes, areas and detail. v0.9 supplies a conservative top-down summary of the current graph, not the entire catalog hierarchy. Whether Jana means a particular proposal-level hierarchy still needs validation. No Business Central steps are inserted into a customer's as-is process. No reference step proves a customer's actual software use, responsibility or automation.
+Microsoft's [process levels](https://learn.microsoft.com/en-us/dynamics365/guidance/business-processes/about-catalog-levels) distinguish end-to-end processes, areas and detail. v0.9 supplies a conservative top-down summary of the current graph, not the entire catalog hierarchy. Whether the client means a particular proposal-level hierarchy still needs validation. No Business Central steps are inserted into a customer's as-is process. No reference step proves a customer's actual software use, responsibility or automation.
 
 ## Data and review
 

@@ -52,9 +52,9 @@ export default function Home(){
  function openLibrary(transfer=false){if(transfer){
   if(aiAbort.current)return;
   let active=process;
-  if(view==='khaled'){
-   if(!khaledDraft||khaledDraft.draft.source!==source||khaledDraft.scope!==effectiveKhaledScope){tell('Generate the visible draft before saving it.',true);return;}
-   active={...khaledDraft.draft,version:process.version+1};
+  if(view==='consultant'){
+   if(!consultantDraft||consultantDraft.draft.source!==source||consultantDraft.scope!==effectiveConsultantScope){tell('Generate the visible draft before saving it.',true);return;}
+   active={...consultantDraft.draft,version:process.version+1};
   }else if(dirty){tell('Generate the visible draft before saving it.',true);return;}
   try{localStorage.setItem('quality-generator-transfer',JSON.stringify({process:active,source:active.source,qualityOrigin:qualityOrigin.current,transferId:crypto.randomUUID()}));}catch{tell('Browser storage unavailable. Export JSON first.',true);return;}}setQualityURL('/quality/?embedded=1'+(transfer?'&from=generator&transfer='+crypto.randomUUID():''));setStudioMode('library');}
  useEffect(()=>{if(new URLSearchParams(location.search).get('view')==='generator')setStudioMode('generator');if(new URLSearchParams(location.search).get('view')==='shared')setQualityURL('/quality/shared.html?embedded=1');const receive=(event:MessageEvent)=>{if(event.origin!==location.origin||event.source!==qualityFrame.current?.contentWindow)return;if(event.data?.type==='studio:locale'){setLocale(syncLanguagePreference(event.data.locale));return;}if(event.data?.type==='studio:shared-view'){setQualityURL('/quality/shared.html?embedded=1');setStudioMode('library');return;}if(event.data?.type==='studio:library-view'){setQualityURL('/quality/?embedded=1');setStudioMode('library');return;}if(event.data?.type==='studio:generator-view'){setStudioMode('generator');return;}if(event.data?.type!=='studio:open-generator')return;try{const loaded=loadWorkspaceWithTransfer(localStorage).workspace;if(!loaded)return;setProcess(loaded.process);setSource(loaded.source);setSample(loaded.sample);setVersions(loaded.versions);setCommand(loaded.command);setAnswers(loaded.answers);qualityOrigin.current=loaded.qualityOrigin;setView('overview');setStudioMode('generator');}catch{tell('Browser storage unavailable. Export JSON first.',true);}};window.addEventListener('message',receive);return()=>window.removeEventListener('message',receive);},[]);
@@ -74,8 +74,8 @@ export default function Home(){
  const [process,setProcess]=useState<Process>(()=>withBusinessAreas(withSystemRegistry(clone(examples[0].process))));
  const [source,setSource]=useState(examples[0].source),[sample,setSample]=useState('expense');
  const [versions,setVersions]=useState<Process[]>([]),[command,setCommand]=useState('');
- const [khaledScope,setKhaledScope]=useState('');
- const [khaledDraft,setKhaledDraft]=useState<{draft:Process;evidence:Process;scope:string}|null>(null);
+ const [consultantScope,setConsultantScope]=useState('');
+ const [consultantDraft,setConsultantDraft]=useState<{draft:Process;evidence:Process;scope:string}|null>(null);
  const [panel,setPanel]=useState<Panel>('none'),[view,setView]=useState('overview'),[selected,setSelected]=useState<string|null>(null);
  const [stepIds,setStepIds]=useState<string[]|null>(null);
  const [importText,setImportText]=useState(''),[notice,setNotice]=useState(''),[noticeError,setNoticeError]=useState(false);
@@ -93,15 +93,15 @@ export default function Home(){
  const inputRef=useRef<HTMLInputElement>(null),diagramRef=useRef<HTMLDivElement>(null),workspace=useRef<any>(null),timer=useRef<ReturnType<typeof setTimeout>|null>(null);
  const before=versions.at(-1),diff=difference(before,process),changed=[...diff.added,...diff.changed],dirty=source!==process.source;
  const overview=customerOverview(process,t),showingOverview=view==='overview',showingBpmn=view==='bpmn',displayProcess=process,displayDirection=showingOverview?'TD':direction;
- const khaledUncovered=useMemo(()=>khaledDraft?sourceWithoutStepEvidence(khaledDraft.draft,locale):[],[khaledDraft,locale]);
- const bpmnVisible=showingBpmn||view==='khaled';
+ const consultantUncovered=useMemo(()=>consultantDraft?sourceWithoutStepEvidence(consultantDraft.draft,locale):[],[consultantDraft,locale]);
+ const bpmnVisible=showingBpmn||view==='consultant';
  const layout=showingBpmn?bpmnLayout(displayProcess,svgLabels.unknownRoleLabel):diagramLayout(displayProcess,displayDirection),displayLabels={...svgLabels,direction:displayDirection,startLabel:t('Start event'),endLabel:t('End event'),activityLabel:t('Activity'),decisionLabel:t('Decision'),loopLabel:t('Rework loop'),clarificationLabel:t('Needs clarification'),notation:showingBpmn?'bpmn':'flowchart',viewLabel:showingOverview?t('Customer overview'):showingBpmn?'BPMN':''};
  const displayChanged=showingOverview?displayProcess.nodes.filter((node:Process)=>(overview.members[node.id]||[node.id]).some((id:string)=>changed.includes(id))).map((node:Process)=>node.id):changed;
  const uncovered=useMemo(()=>sourceWithoutStepEvidence(process,locale),[process,locale]);
  const activeNode=process.nodes.find((n:Process)=>n.id===selected);
  const activeExample=examples.find(e=>e.id===sample),activeGroup=CASE_GROUPS.find(g=>g.id===(activeExample as any)?.family);
  const requestScope=activeGroup&&!dirty?`${t(activeGroup.title)}. Selected view: ${activeExample?.label}. ${process.notes.join(' ')}`:'';
- const effectiveKhaledScope=khaledScope.trim()||requestScope;
+ const effectiveConsultantScope=consultantScope.trim()||requestScope;
  function requestForAssistant(){return workspaceAssistantRequest({source,current:process,command,locale,scope:requestScope});}
  const assistantCopy=panel==='assistant'?requestForAssistant():{text:'',error:null};
  const caseStages=examples.filter((e:any)=>e.family===activeGroup?.id&&e.family),futureNeeds=explicitFutureNeeds(source);
@@ -154,10 +154,10 @@ export default function Home(){
  }catch(e){tell(clientErrorKey(e),true);}}
  async function copyRequest(){const assistantCopy=requestForAssistant();if(assistantCopy.error){tell(t(assistantCopy.error),true);return;}try{await navigator.clipboard.writeText(assistantCopy.text);tell('Request copied. Ask your AI assistant, then import its JSON draft.');}catch{setPanel('assistant');tell('Copy the request shown in this panel.');}}
  function clarify(id:string){try{if(dirty)throw new Error('Generate a draft for the edited description first.');const next=applyClarification(process,id,answers[id]||'');commit(next);setAnswers(a=>({...a,[id]:''}));tell('Answer recorded. Review the updated diagram.');}catch(e){tell(clientErrorKey(e),true);}}
- async function runAI(intent='generate',questionId='',ruleSet?:'khaled'){
+ async function runAI(intent='generate',questionId='',ruleSet?:'consultant'){
   if(aiAbort.current)return;
   if(intent!=='generate'&&dirty){tell('Generate a draft for the edited description before changing the diagram.',true);return;}
-  const scope=ruleSet==='khaled'?effectiveKhaledScope:requestScope;
+  const scope=ruleSet==='consultant'?effectiveConsultantScope:requestScope;
   const snapshot={intent,locale,version:process.version,process:clone(process),source,command,questionId,answer:answers[questionId]||''};
   const controller=new AbortController();aiAbort.current=controller;setAIPending(ruleSet||intent);setAIError('');setAIDetails([]);
   try{
@@ -168,8 +168,8 @@ export default function Home(){
    if(result.expectedVersion!==snapshot.version||!matchesAIRequest(snapshot,workspace.current)){tell('The workspace changed during generation. The earlier AI result was discarded; your current work is kept.',true);return;}
    const nextSource=intent==='edit'?snapshot.source+'\nRequested improvement: '+snapshot.command.trim():intent==='clarify'?snapshot.source+`\nClarification: ${snapshot.process.questions.find((q:Process)=>q.id===questionId).text}\nAnswer: ${snapshot.answer.trim()}`:snapshot.source;
    const next=createDocument(result.draft,nextSource,'model-api');next.version=snapshot.version+1;next.changeSummary=result.draft.changeSummary;
-   if(ruleSet==='khaled'){
-    if(workspace.current.khaledScope===scope)setKhaledDraft({draft:next,evidence:result.evidence||{},scope});
+   if(ruleSet==='consultant'){
+    if(workspace.current.consultantScope===scope)setConsultantDraft({draft:next,evidence:result.evidence||{},scope});
     return;
    }
    commit(next);setSample('custom');setView('overview');setAIReady(true);
@@ -180,11 +180,11 @@ export default function Home(){
    else{const message=error instanceof TypeError?'The model service could not be reached. Try again later.':error instanceof SyntaxError?'The model service returned an unreadable response. Your draft is unchanged.':clientErrorKey(error);setAIError(message);tell(message,true);}
   }finally{if(aiAbort.current===controller){aiAbort.current=null;setAIPending('');}}
  }
- function editKhaledDraft(){
-  if(!khaledDraft||aiAbort.current||khaledDraft.draft.source!==source||khaledDraft.scope!==effectiveKhaledScope)return;
-  const next=clone(khaledDraft.draft);
+ function editConsultantDraft(){
+  if(!consultantDraft||aiAbort.current||consultantDraft.draft.source!==source||consultantDraft.scope!==effectiveConsultantScope)return;
+  const next=clone(consultantDraft.draft);
   next.version=process.version+1;
-  next.changeSummary='Khaled draft opened for editing';
+  next.changeSummary='Consultant draft opened for editing';
   commit(next);
   setSample('custom');
   setAnswers({});
@@ -192,16 +192,16 @@ export default function Home(){
  }
  function fitBpmnHeight(){
   const scroller=diagramRef.current;
-  const target=view==='khaled'?khaledDraft?.draft:process;
+  const target=view==='consultant'?consultantDraft?.draft:process;
   if(!scroller||!target)return;
   const {height}=bpmnLayout(target,svgLabels.unknownRoleLabel);
   setZoom(Math.max(.02,Math.min(1.6,(scroller.clientHeight-64)/height)));
   scroller.scrollTo({top:0,left:0});
  }
- useEffect(()=>{if(bpmnVisible&&diagramRef.current)pinBpmnLanes(diagramRef.current);},[bpmnVisible,zoom,diagramExpanded,process,khaledDraft,locale]);
+ useEffect(()=>{if(bpmnVisible&&diagramRef.current)pinBpmnLanes(diagramRef.current);},[bpmnVisible,zoom,diagramExpanded,process,consultantDraft,locale]);
  function showView(next:string){setView(next);setStepIds(null);setZoom(.85);diagramRef.current?.scrollTo({top:0,left:0});}
  function selectNode(event:any){const element=event.target.closest?.('[data-node]');if(!element)return;const id=element.getAttribute('data-node'),members=showingOverview?overview.members[id]:null;if(members&&members.length>1){setStepIds(members);setView('steps');setSelected(null);}else setSelected(members?.[0]||id);}
- workspace.current={process,source,command,answers,locale,scope:requestScope,khaledScope:effectiveKhaledScope,importDraft,commit};
+ workspace.current={process,source,command,answers,locale,scope:requestScope,consultantScope:effectiveConsultantScope,importDraft,commit};
  useEffect(()=>{
   if(panel==='none'&&!selected)return;
   const previous=document.activeElement as HTMLElement|null;
@@ -275,36 +275,36 @@ export default function Home(){
      </section>
      <section className="output-column" id="process-output">
       <div className="card diagram-card">
-       <div className="diagram-heading"><div><div className="section-heading"><span className="step-number">2</span><h2>{view==='khaled'?(khaledDraft?.draft.title||t('Khaled’s rules')):process.title}</h2></div><div className="diagram-subline" style={view==='khaled'?{display:'none'}:undefined}><span className={'mode-badge '+(process.mode==='to-be'?'future':'')}>{process.mode==='as-is'?t("AS-IS · CURRENT PROCESS"):t("TO-BE · PROPOSED PROCESS")}</span><span>v{process.version}</span><span className="sub-dot">·</span><span>{t('{count} activities',{count:process.nodes.filter((n:Process)=>n.type==='activity').length})}</span><span className="sub-dot">·</span><span>{t('{count} roles',{count:process.roles.length})}</span></div></div><div className="diagram-heading-actions"><button className="button ghost diagram-expand-button" aria-controls="process-output" aria-pressed={diagramExpanded} title={t(diagramExpanded?'Show the source and change panels again.':'Temporarily hide the input panels to give the diagram more space.')} onClick={()=>setDiagramExpanded(v=>!v)}>{diagramExpanded?<Minimize2 size={14}/>:<Maximize2 size={14}/>}<span>{t(diagramExpanded?'Restore workspace':'Expand diagram')}</span></button><button className="icon-button" aria-label={t("Open version history")} onClick={()=>setPanel('history')}><History size={17}/></button></div></div>
-       <div className="diagram-toolbar"><div className="view-tabs"><button className={view==='overview'?'chosen':''} onClick={()=>showView('overview')}>{explorerText(locale)('overall')}</button><button className={view==='diagram'?'chosen':''} onClick={()=>showView('diagram')}><GitBranch size={14}/>{t("Flowchart")}</button><button className={showingBpmn?'chosen':''} aria-pressed={showingBpmn} onClick={()=>showView('bpmn')}>BPMN</button><button className={view==='khaled'?'chosen':''} aria-pressed={view==='khaled'} onClick={()=>showView('khaled')}>{t('Khaled’s rules')}</button><button className={view==='steps'?'chosen':''} onClick={()=>showView('steps')}>{t("Process steps")}</button><button className={view==='mermaid'?'chosen':''} onClick={()=>showView('mermaid')}>Mermaid</button></div><div className="diagram-display-options" style={view==='khaled'?{display:'none'}:undefined}>{!showingOverview&&!showingBpmn&&<label className="direction-picker"><span>{t("Direction")}</span><select aria-label={t("Diagram direction")} title={t(showingOverview?"Customer view uses top-to-bottom layout. Your detailed view keeps its direction.":"Change the layout without changing your process.")} disabled={showingOverview} value={displayDirection} onChange={e=>{setDirection(normalizeDirection(e.target.value));setZoom(.85);diagramRef.current?.scrollTo({top:0,left:0});}}>{DIAGRAM_DIRECTIONS.map(d=><option key={d.id} value={d.id}>{t(d.label)}</option>)}</select></label>}<span className={'review-state '+(process.reviewed?'reviewed':'')}>{process.reviewed?<Check size={13}/>:<span className="review-dot"/>}{process.reviewed?t("Human reviewed"):process.questions.length?t("Needs clarification"):t("Draft · ready to review")}</span></div></div>
-       {view==='khaled'
-        ?khaledDraft&&khaledDraft.draft.source===source&&khaledDraft.scope===effectiveKhaledScope&&<BusinessCentralReview key="khaled" process={khaledDraft.draft} locale={locale} t={t}/>
+       <div className="diagram-heading"><div><div className="section-heading"><span className="step-number">2</span><h2>{view==='consultant'?(consultantDraft?.draft.title||t('Consultant rules')):process.title}</h2></div><div className="diagram-subline" style={view==='consultant'?{display:'none'}:undefined}><span className={'mode-badge '+(process.mode==='to-be'?'future':'')}>{process.mode==='as-is'?t("AS-IS · CURRENT PROCESS"):t("TO-BE · PROPOSED PROCESS")}</span><span>v{process.version}</span><span className="sub-dot">·</span><span>{t('{count} activities',{count:process.nodes.filter((n:Process)=>n.type==='activity').length})}</span><span className="sub-dot">·</span><span>{t('{count} roles',{count:process.roles.length})}</span></div></div><div className="diagram-heading-actions"><button className="button ghost diagram-expand-button" aria-controls="process-output" aria-pressed={diagramExpanded} title={t(diagramExpanded?'Show the source and change panels again.':'Temporarily hide the input panels to give the diagram more space.')} onClick={()=>setDiagramExpanded(v=>!v)}>{diagramExpanded?<Minimize2 size={14}/>:<Maximize2 size={14}/>}<span>{t(diagramExpanded?'Restore workspace':'Expand diagram')}</span></button><button className="icon-button" aria-label={t("Open version history")} onClick={()=>setPanel('history')}><History size={17}/></button></div></div>
+       <div className="diagram-toolbar"><div className="view-tabs"><button className={view==='overview'?'chosen':''} onClick={()=>showView('overview')}>{explorerText(locale)('overall')}</button><button className={view==='diagram'?'chosen':''} onClick={()=>showView('diagram')}><GitBranch size={14}/>{t("Flowchart")}</button><button className={showingBpmn?'chosen':''} aria-pressed={showingBpmn} onClick={()=>showView('bpmn')}>BPMN</button><button className={view==='consultant'?'chosen':''} aria-pressed={view==='consultant'} onClick={()=>showView('consultant')}>{t('Consultant rules')}</button><button className={view==='steps'?'chosen':''} onClick={()=>showView('steps')}>{t("Process steps")}</button><button className={view==='mermaid'?'chosen':''} onClick={()=>showView('mermaid')}>Mermaid</button></div><div className="diagram-display-options" style={view==='consultant'?{display:'none'}:undefined}>{!showingOverview&&!showingBpmn&&<label className="direction-picker"><span>{t("Direction")}</span><select aria-label={t("Diagram direction")} title={t(showingOverview?"Customer view uses top-to-bottom layout. Your detailed view keeps its direction.":"Change the layout without changing your process.")} disabled={showingOverview} value={displayDirection} onChange={e=>{setDirection(normalizeDirection(e.target.value));setZoom(.85);diagramRef.current?.scrollTo({top:0,left:0});}}>{DIAGRAM_DIRECTIONS.map(d=><option key={d.id} value={d.id}>{t(d.label)}</option>)}</select></label>}<span className={'review-state '+(process.reviewed?'reviewed':'')}>{process.reviewed?<Check size={13}/>:<span className="review-dot"/>}{process.reviewed?t("Human reviewed"):process.questions.length?t("Needs clarification"):t("Draft · ready to review")}</span></div></div>
+       {view==='consultant'
+        ?consultantDraft&&consultantDraft.draft.source===source&&consultantDraft.scope===effectiveConsultantScope&&<BusinessCentralReview key="consultant" process={consultantDraft.draft} locale={locale} t={t}/>
         :!dirty&&<BusinessCentralReview key="standard" process={process} locale={locale} t={t} onSuggest={note=>{setCommand(previous=>[previous,note].filter(Boolean).join('\n'));tell('Business Central suggestion added to the change field.');}}/>}
-       {view==='khaled'?<>
+       {view==='consultant'?<>
         <section className="mapping-notes">
          <p>{t('Generate a separate AS-IS draft from the text in the source field.')}</p>
-         <p><label>{t('Process scope (optional)')} <input value={khaledScope} onChange={event=>setKhaledScope(event.target.value)} maxLength={4000} placeholder={t('Example: Goods receipt from suppliers without a pre-created order')}/></label></p>
-         <button className="button soft" disabled={!source.trim()||!!aiPending} onClick={()=>runAI('generate','','khaled')}>{t(aiPending==='khaled'?'Generating…':'Generate with Khaled’s rules')}</button>
-         {aiPending==='khaled'&&<button className="button ghost" onClick={()=>aiAbort.current?.abort()}>{t('Cancel request')}</button>}
+         <p><label>{t('Process scope (optional)')} <input value={consultantScope} onChange={event=>setConsultantScope(event.target.value)} maxLength={4000} placeholder={t('Example: Goods receipt from suppliers without a pre-created order')}/></label></p>
+         <button className="button soft" disabled={!source.trim()||!!aiPending} onClick={()=>runAI('generate','','consultant')}>{t(aiPending==='consultant'?'Generating…':'Generate with consultant rules')}</button>
+         {aiPending==='consultant'&&<button className="button ghost" onClick={()=>aiAbort.current?.abort()}>{t('Cancel request')}</button>}
         </section>
-        {khaledDraft&&(khaledDraft.draft.source!==source||khaledDraft.scope!==effectiveKhaledScope)?<p className="dirty-note">{t('The source or scope changed. Generate a new draft.')}</p>:khaledDraft&&<>
+        {consultantDraft&&(consultantDraft.draft.source!==source||consultantDraft.scope!==effectiveConsultantScope)?<p className="dirty-note">{t('The source or scope changed. Generate a new draft.')}</p>:consultantDraft&&<>
          <div className={bpmnVisible?'diagram-area bpmn-area':'diagram-area'}><div className="diagram-scroll" ref={diagramRef} onScroll={event=>pinBpmnLanes(event.currentTarget)}>
-          <div className="svg-holder" style={{width:bpmnLayout(khaledDraft.draft,svgLabels.unknownRoleLabel).width*zoom}} dangerouslySetInnerHTML={{__html:toSVG(khaledDraft.draft,[],{...displayLabels,notation:'bpmn',includeSystemLegend:false})}}/>
+          <div className="svg-holder" style={{width:bpmnLayout(consultantDraft.draft,svgLabels.unknownRoleLabel).width*zoom}} dangerouslySetInnerHTML={{__html:toSVG(consultantDraft.draft,[],{...displayLabels,notation:'bpmn',includeSystemLegend:false})}}/>
          </div><div className="zoom-tools"><button aria-label={t('Zoom out')} onClick={()=>setZoom(v=>Math.max(.1,v-.1))}><ZoomOut size={15}/></button><span>{Math.round(zoom*100)}%</span><button aria-label={t('Zoom in')} onClick={()=>setZoom(v=>Math.min(1.6,v+.1))}><ZoomIn size={15}/></button><button title={t('Fit diagram height')} aria-label={t('Fit diagram height')} onClick={fitBpmnHeight}><Maximize2 size={14}/></button></div></div>
          <section className="mapping-notes">
-          <h3>{t('Review Khaled draft')}</h3>
-          {khaledDraft.draft.questions.length>0
-           ?<ul>{khaledDraft.draft.questions.map((q:Process)=><li key={q.id}>{q.text}</li>)}</ul>
+          <h3>{t('Review consultant draft')}</h3>
+          {consultantDraft.draft.questions.length>0
+           ?<ul>{consultantDraft.draft.questions.map((q:Process)=><li key={q.id}>{q.text}</li>)}</ul>
            :<p>{t('AI returned no clarification questions. Review the source coverage and the diagram before approval.')}</p>}
-          {khaledUncovered.length>0&&<details><summary>{t('Source passages without step evidence')} ({khaledUncovered.length})</summary><ul>{khaledUncovered.map(passage=><li key={passage}>{passage}</li>)}</ul></details>}
+          {consultantUncovered.length>0&&<details><summary>{t('Source passages without step evidence')} ({consultantUncovered.length})</summary><ul>{consultantUncovered.map(passage=><li key={passage}>{passage}</li>)}</ul></details>}
           <p>{t('Open this draft to answer questions, edit steps or request an AI change. The previous draft is saved in version history.')}</p>
-          <button className="button soft" disabled={!!aiPending} onClick={editKhaledDraft}>{t('Open Khaled draft for editing')}</button>
+          <button className="button soft" disabled={!!aiPending} onClick={editConsultantDraft}>{t('Open consultant draft for editing')}</button>
          </section>
-         {!!khaledDraft.draft.notes.length&&<section className="mapping-notes"><h3>{t('Source and scope notes')}</h3>{khaledDraft.draft.notes.map((note:string,i:number)=><p key={i}>{note}</p>)}</section>}
+         {!!consultantDraft.draft.notes.length&&<section className="mapping-notes"><h3>{t('Source and scope notes')}</h3>{consultantDraft.draft.notes.map((note:string,i:number)=><p key={i}>{note}</p>)}</section>}
          <details className="mapping-notes">
           <summary>{t('Source references')}</summary>
-          {[...(khaledDraft.evidence.nodes||[]),...(khaledDraft.evidence.edges||[])].filter(item=>item.references.length).map(({entry,references},i)=>{
-           const nodeLabel=(id:string)=>khaledDraft.draft.nodes.find((n:Process)=>n.id===id)?.label||id;
+          {[...(consultantDraft.evidence.nodes||[]),...(consultantDraft.evidence.edges||[])].filter(item=>item.references.length).map(({entry,references},i)=>{
+           const nodeLabel=(id:string)=>consultantDraft.draft.nodes.find((n:Process)=>n.id===id)?.label||id;
            const label=entry.id?entry.label:[nodeLabel(entry.from)+' → '+nodeLabel(entry.to),entry.label].filter(Boolean).join(' · ');
            return <p key={i}><strong>{label}</strong>{references.map((reference:Process)=><span key={reference.id}><br/>{reference.id} · {reference.text}</span>)}</p>;
           })}
@@ -319,7 +319,7 @@ export default function Home(){
        <footer className="diagram-footer">{!showingBpmn&&<div className="legend"><span><i className="activity-symbol"/>{t("Activity")}</span><span><i className="decision-symbol"/>{t("Decision")}</span><span><i className="terminal-symbol"/>{t("Start / end")}</span></div>}<button onClick={exportPDF} disabled={pdfPending} title={pdfCopy(locale).hint}><ArrowDownToLine size={14}/>{pdfPending?pdfCopy(locale).busy:"PDF"}</button><button onClick={()=>download('process-v'+process.version+(showingOverview?'-overview':showingBpmn?'-bpmn':'')+'.svg',toSVG(showingOverview?process:displayProcess,[],showingOverview?{...displayLabels,direction}:displayLabels),'image/svg+xml')}><ArrowDownToLine size={14}/>SVG</button><button onClick={()=>download('process-v'+process.version+'.mmd',toMermaid(process,svgLabels),'text/plain')}>{showingOverview?t('Detailed Mermaid'):'Mermaid'}<ArrowDownToLine size={14}/></button></footer>
        </>}
       </div>
-      {view!=='khaled'&&<>
+      {view!=='consultant'&&<>
       <div className="review-strip"><div className="review-summary"><span className={'summary-icon '+(process.questions.length?'amber':'')}>{process.questions.length?<CircleHelp size={18}/>:<Check size={18}/>}</span><div><strong>{process.questions.length?t('{count} questions before approval',{count:process.questions.length}):t("A draft is a starting point.")}</strong><span>{process.questions.length?t("Resolve missing information without guessing."):t("Check the steps, roles and decisions against the description.")}</span></div></div><button className="button soft" disabled={!!process.questions.length||dirty||!!aiPending} onClick={()=>{const next={...clone(process),reviewed:!process.reviewed,changeSummary:process.reviewed?'Review reopened':'Human review recorded'};setProcess(next);tell(next.reviewed?'Human review recorded for this version.':'Draft reopened for review.');}}>{process.reviewed?t("Reopen review"):t("Mark as reviewed")}<Check size={14}/></button></div>
       {!!process.questions.length&&<div className="questions-grid">{process.questions.map((q:Process)=><div className="question-card" key={q.id}><span className="question-label">{t("CLARIFICATION NEEDED")}</span><label htmlFor={['role','decision_rule'].includes(q.kind)?q.id:undefined}>{q.text}</label>{['role','decision_rule'].includes(q.kind)?<div className="answer-row"><input id={q.id} value={answers[q.id]||''} onChange={e=>setAnswers(a=>({...a,[q.id]:e.target.value}))} placeholder={q.kind==='role'?t("Responsible role…"):t("Approval rule…")} maxLength={100}/><button className="icon-button" aria-label={t('Save answer: {question}',{question:q.text})} onClick={()=>clarify(q.id)}><ArrowRight size={16}/></button></div>:<><p className="question-help">{t("Describe the missing step or handoff. AI maps your answer into a new draft and keeps unanswered gaps open.")}</p><textarea aria-label={t('Answer: {question}',{question:q.text})} value={answers[q.id]||''} onChange={e=>setAnswers(a=>({...a,[q.id]:e.target.value}))} maxLength={2000} placeholder={t("Your clarification…")} rows={3}/><button className="question-assistant" disabled={!!aiPending||dirty||!answers[q.id]?.trim()} onClick={()=>runAI('clarify',q.id)}>{t("Map answer with AI")}<ArrowRight size={12}/></button></>}</div>)}</div>}
       {!dirty&&uncovered.length>0&&<details className="mapping-notes"><summary>{t('Source passages without step evidence')} ({uncovered.length})</summary><p>{t('Check these passages for omitted steps. Some may be context or outside the selected scope.')}</p><ul>{uncovered.map(passage=><li key={passage}>{passage}</li>)}</ul></details>}

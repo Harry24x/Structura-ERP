@@ -139,8 +139,8 @@ test('a system mentioned elsewhere cannot justify an assignment without a named 
  assert.deepEqual(draft.edges,model.edges);
 });
 
-test('Khaled generation sends numbered source and validates separate step and arrow references',async()=>{
- const input=prepareProcessRequest({...request(),current:undefined,ruleSet:'khaled'});
+test('Consultant generation sends numbered source and validates separate step and arrow references',async()=>{
+ const input=prepareProcessRequest({...request(),current:undefined,ruleSet:'consultant'});
  let sent;
  const raw=expense();
  raw.nodes=raw.nodes.map(node=>({...node,sourceIds:['s1']}));
@@ -149,8 +149,8 @@ test('Khaled generation sends numbered source and validates separate step and ar
   sent=JSON.parse(options.body);
   return response(raw);
  }});
- assert.match(sent.instructions,/KHALED RULES/);
- assert.equal(sent.text.format.name,'khaled_draft');
+ assert.match(sent.instructions,/CONSULTANT RULES/);
+ assert.equal(sent.text.format.name,'consultant_draft');
  assert.ok(sent.text.format.schema.properties.edges.items.required.includes('sourceIds'));
  const first=JSON.parse(sent.input).numberedSource[0];
  assert.equal(first.id,'s1');
@@ -160,5 +160,5 @@ test('Khaled generation sends numbered source and validates separate step and ar
  assert.equal(result.draft.edges[0].sourceIds,undefined);
  raw.edges[0].sourceIds=['s999999'];
  await expectError(generateProcessDraft(input,{apiKey:'test',fetcher:async()=>response(raw)}),'INVALID_DRAFT');
- assert.throws(()=>prepareProcessRequest({...request(),intent:'edit',ruleSet:'khaled'}),{code:'INVALID_REQUEST'});
+ assert.throws(()=>prepareProcessRequest({...request(),intent:'edit',ruleSet:'consultant'}),{code:'INVALID_REQUEST'});
 });

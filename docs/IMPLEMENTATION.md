@@ -1,6 +1,6 @@
 # Implementation checkpoint — v0.9, 26 October 2026
 
-Work allocation is deferred. The eight core requirements remain the implementation scope. Jana’s written guidance is recorded in the Google requirements log: prioritize consistent diagrams, an official Business Central reference, top-down customer presentation and a bounded prototype. This is guidance before she viewed the app, not business acceptance. The exact abstraction level still needs validation.
+Work allocation is deferred. The eight core requirements remain the implementation scope. The client’s written guidance is recorded in the Google requirements log: prioritize consistent diagrams, an official Business Central reference, top-down customer presentation and a bounded prototype. This is guidance before she viewed the app, not business acceptance. The exact abstraction level still needs validation.
 
 ## Current implementation
 
@@ -83,7 +83,7 @@ All 84 automated checks and TypeScript pass. Five added checks cover safe direct
 
 ## v0.9: business areas and customer overview, 26 October 2026
 
-M5 follows Jana’s guidance with a controlled, correctable functional classification and a conservative customer summary. The six project areas are aligned with linked Business Central documentation; they are separate from role/software and are not the entire Microsoft process catalog. The official basic inbound warehouse flow is the concrete reference. No reference activity is inserted into a customer’s model. Unknown legacy mappings stay unknown. Strict model output carries category/rationale; model responses cannot mark new assignments human-confirmed. Manual confirmation preserves source and graph, creates a new unreviewed version and is retained on unchanged tasks during subsequent edits/clarifications.
+M5 follows the client’s guidance with a controlled, correctable functional classification and a conservative customer summary. The six project areas are aligned with linked Business Central documentation; they are separate from role/software and are not the entire Microsoft process catalog. The official basic inbound warehouse flow is the concrete reference. No reference activity is inserted into a customer’s model. Unknown legacy mappings stay unknown. Strict model output carries category/rationale; model responses cannot mark new assignments human-confirmed. Manual confirmation preserves source and graph, creates a new unreviewed version and is retained on unchanged tasks during subsequent edits/clarifications.
 
 Customer overview always uses TD and contracts only safe single paths of adjacent same-area/owner/system activities. It preserves decisions, cycles, labelled edges, questioned steps and unknowns. Each displayed group links to its original step rows. The detailed view retains its own direction and all JSON stays complete. SVG adds category/status labels and stable area colors; overview SVG is the summary, while Mermaid exports the detailed graph. Sources, help, controls and errors support all four interface languages. See [BUSINESS-AREAS.md](BUSINESS-AREAS.md) for schema, reference profile and usage.
 

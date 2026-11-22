@@ -106,7 +106,7 @@ The Google Docs remain the maintained requirements and course record:
 - Requirements and tests: https://docs.google.com/document/d/1JFlOUku2S11E9KMz10x3nCGNn5kcVD9jmR4QLYFGTas/edit
 - Project hub: https://docs.google.com/document/d/1I0KV9pHnSw9YQ-ScqYWz9DyqrU5BAzaZHKhpBs_F7AE/edit
 
-Work allocation is deferred. Jana’s guidance, recorded 26 October, permits diagram technology choices while asking for a Business Central reference and a top-down customer view. The prototype implements an initial interpretation; the required abstraction level and any later deployment/integration needs still require validation.
+Work allocation is deferred. The client’s guidance, recorded 26 October, permits diagram technology choices while asking for a Business Central reference and a top-down customer view. The prototype implements an initial interpretation; the required abstraction level and any later deployment/integration needs still require validation.
 
 
 ## Ühine AI ja parenduste tööruum (versioon 24)

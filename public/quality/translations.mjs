@@ -75,10 +75,10 @@ export const QUALITY_TRANSLATIONS = {
   "La source ou le périmètre a changé. Générez un nouveau brouillon.",
   "Quelle oder Umfang wurde geändert. Erstellen Sie einen neuen Entwurf."
  ],
- "Khaledi mustandi kontroll": [
-  "Review Khaled draft",
-  "Vérifier le brouillon de Khaled",
-  "Khaleds Entwurf prüfen"
+ "Konsultandi mustandi kontroll": [
+  "Review consultant draft",
+  "Vérifier le brouillon du consultant",
+  "Beraterentwurf prüfen"
  ],
  "AI ei esitanud täpsustusküsimusi. Kontrolli enne kinnitamist skeemi ja selle vastavust algtekstile.": [
   "AI returned no clarification questions. Review the source coverage and the diagram before approval.",
@@ -90,15 +90,15 @@ export const QUALITY_TRANSLATIONS = {
   "Ouvrez le brouillon pour répondre aux questions, modifier les étapes ou demander un changement à l’IA. Le brouillon précédent reste dans l’historique.",
   "Öffnen Sie den Entwurf, um Fragen zu beantworten, Schritte zu bearbeiten oder eine KI-Änderung anzufordern. Der vorherige Entwurf bleibt im Versionsverlauf."
  ],
- "Ava Khaledi mustand muutmiseks": [
-  "Open Khaled draft for editing",
-  "Ouvrir le brouillon de Khaled pour modification",
-  "Khaleds Entwurf zur Bearbeitung öffnen"
+ "Ava konsultandi mustand muutmiseks": [
+  "Open consultant draft for editing",
+  "Ouvrir le brouillon du consultant pour modification",
+  "Beraterentwurf zur Bearbeitung öffnen"
  ],
- "Khaledi mustand avati muutmiseks": [
-  "Khaled draft opened for editing",
-  "Brouillon de Khaled ouvert pour modification",
-  "Khaleds Entwurf zur Bearbeitung geöffnet"
+ "Konsultandi mustand avati muutmiseks": [
+  "Consultant draft opened for editing",
+  "Brouillon du consultant ouvert pour modification",
+  "Beraterentwurf zur Bearbeitung geöffnet"
  ],
  "Kontrolli konteerimise järjekorda": [
   "Check posting order",
@@ -205,15 +205,15 @@ export const QUALITY_TRANSLATIONS = {
   "Préciser l’approbateur et le seuil. Distinguer la demande, la décision et le traitement du document.",
   "Genehmiger und Betragsgrenze klären. Anfrage, Entscheidung und Belegverarbeitung trennen."
  ],
- "Khaledi reeglid": [
-  "Khaled’s rules",
-  "Règles de Khaled",
-  "Khaleds Regeln"
+ "Konsultandi reeglid": [
+  "Consultant rules",
+  "Règles du consultant",
+  "Beraterregeln"
  ],
- "Genereeri Khaledi reeglitega": [
-  "Generate with Khaled’s rules",
-  "Générer avec les règles de Khaled",
-  "Mit Khaleds Regeln generieren"
+ "Genereeri konsultandi reeglitega": [
+  "Generate with consultant rules",
+  "Générer avec les règles du consultant",
+  "Mit Beraterregeln generieren"
  ],
  "Loo algtekstist eraldi praeguse protsessi (AS-IS) mustand.": [
   "Generate a separate AS-IS draft from the text in the source field.",
